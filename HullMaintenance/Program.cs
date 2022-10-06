@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 
 namespace HullMaintenance
 {
@@ -14,9 +16,24 @@ namespace HullMaintenance
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
+            if (VisualStyleInformation.IsSupportedByOS && VisualStyleInformation.IsEnabledByUser)
+            {
+                Application.EnableVisualStyles();
+            }
+
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+
+            Thread thread1 = new Thread(RunMainForm);
+            thread1.Start("Thread1");
+
+            thread1.Join();
+        }
+
+        static void RunMainForm(object title)
+        {
+            MainForm mainForm = new MainForm();
+
+            Application.Run(new MainForm());
         }
     }
 }
