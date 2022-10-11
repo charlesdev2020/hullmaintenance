@@ -1,0 +1,170 @@
+SmartHull_Dev_Imabari.xlsx
+
+[번호]
+
+[종류]
+	Main
+	BatchWork
+	Plate
+	Profile
+	Reg.Cadwin
+	Assembly Plan
+	Project Copy
+	Output
+	Draft
+
+[내용]
+	Check Panel
+	Compare
+	Assembly Grid
+	Bevel Database
+	Cutting Length Database
+	Marking Side
+	BuiltUp Weight
+	Leg Length
+	Error Check
+	BHN Convert
+	API
+	Diff.Check
+	PartList
+	Feedback
+	Avoid
+	Attaching Angle Line
+	Marking Side
+	Macro
+	Length
+	Migration
+	부재표
+	WCOG
+	POR 리스트
+	Plate 도면
+	Profile 도면
+	Builtup 도면
+	Corrugate 도면
+	Revision
+	Drawing
+	Active Marking
+
+[시작일자]
+	2022-03-02
+[완료일자]
+[검증일자]
+[업데이트일자]
+[현장]
+[시수]
+[담당자]
+[타입]
+사양
+피드백
+개선
+[상태]
+완료
+진행중
+처리완료
+[비고]
+[우선순위]
+	S
+	A
+[참고문서]
+
+-- 기능 --
+[필터]
+[상태 색상 표시 : 진행중, 처리완료, 완료, 부분완료, 보류 또는 대기, 처리불가 또는 취소, 날짜 기입X]
+
+
+
+SpisMaintenance.exe
+[Client]
+	이마바리
+[현장]
+[분류1]
+	부재 정보
+    Plate
+    Profile
+    Customize Migration
+    Assembly Drawing
+    도면
+    BatchWork
+    Profile CP
+    2D CAD
+    호선복사
+    BHN
+    부재 수정
+    Register Cadwin
+    Active Mark
+    DifferenceCheck
+    STD Spis Flow
+    자체 검증 결과
+    화상회의
+    캐드윈
+    CAM
+    부재표
+    Structure MarkText
+    PartLis
+[분류2]
+[타입]
+	사양
+	피드백
+[번호]
+[시수]
+[중요도]
+[담당자]
+[상황]
+	완료
+	보류
+	대기
+	처리불가
+	진행중
+[검증]
+[접수일자]
+[시작일자]
+[완료예정일자]
+[완료일자]
+[업데이트일자]
+[문서파일]
+[샘플파일]
+[내용]
+[키워드]
+
+-- View 기능 --
+[복사]
+[저장]
+[삭제]
+[메일검색]
+[파일등록]
+[파일링크]
+
+-- Main 기능 --
+[추가]
+[필터링]
+[검색]
+[엑셀저장]
+[완료예정일 색상 알림 : 3단계]
+
+
+
+m_id
+m_number
+m_kind1
+m_kind2
+m_k_title
+m_j_title
+m_receive_date
+m_begin_date
+m_due_date
+m_end_date
+m_update_date
+m_order
+m_verification
+m_client
+m_working_hour
+m_worker
+m_type
+m_status
+m_contnent
+m_document_file
+m_sample_file
+m_remark
+m_writer
+m_reporting_date
+m_site

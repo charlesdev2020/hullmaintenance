@@ -19,27 +19,25 @@ namespace HullMaintenance
         [DllImport("kernel32.dll", CharSet = CharSet.Unicode)]
         static extern uint GetPrivateProfileString(string section, string key, string value, StringBuilder returnedString, uint nSize, string filePath);
 
+        public DataTable DataTableAll { get; set; }
+
         public MainForm()
         {
             InitializeComponent();
-
+        }
+        private void MainForm_Load(object sender, EventArgs e)
+        {
             InitStyle();
             LoadIni();
             GetDatabase();
+            LoadDataTables();
         }
 
         #region Event
         private void MainForm_Resize(object sender, EventArgs e)
         {
-            this.metroTabControl.Width = this.Width - 47;
-            this.metroTabControl.Height = this.Height - 50;
-        }
-
-
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-
-            this.metroTabControl.SelectedIndex = 3;
+            this.tabControl.Width = this.Width - 47;
+            this.tabControl.Height = this.Height - 50;
         }
 
         private void metroTabControl_SelectedIndexChanged(object sender, EventArgs e)
@@ -83,8 +81,8 @@ namespace HullMaintenance
         {
             // size of TabControl's tabs
             //metroTabControl.ItemSize = new Size(
-            //    metroTabControl.Width / metroTabControl.TabPages.Count - 1,
-            //    metroTabControl.ItemSize.Height);
+            //metroTabControl.Width / metroTabControl.TabPages.Count - 1,
+            //metroTabControl.ItemSize.Height);
             //metroTabControl.SelectedIndex = 0;
         }
 
@@ -106,18 +104,69 @@ namespace HullMaintenance
                     SqlDataAdapter sda = new SqlDataAdapter();
                     SqlCommand scm = new SqlCommand(query, conn);
                     SqlDataReader adr = scm.ExecuteReader();
+                    this.DataTableAll = new DataTable();
+                    this.DataTableAll.Load(adr);
+                    this.DataTableAll.Columns.Add("document_name");
+                    foreach (DataRow row in this.DataTableAll.Rows)
+                    {
+                        string file = row["document_file"].ToString();
+
+                        if (String.IsNullOrEmpty(file) == true)
+                        {
+                            continue;
+                        }
+
+                        file = file.Split(Path.DirectorySeparatorChar).Last();
+                        row["document_name"] = file;
+                    }
                 }
-                result = "Connected!";
+                result = "OK!";
+                tabControl.SelectedIndex = 0;
             }
             catch (Exception)
             {
                 result = "Failed!";
+                tabControl.SelectedIndex = 3;
             }
             finally
             {
                 this.lbDBStatus.Text = result;
             }
         }
+
+        private void LoadDataTables()
+        {
+            metroGrid1.DataSource = null;
+
+            var querySpisIma = (from dt in this.DataTableAll.AsEnumerable()
+                               where dt.Field<string>("customer") == "이마바리"
+                               select new
+                               {
+                                   id = dt.Field<int>("id"),
+                                   type = dt.Field<string>("type"),
+                                   status = dt.Field<string>("status"),
+                                   summary_kr = dt.Field<string>("summary_kr"),
+                                   due_date = dt.Field<Nullable<DateTime>>("due_date"),
+                                   update_date = dt.Field<Nullable<DateTime>>("update_date"),
+                                   document_name = dt.Field<string>("document_name")
+                               }).ToList();
+            metroGrid1.DataSource = querySpisIma;
+
+            var querySpisMitsui = (from dt in this.DataTableAll.AsEnumerable()
+                                   where dt.Field<string>("customer") == "미츠이"
+                                   select new
+                                   {
+                                       id = dt.Field<int>("id"),
+                                       type = dt.Field<string>("type"),
+                                       status = dt.Field<string>("status"),
+                                       summary_kr = dt.Field<string>("summary_kr"),
+                                       due_date = dt.Field<Nullable<DateTime>>("due_date"),
+                                       update_date = dt.Field<Nullable<DateTime>>("update_date"),
+                                       document_name = dt.Field<string>("document_name")
+                                   }).ToList();
+            //metroGrid2.DataSource = querySpisMitsui;
+        }
+
         private void LoadIni()
         {
             string iniPath = String.Format(@"{0}\Option.ini", Environment.CurrentDirectory);
