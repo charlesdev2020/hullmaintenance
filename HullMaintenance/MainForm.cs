@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MetroFramework.Controls;
 using MetroFramework.Forms;
 
 namespace HullMaintenance
@@ -62,7 +63,7 @@ namespace HullMaintenance
                     SqlCommand scm = new SqlCommand(query, conn);
                     SqlDataReader adr = scm.ExecuteReader();
                 }
-                result = "Connected!";
+                result = "OK!";
             }
             catch (Exception ex)
             {
@@ -74,6 +75,21 @@ namespace HullMaintenance
             }
         }
 
+        private void metroGrid1_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            DataGridViewColumn selCol = metroGrid1.Columns[e.ColumnIndex];
+
+            if (selCol.Tag == "ASC")
+            {
+                metroGrid1.Sort(selCol, ListSortDirection.Descending);
+                selCol.Tag = "DESC";
+            }
+            else
+            {
+                metroGrid1.Sort(selCol, ListSortDirection.Ascending);
+                selCol.Tag = "ASC";
+            }
+        }
         #endregion
 
         #region Method
@@ -138,33 +154,22 @@ namespace HullMaintenance
         {
             metroGrid1.DataSource = null;
 
-            var querySpisIma = (from dt in this.DataTableAll.AsEnumerable()
-                               where dt.Field<string>("customer") == "이마바리"
-                               select new
-                               {
-                                   id = dt.Field<int>("id"),
-                                   type = dt.Field<string>("type"),
-                                   status = dt.Field<string>("status"),
-                                   summary_kr = dt.Field<string>("summary_kr"),
-                                   due_date = dt.Field<Nullable<DateTime>>("due_date"),
-                                   update_date = dt.Field<Nullable<DateTime>>("update_date"),
-                                   document_name = dt.Field<string>("document_name")
-                               }).ToList();
-            metroGrid1.DataSource = querySpisIma;
+            DataTable dt = DataTableAll.DefaultView.ToTable(false, new string[] { colId.DataPropertyName, colType.DataPropertyName, colStatus.DataPropertyName, colSummaryKr.DataPropertyName, colDueDate.DataPropertyName, colUpdateDate.DataPropertyName, colDocumentLink.DataPropertyName, colCustomer.DataPropertyName }).Select("customer = '이마바리'").CopyToDataTable();
+            metroGrid1.DataSource = dt;
 
-            var querySpisMitsui = (from dt in this.DataTableAll.AsEnumerable()
-                                   where dt.Field<string>("customer") == "미츠이"
-                                   select new
-                                   {
-                                       id = dt.Field<int>("id"),
-                                       type = dt.Field<string>("type"),
-                                       status = dt.Field<string>("status"),
-                                       summary_kr = dt.Field<string>("summary_kr"),
-                                       due_date = dt.Field<Nullable<DateTime>>("due_date"),
-                                       update_date = dt.Field<Nullable<DateTime>>("update_date"),
-                                       document_name = dt.Field<string>("document_name")
-                                   }).ToList();
-            //metroGrid2.DataSource = querySpisMitsui;
+            //var querySpisIma = (from dt in this.DataTableAll.AsEnumerable()
+            //                   where dt.Field<string>("customer") == "이마바리"
+            //                   select new
+            //                   {
+            //                       id = dt.Field<int>("id"),
+            //                       type = dt.Field<string>("type"),
+            //                       status = dt.Field<string>("status"),
+            //                       summary_kr = dt.Field<string>("summary_kr"),
+            //                       due_date = dt.Field<Nullable<DateTime>>("due_date"),
+            //                       update_date = dt.Field<Nullable<DateTime>>("update_date"),
+            //                       document_name = dt.Field<string>("document_name")
+            //                   }).ToList();
+            //metroGrid1.DataSource = querySpisIma;
         }
 
         private void LoadIni()
@@ -174,6 +179,9 @@ namespace HullMaintenance
             this.tbDbId.Text = GetPrivateProfileString("Database", "LoginId", "spis", iniPath);
             this.tbDbPw.Text = GetPrivateProfileString("Database", "LoginPw", "spishull", iniPath);
             this.tbDbName.Text = GetPrivateProfileString("Database", "DBName", "HULLDB", iniPath);
+            this.tbPath1.Text = GetPrivateProfileString("File", "Path1", "", iniPath);
+            this.tbPath2.Text = GetPrivateProfileString("File", "Path2", "", iniPath);
+            this.tbPath3.Text = GetPrivateProfileString("File", "Path3", "", iniPath);
         }
 
         /// <summary>
