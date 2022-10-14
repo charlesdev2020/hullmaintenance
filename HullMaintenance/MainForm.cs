@@ -17,22 +17,26 @@ namespace HullMaintenance
 {
     public partial class MainForm : MetroForm
     {
-        public DataTable DataTableAll { get; set; }
-
+		public DataTable DtSpis = new DataTable();
+		public DataTable DtSmartHull = new DataTable();
+		string ConnString = "";
         public MainForm()
         {
             InitializeComponent();
         }
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-            InitStyle();
-            LoadIni();
-            GetDatabase();
-            LoadDataTables();
-        }
 
-        #region Event
-        private void MainForm_Resize(object sender, EventArgs e)
+		#region Event
+		private void MainForm_Load(object sender, EventArgs e)
+		{
+			InitStyle();
+			LoadIni();
+			this.ConnString = GetDatabaseConnection();
+			this.DtSpis = GetDatabase("spis");
+			this.DtSmartHull = GetDatabase("smartHull");
+			LoadDataTables();
+		}
+
+		private void MainForm_Resize(object sender, EventArgs e)
         {
             this.tabControl.Width = this.Width - 47;
             this.tabControl.Height = this.Height - 50;
@@ -76,7 +80,7 @@ namespace HullMaintenance
         {
             DataGridViewColumn selCol = metroGrid1.Columns[e.ColumnIndex];
 
-            if (selCol.Tag == "ASC")
+            if (selCol.Tag as string == "ASC")
             {
                 metroGrid1.Sort(selCol, ListSortDirection.Descending);
                 selCol.Tag = "DESC";
@@ -99,28 +103,35 @@ namespace HullMaintenance
             //metroTabControl.SelectedIndex = 0;
         }
 
-        private void GetDatabase()
+		private string  GetDatabaseConnection()
+		{
+			string connString = String.Format(@"Data Source={0}; Initial Catalog={1}; User ID={2}; Password={3}; Persist Security Info=True;",
+												this.tbDbServer.Text, this.tbDbName.Text, this.tbDbId.Text, this.tbDbPw.Text);
+
+			return connString;
+		}
+
+        private DataTable GetDatabase(string tableName)
         {
-            string result = "Wait...";
+			DataTable dt = new DataTable();
+			string result = "Wait...";
             this.lbDBStatus.Text = result;
 
+            string query = String.Format("SELECT * FROM {0} ORDER BY id DESC", tableName);
 
-            string connString = String.Format(@"Data Source={0}; Initial Catalog={1}; User ID={2}; Password={3}; Persist Security Info=True;",
-                                                this.tbDbServer.Text, this.tbDbName.Text, this.tbDbId.Text, this.tbDbPw.Text);
-
-            string query = "SELECT * FROM spis ORDER BY id DESC";
             try
             {
-                using (SqlConnection conn = new SqlConnection(connString))
+				using (SqlConnection conn = new SqlConnection(this.ConnString))
                 {
                     conn.Open();
+
                     SqlDataAdapter sda = new SqlDataAdapter();
                     SqlCommand scm = new SqlCommand(query, conn);
                     SqlDataReader adr = scm.ExecuteReader();
-                    this.DataTableAll = new DataTable();
-                    this.DataTableAll.Load(adr);
-                    this.DataTableAll.Columns.Add("document_name");
-                    foreach (DataRow row in this.DataTableAll.Rows)
+
+					dt.Load(adr);
+					dt.Columns.Add("document_name");
+                    foreach (DataRow row in dt.Rows)
                     {
                         string file = row["document_file"].ToString();
 
@@ -144,14 +155,16 @@ namespace HullMaintenance
             finally
             {
                 this.lbDBStatus.Text = result;
-            }
+			}
+
+			return dt;
         }
 
         private void LoadDataTables()
         {
             metroGrid1.DataSource = null;
 
-            DataTable dt = DataTableAll.DefaultView.ToTable(false, new string[] { colId.DataPropertyName, colType.DataPropertyName, colStatus.DataPropertyName, colSummaryKr.DataPropertyName, colDueDate.DataPropertyName, colUpdateDate.DataPropertyName, colDocumentLink.DataPropertyName, colCustomer.DataPropertyName }).Select("customer = '이마바리'").CopyToDataTable();
+            DataTable dt = this.DtSpis.DefaultView.ToTable(false, new string[] { colId.DataPropertyName, colType.DataPropertyName, colStatus.DataPropertyName, colSummaryKr.DataPropertyName, colDueDate.DataPropertyName, colUpdateDate.DataPropertyName, colDocumentLink.DataPropertyName, colCustomer.DataPropertyName }).Select("customer = '이마바리'").CopyToDataTable();
             metroGrid1.DataSource = dt;
 
             //var querySpisIma = (from dt in this.DataTableAll.AsEnumerable()
