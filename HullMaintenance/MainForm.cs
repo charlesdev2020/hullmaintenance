@@ -17,9 +17,6 @@ namespace HullMaintenance
 {
     public partial class MainForm : MetroForm
     {
-        [DllImport("kernel32.dll", CharSet = CharSet.Unicode)]
-        static extern uint GetPrivateProfileString(string section, string key, string value, StringBuilder returnedString, uint nSize, string filePath);
-
         public DataTable DataTableAll { get; set; }
 
         public MainForm()
@@ -175,36 +172,15 @@ namespace HullMaintenance
         private void LoadIni()
         {
             string iniPath = String.Format(@"{0}\Option.ini", Environment.CurrentDirectory);
-            this.tbDbServer.Text = GetPrivateProfileString("Database", "Server", "localhost", iniPath);
-            this.tbDbId.Text = GetPrivateProfileString("Database", "LoginId", "spis", iniPath);
-            this.tbDbPw.Text = GetPrivateProfileString("Database", "LoginPw", "spishull", iniPath);
-            this.tbDbName.Text = GetPrivateProfileString("Database", "DBName", "HULLDB", iniPath);
-            this.tbPath1.Text = GetPrivateProfileString("File", "Path1", "", iniPath);
-            this.tbPath2.Text = GetPrivateProfileString("File", "Path2", "", iniPath);
-            this.tbPath3.Text = GetPrivateProfileString("File", "Path3", "", iniPath);
-        }
+			INIHelper iniHelper = new INIHelper(iniPath);
 
-        /// <summary>
-        /// INI 파일에서 값을 가져옴
-        /// </summary>
-        /// <param name="section"></param>
-        /// <param name="key"></param>
-        /// <param name="defaultValue"></param>
-        /// <param name="filePath"></param>
-        /// <returns></returns>
-        static public string GetPrivateProfileString(string section, string key, string defaultValue, string filePath)
-        {
-            string value = defaultValue;
-
-            StringBuilder builder = new StringBuilder(8192);    // MaxLength = 65536;
-
-            if (File.Exists(filePath) == true)
-            {
-                GetPrivateProfileString(section, key, defaultValue, builder, 8192, filePath);
-                value = builder.ToString();
-            }
-
-            return value;
+            this.tbDbServer.Text = iniHelper.GetPrivateProfileString("Database", "Server", "localhost");
+            this.tbDbId.Text = iniHelper.GetPrivateProfileString("Database", "LoginId", "spis");
+            this.tbDbPw.Text = iniHelper.GetPrivateProfileString("Database", "LoginPw", "spishull");
+            this.tbDbName.Text = iniHelper.GetPrivateProfileString("Database", "DBName", "HULLDB");
+            this.tbPath1.Text = iniHelper.GetPrivateProfileString("File", "Path1", "");
+            this.tbPath2.Text = iniHelper.GetPrivateProfileString("File", "Path2", "");
+            this.tbPath3.Text = iniHelper.GetPrivateProfileString("File", "Path3", "");
         }
         #endregion
     }
