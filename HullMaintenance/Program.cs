@@ -22,18 +22,7 @@ namespace HullMaintenance
             }
 
             Application.SetCompatibleTextRenderingDefault(false);
-
-            Thread thread1 = new Thread(RunMainForm);
-            thread1.Start("Thread1");
-
-            thread1.Join();
-        }
-
-        static void RunMainForm(object title)
-        {
-            MainForm mainForm = new MainForm();
-
-            Application.Run(new MainForm());
+			Application.Run(new MainForm());
         }
     }
 }

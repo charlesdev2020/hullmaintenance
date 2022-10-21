@@ -1,24 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using MetroFramework.Controls;
+using MetroFramework.Forms;
+using System;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using MetroFramework.Controls;
-using MetroFramework.Forms;
 
 namespace HullMaintenance
 {
-    public partial class MainForm : MetroForm
+	public partial class MainForm : MetroForm
     {
-		public DataTable DtSpis = new DataTable();
+		public DataTable DtSpisHull = new DataTable();
 		public DataTable DtSmartHull = new DataTable();
+
+		string spisHullDbName = "";
+		string smartHullDbName = "";
+
 		string ConnString = "";
         public MainForm()
         {
@@ -31,8 +31,8 @@ namespace HullMaintenance
 			InitStyle();
 			LoadIni();
 			this.ConnString = GetDatabaseConnection();
-			this.DtSpis = GetDatabase("spis");
-			this.DtSmartHull = GetDatabase("smartHull");
+			this.DtSpisHull = GetDatabase(spisHullDbName);
+			this.DtSmartHull = GetDatabase(smartHullDbName);
 			LoadDataTables();
 		}
 
@@ -47,7 +47,23 @@ namespace HullMaintenance
 
         }
 
-        private void btnConnect_Click(object sender, EventArgs e)
+		private void metroGrid1_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+		{
+			DataGridViewColumn selCol = metroGrid1.Columns[e.ColumnIndex];
+
+			if (selCol.Tag as string == "ASC")
+			{
+				metroGrid1.Sort(selCol, ListSortDirection.Descending);
+				selCol.Tag = "DESC";
+			}
+			else
+			{
+				metroGrid1.Sort(selCol, ListSortDirection.Ascending);
+				selCol.Tag = "ASC";
+			}
+		}
+
+		private void btnConnect_Click(object sender, EventArgs e)
         {
             string result = "Wait...";
 
@@ -62,7 +78,8 @@ namespace HullMaintenance
                     conn.Open();
                     SqlDataAdapter sda = new SqlDataAdapter();
                     SqlCommand scm = new SqlCommand(query, conn);
-                    SqlDataReader adr = scm.ExecuteReader();
+					scm.CommandTimeout = 5;	// Default = 30s
+                    //SqlDataReader adr = scm.ExecuteReader();
                 }
                 result = "OK!";
             }
@@ -76,21 +93,29 @@ namespace HullMaintenance
             }
         }
 
-        private void metroGrid1_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            DataGridViewColumn selCol = metroGrid1.Columns[e.ColumnIndex];
+		private void btnPath_Click(object sender, EventArgs e)
+		{
+			MetroButton mBtn = sender as MetroButton;
 
-            if (selCol.Tag as string == "ASC")
-            {
-                metroGrid1.Sort(selCol, ListSortDirection.Descending);
-                selCol.Tag = "DESC";
-            }
-            else
-            {
-                metroGrid1.Sort(selCol, ListSortDirection.Ascending);
-                selCol.Tag = "ASC";
-            }
-        }
+			string tag = mBtn.Tag.ToString();
+			MetroTextBox tbPath = this.tabPage4.Controls.Find(tag, false).FirstOrDefault() as MetroTextBox;
+
+			FolderBrowserDialog folderDialog = new FolderBrowserDialog();
+			folderDialog.SelectedPath = tbPath.Text;
+			if (folderDialog.ShowDialog(this) == DialogResult.OK)
+			{
+				tbPath.Text = folderDialog.SelectedPath;
+			}
+		}
+
+		private void btnPathOpen_Click(object sender, EventArgs e)
+		{
+			MetroButton mBtn = sender as MetroButton;
+
+			string tag = mBtn.Tag.ToString();
+			MetroTextBox tbPath = this.tabPage4.Controls.Find(tag, false).FirstOrDefault() as MetroTextBox;
+			Process.Start(tbPath.Text);
+		}
         #endregion
 
         #region Method
@@ -164,24 +189,33 @@ namespace HullMaintenance
         {
             metroGrid1.DataSource = null;
 
-            DataTable dt = this.DtSpis.DefaultView.ToTable(false, new string[] { colId.DataPropertyName, colType.DataPropertyName, colStatus.DataPropertyName, colSummaryKr.DataPropertyName, colDueDate.DataPropertyName, colUpdateDate.DataPropertyName, colDocumentLink.DataPropertyName, colCustomer.DataPropertyName }).Select("customer = '이마바리'").CopyToDataTable();
+            DataTable dt = this.DtSpisHull.DefaultView.ToTable(false, new string[] { colId.DataPropertyName, colType.DataPropertyName, colStatus.DataPropertyName, colSummaryKr.DataPropertyName, colDueDate.DataPropertyName, colUpdateDate.DataPropertyName, colDocumentLink.DataPropertyName, colCustomer.DataPropertyName }).Select("customer = '이마바리'").CopyToDataTable();
             metroGrid1.DataSource = dt;
 
-            //var querySpisIma = (from dt in this.DataTableAll.AsEnumerable()
-            //                   where dt.Field<string>("customer") == "이마바리"
-            //                   select new
-            //                   {
-            //                       id = dt.Field<int>("id"),
-            //                       type = dt.Field<string>("type"),
-            //                       status = dt.Field<string>("status"),
-            //                       summary_kr = dt.Field<string>("summary_kr"),
-            //                       due_date = dt.Field<Nullable<DateTime>>("due_date"),
-            //                       update_date = dt.Field<Nullable<DateTime>>("update_date"),
-            //                       document_name = dt.Field<string>("document_name")
-            //                   }).ToList();
-            //metroGrid1.DataSource = querySpisIma;
-        }
+			//dt = this.DtSmartHull.DefaultView.ToTable(false, new string[] { colId.DataPropertyName, colType.DataPropertyName, colStatus.DataPropertyName, colSummaryKr.DataPropertyName, colDueDate.DataPropertyName, colUpdateDate.DataPropertyName, colDocumentLink.DataPropertyName, colCustomer.DataPropertyName }).Select("customer = '이마바리'").CopyToDataTable();
 
+			//var querySpisIma = (from dt in this.DataTableAll.AsEnumerable()
+			//                   where dt.Field<string>("customer") == "이마바리"
+			//                   select new
+			//                   {
+			//                       id = dt.Field<int>("id"),
+			//                       type = dt.Field<string>("type"),
+			//                       status = dt.Field<string>("status"),
+			//                       summary_kr = dt.Field<string>("summary_kr"),
+			//                       due_date = dt.Field<Nullable<DateTime>>("due_date"),
+			//                       update_date = dt.Field<Nullable<DateTime>>("update_date"),
+			//                       document_name = dt.Field<string>("document_name")
+			//                   }).ToList();
+			//metroGrid1.DataSource = querySpisIma;
+
+			
+			//this.tabPage3.Controls.Add(metroGrid1);
+			//this.metroPanel2.Controls.Add(metroGrid1);
+		}
+
+		/// <summary>
+		/// INI 파일 불러오기
+		/// </summary>
         private void LoadIni()
         {
             string iniPath = String.Format(@"{0}\Option.ini", Environment.CurrentDirectory);
@@ -191,10 +225,20 @@ namespace HullMaintenance
             this.tbDbId.Text = iniHelper.GetPrivateProfileString("Database", "LoginId", "spis");
             this.tbDbPw.Text = iniHelper.GetPrivateProfileString("Database", "LoginPw", "spishull");
             this.tbDbName.Text = iniHelper.GetPrivateProfileString("Database", "DBName", "HULLDB");
-            this.tbPath1.Text = iniHelper.GetPrivateProfileString("File", "Path1", "");
+			spisHullDbName = iniHelper.GetPrivateProfileString("Database", "TableName1", "spishull");
+			smartHullDbName = iniHelper.GetPrivateProfileString("Database", "TableName2", "smarthull");
+			this.tbPath1.Text = iniHelper.GetPrivateProfileString("File", "Path1", "");
             this.tbPath2.Text = iniHelper.GetPrivateProfileString("File", "Path2", "");
             this.tbPath3.Text = iniHelper.GetPrivateProfileString("File", "Path3", "");
         }
-        #endregion
-    }
+		#endregion
+
+		private void tabControl_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.Control && e.KeyCode == Keys.F)
+			{
+
+			}
+		}
+	}
 }
