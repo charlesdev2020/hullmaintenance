@@ -13,33 +13,38 @@ namespace HullMaintenance
 {
 	public partial class MainForm : MetroForm
     {
-		public DataTable DtSpisHull = new DataTable();
-		public DataTable DtSmartHull = new DataTable();
+        #region Members
+        string ConnString = "";
+        string spisHullDbName = "";
+        string smartHullDbName = "";
+        #endregion
 
-		string spisHullDbName = "";
-		string smartHullDbName = "";
+        #region Properties
+        public DataTable DtSpisHull { get; set; }
+        public DataTable DtSmartHull { get; set; }
+        #endregion
 
-		string ConnString = "";
         public MainForm()
         {
             InitializeComponent();
         }
 
-		#region Event
-		private void MainForm_Load(object sender, EventArgs e)
-		{
-			InitStyle();
-			LoadIni();
-			this.ConnString = GetDatabaseConnection();
-			this.DtSpisHull = GetDatabase(spisHullDbName);
-			this.DtSmartHull = GetDatabase(smartHullDbName);
-			LoadDataTables();
-		}
 
-		private void MainForm_Resize(object sender, EventArgs e)
+        #region Event
+        private void MainForm_Load(object sender, EventArgs e)
         {
-            this.tabControl.Width = this.Width - 47;
-            this.tabControl.Height = this.Height - 50;
+            InitStyle();
+            LoadIni();
+            this.ConnString = GetDatabaseConnection();
+            this.DtSpisHull = GetDataTable(spisHullDbName);
+            this.DtSmartHull = GetDataTable(smartHullDbName);
+            LoadDataTables();
+        }
+
+        private void MainForm_Resize(object sender, EventArgs e)
+        {
+            //this.tabControl.Width = this.Width - 47;
+            //this.tabControl.Height = this.Height - 50;
         }
 
         private void metroTabControl_SelectedIndexChanged(object sender, EventArgs e)
@@ -47,23 +52,23 @@ namespace HullMaintenance
 
         }
 
-		private void metroGrid1_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
-		{
-			DataGridViewColumn selCol = metroGrid1.Columns[e.ColumnIndex];
+        private void metroGrid1_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            //DataGridViewColumn selCol = metroGrid1.Columns[e.ColumnIndex];
 
-			if (selCol.Tag as string == "ASC")
-			{
-				metroGrid1.Sort(selCol, ListSortDirection.Descending);
-				selCol.Tag = "DESC";
-			}
-			else
-			{
-				metroGrid1.Sort(selCol, ListSortDirection.Ascending);
-				selCol.Tag = "ASC";
-			}
-		}
+            //if (selCol.Tag as string == "ASC")
+            //{
+            //    metroGrid1.Sort(selCol, ListSortDirection.Descending);
+            //    selCol.Tag = "DESC";
+            //}
+            //else
+            //{
+            //    metroGrid1.Sort(selCol, ListSortDirection.Ascending);
+            //    selCol.Tag = "ASC";
+            //}
+        }
 
-		private void btnConnect_Click(object sender, EventArgs e)
+        private void btnConnect_Click(object sender, EventArgs e)
         {
             string result = "Wait...";
 
@@ -78,7 +83,7 @@ namespace HullMaintenance
                     conn.Open();
                     SqlDataAdapter sda = new SqlDataAdapter();
                     SqlCommand scm = new SqlCommand(query, conn);
-					scm.CommandTimeout = 5;	// Default = 30s
+                    scm.CommandTimeout = 5;	// Default = 30s
                     //SqlDataReader adr = scm.ExecuteReader();
                 }
                 result = "OK!";
@@ -93,29 +98,63 @@ namespace HullMaintenance
             }
         }
 
-		private void btnPath_Click(object sender, EventArgs e)
-		{
-			MetroButton mBtn = sender as MetroButton;
+        private void btnPath_Click(object sender, EventArgs e)
+        {
+            MetroButton mBtn = sender as MetroButton;
 
-			string tag = mBtn.Tag.ToString();
-			MetroTextBox tbPath = this.tabPage4.Controls.Find(tag, false).FirstOrDefault() as MetroTextBox;
+            string tag = mBtn.Tag.ToString();
+            MetroTextBox tbPath = this.tabPage3.Controls.Find(tag, false).FirstOrDefault() as MetroTextBox;
 
-			FolderBrowserDialog folderDialog = new FolderBrowserDialog();
-			folderDialog.SelectedPath = tbPath.Text;
-			if (folderDialog.ShowDialog(this) == DialogResult.OK)
-			{
-				tbPath.Text = folderDialog.SelectedPath;
-			}
-		}
+            FolderBrowserDialog folderDialog = new FolderBrowserDialog();
+            folderDialog.SelectedPath = tbPath.Text;
+            if (folderDialog.ShowDialog(this) == DialogResult.OK)
+            {
+                tbPath.Text = folderDialog.SelectedPath;
+            }
+        }
 
-		private void btnPathOpen_Click(object sender, EventArgs e)
-		{
-			MetroButton mBtn = sender as MetroButton;
+        private void btnPathOpen_Click(object sender, EventArgs e)
+        {
+            MetroButton mBtn = sender as MetroButton;
 
-			string tag = mBtn.Tag.ToString();
-			MetroTextBox tbPath = this.tabPage4.Controls.Find(tag, false).FirstOrDefault() as MetroTextBox;
-			Process.Start(tbPath.Text);
-		}
+            string tag = mBtn.Tag.ToString();
+            MetroTextBox tbPath = this.tabPage3.Controls.Find(tag, false).FirstOrDefault() as MetroTextBox;
+
+            if (Directory.Exists(tbPath.Text) == true)
+            {
+                Process.Start(tbPath.Text);
+            }
+        }
+
+        private void tabControl_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.F)
+            {
+
+                if (tabControl.SelectedIndex == 0)
+                {
+                    if (collapsiblePanel1.Visible == false)
+                    {
+                        collapsiblePanel1.Visible = true;
+                    }
+                    else
+                    {
+                        collapsiblePanel1.Visible = false;
+                    }
+                }
+                else if (tabControl.SelectedIndex == 1)
+                {
+                    if (collapsiblePanel2.Visible == false)
+                    {
+                        collapsiblePanel2.Visible = true;
+                    }
+                    else
+                    {
+                        collapsiblePanel2.Visible = false;
+                    }
+                }
+            }
+        }
         #endregion
 
         #region Method
@@ -128,25 +167,30 @@ namespace HullMaintenance
             //metroTabControl.SelectedIndex = 0;
         }
 
-		private string  GetDatabaseConnection()
-		{
-			string connString = String.Format(@"Data Source={0}; Initial Catalog={1}; User ID={2}; Password={3}; Persist Security Info=True;",
-												this.tbDbServer.Text, this.tbDbName.Text, this.tbDbId.Text, this.tbDbPw.Text);
-
-			return connString;
-		}
-
-        private DataTable GetDatabase(string tableName)
+        private string  GetDatabaseConnection()
         {
-			DataTable dt = new DataTable();
-			string result = "Wait...";
+            string connString = String.Format(@"Data Source={0}; Initial Catalog={1}; User ID={2}; Password={3}; Persist Security Info=True;",
+                                              this.tbDbServer.Text, this.tbDbName.Text, this.tbDbId.Text, this.tbDbPw.Text);
+
+            return connString;
+        }
+
+        /// <summary>
+        /// Get 
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <returns></returns>
+        private DataTable GetDataTable(string tableName)
+        {
+            DataTable dt = new DataTable();
+            string result = "Wait...";
             this.lbDBStatus.Text = result;
 
             string query = String.Format("SELECT * FROM {0} ORDER BY id DESC", tableName);
 
             try
             {
-				using (SqlConnection conn = new SqlConnection(this.ConnString))
+                using (SqlConnection conn = new SqlConnection(this.ConnString))
                 {
                     conn.Open();
 
@@ -154,8 +198,8 @@ namespace HullMaintenance
                     SqlCommand scm = new SqlCommand(query, conn);
                     SqlDataReader adr = scm.ExecuteReader();
 
-					dt.Load(adr);
-					dt.Columns.Add("document_name");
+                    dt.Load(adr);
+                    dt.Columns.Add("document_name");
                     foreach (DataRow row in dt.Rows)
                     {
                         string file = row["document_file"].ToString();
@@ -180,65 +224,57 @@ namespace HullMaintenance
             finally
             {
                 this.lbDBStatus.Text = result;
-			}
+            }
 
-			return dt;
+            return dt;
         }
 
+        /// <summary>
+        /// Load DataTable 
+        /// </summary>
         private void LoadDataTables()
         {
-            metroGrid1.DataSource = null;
+            //metroGrid1.DataSource = null;
 
             DataTable dt = this.DtSpisHull.DefaultView.ToTable(false, new string[] { colId.DataPropertyName, colType.DataPropertyName, colStatus.DataPropertyName, colSummaryKr.DataPropertyName, colDueDate.DataPropertyName, colUpdateDate.DataPropertyName, colDocumentLink.DataPropertyName, colCustomer.DataPropertyName }).Select("customer = '이마바리'").CopyToDataTable();
-            metroGrid1.DataSource = dt;
+            //metroGrid1.DataSource = dt;
 
-			//dt = this.DtSmartHull.DefaultView.ToTable(false, new string[] { colId.DataPropertyName, colType.DataPropertyName, colStatus.DataPropertyName, colSummaryKr.DataPropertyName, colDueDate.DataPropertyName, colUpdateDate.DataPropertyName, colDocumentLink.DataPropertyName, colCustomer.DataPropertyName }).Select("customer = '이마바리'").CopyToDataTable();
+            #region Test
+            //dt = this.DtSmartHull.DefaultView.ToTable(false, new string[] { colId.DataPropertyName, colType.DataPropertyName, colStatus.DataPropertyName, colSummaryKr.DataPropertyName, colDueDate.DataPropertyName, colUpdateDate.DataPropertyName, colDocumentLink.DataPropertyName, colCustomer.DataPropertyName }).Select("customer = '이마바리'").CopyToDataTable();
+            //var querySpisIma = (from dt in this.DataTableAll.AsEnumerable()
+            //                   where dt.Field<string>("customer") == "이마바리"
+            //                   select new
+            //                   {
+            //                       id = dt.Field<int>("id"),
+            //                       type = dt.Field<string>("type"),
+            //                       status = dt.Field<string>("status"),
+            //                       summary_kr = dt.Field<string>("summary_kr"),
+            //                       due_date = dt.Field<Nullable<DateTime>>("due_date"),
+            //                       update_date = dt.Field<Nullable<DateTime>>("update_date"),
+            //                       document_name = dt.Field<string>("document_name")
+            //                   }).ToList();
+            //metroGrid1.DataSource = querySpisIma;
+            #endregion
+        }
 
-			//var querySpisIma = (from dt in this.DataTableAll.AsEnumerable()
-			//                   where dt.Field<string>("customer") == "이마바리"
-			//                   select new
-			//                   {
-			//                       id = dt.Field<int>("id"),
-			//                       type = dt.Field<string>("type"),
-			//                       status = dt.Field<string>("status"),
-			//                       summary_kr = dt.Field<string>("summary_kr"),
-			//                       due_date = dt.Field<Nullable<DateTime>>("due_date"),
-			//                       update_date = dt.Field<Nullable<DateTime>>("update_date"),
-			//                       document_name = dt.Field<string>("document_name")
-			//                   }).ToList();
-			//metroGrid1.DataSource = querySpisIma;
-
-			
-			//this.tabPage3.Controls.Add(metroGrid1);
-			//this.metroPanel2.Controls.Add(metroGrid1);
-		}
-
-		/// <summary>
-		/// INI 파일 불러오기
-		/// </summary>
+        /// <summary>
+        /// Load INI
+        /// </summary>
         private void LoadIni()
         {
             string iniPath = String.Format(@"{0}\Option.ini", Environment.CurrentDirectory);
-			INIHelper iniHelper = new INIHelper(iniPath);
+            INIHelper iniHelper = new INIHelper(iniPath);
 
             this.tbDbServer.Text = iniHelper.GetPrivateProfileString("Database", "Server", "localhost");
             this.tbDbId.Text = iniHelper.GetPrivateProfileString("Database", "LoginId", "spis");
             this.tbDbPw.Text = iniHelper.GetPrivateProfileString("Database", "LoginPw", "spishull");
             this.tbDbName.Text = iniHelper.GetPrivateProfileString("Database", "DBName", "HULLDB");
-			spisHullDbName = iniHelper.GetPrivateProfileString("Database", "TableName1", "spishull");
-			smartHullDbName = iniHelper.GetPrivateProfileString("Database", "TableName2", "smarthull");
-			this.tbPath1.Text = iniHelper.GetPrivateProfileString("File", "Path1", "");
+            spisHullDbName = iniHelper.GetPrivateProfileString("Database", "TableName1", "spishull");
+            smartHullDbName = iniHelper.GetPrivateProfileString("Database", "TableName2", "smarthull");
+            this.tbPath1.Text = iniHelper.GetPrivateProfileString("File", "Path1", "");
             this.tbPath2.Text = iniHelper.GetPrivateProfileString("File", "Path2", "");
             this.tbPath3.Text = iniHelper.GetPrivateProfileString("File", "Path3", "");
         }
-		#endregion
-
-		private void tabControl_KeyDown(object sender, KeyEventArgs e)
-		{
-			if (e.Control && e.KeyCode == Keys.F)
-			{
-
-			}
-		}
-	}
+        #endregion
+    }
 }
