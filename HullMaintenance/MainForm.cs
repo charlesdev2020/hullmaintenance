@@ -1,4 +1,5 @@
-﻿using MetroFramework.Controls;
+﻿using MetroFramework;
+using MetroFramework.Controls;
 using MetroFramework.Forms;
 using System;
 using System.ComponentModel;
@@ -14,14 +15,15 @@ namespace HullMaintenance
 	public partial class MainForm : MetroForm
     {
         #region Members
-        string ConnString = "";
         string spisHullDbName = "";
         string smartHullDbName = "";
+        string customer = "";
         #endregion
 
         #region Properties
-        public DataTable DtSpisHull { get; set; }
-        public DataTable DtSmartHull { get; set; }
+        public string ConnString { get; private set; }
+        public DataTable DtSpisHull { get; private set; }
+        public DataTable DtSmartHull { get; private set; }
         #endregion
 
         public MainForm()
@@ -29,16 +31,15 @@ namespace HullMaintenance
             InitializeComponent();
         }
 
-
         #region Event
         private void MainForm_Load(object sender, EventArgs e)
         {
-            InitStyle();
             LoadIni();
             this.ConnString = GetDatabaseConnection();
             this.DtSpisHull = GetDataTable(spisHullDbName);
             this.DtSmartHull = GetDataTable(smartHullDbName);
-            LoadDataTables();
+            LoadDataTables(this.customer);
+            InitStyle();
         }
 
         private void MainForm_Resize(object sender, EventArgs e)
@@ -52,7 +53,7 @@ namespace HullMaintenance
 
         }
 
-        private void metroGrid1_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        private void grid_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             //DataGridViewColumn selCol = metroGrid1.Columns[e.ColumnIndex];
 
@@ -133,27 +134,39 @@ namespace HullMaintenance
 
                 if (tabControl.SelectedIndex == 0)
                 {
-                    if (collapsiblePanel1.Visible == false)
+                    if (collapsibleSmhPanel.Visible == false)
                     {
-                        collapsiblePanel1.Visible = true;
+                        collapsibleSmhPanel.Visible = true;
                     }
                     else
                     {
-                        collapsiblePanel1.Visible = false;
+                        collapsibleSmhPanel.Visible = false;
                     }
                 }
                 else if (tabControl.SelectedIndex == 1)
                 {
-                    if (collapsiblePanel2.Visible == false)
+                    if (collapsibleStdPanel.Visible == false)
                     {
-                        collapsiblePanel2.Visible = true;
+                        collapsibleStdPanel.Visible = true;
                     }
                     else
                     {
-                        collapsiblePanel2.Visible = false;
+                        collapsibleStdPanel.Visible = false;
                     }
                 }
             }
+        }
+
+        private void btnTheme_Click(object sender, EventArgs e)
+        {
+            styleMgr.Theme = styleMgr.Theme == MetroThemeStyle.Light ? MetroThemeStyle.Dark : MetroThemeStyle.Light;
+        }
+
+        private void btnStyle_Click(object sender, EventArgs e)
+        {
+            var rnd = new Random();
+            int next = rnd.Next(0, 13);
+            styleMgr.Style = (MetroColorStyle)next;
         }
         #endregion
 
@@ -164,7 +177,7 @@ namespace HullMaintenance
             //metroTabControl.ItemSize = new Size(
             //metroTabControl.Width / metroTabControl.TabPages.Count - 1,
             //metroTabControl.ItemSize.Height);
-            //metroTabControl.SelectedIndex = 0;
+            tabControl.SelectedIndex = 1;
         }
 
         private string  GetDatabaseConnection()
@@ -216,7 +229,7 @@ namespace HullMaintenance
                 result = "OK!";
                 tabControl.SelectedIndex = 0;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 result = "Failed!";
                 tabControl.SelectedIndex = 3;
@@ -232,11 +245,20 @@ namespace HullMaintenance
         /// <summary>
         /// Load DataTable 
         /// </summary>
-        private void LoadDataTables()
+        private void LoadDataTables(string customer)
         {
             //metroGrid1.DataSource = null;
-
-            DataTable dt = this.DtSpisHull.DefaultView.ToTable(false, new string[] { colId.DataPropertyName, colType.DataPropertyName, colStatus.DataPropertyName, colSummaryKr.DataPropertyName, colDueDate.DataPropertyName, colUpdateDate.DataPropertyName, colDocumentLink.DataPropertyName, colCustomer.DataPropertyName }).Select("customer = '이마바리'").CopyToDataTable();
+            DataTable stdDt = null;
+            DataTable smhDt = null;
+            if (DtSpisHull.DefaultView.Table.Rows.Count > 0)
+            {
+                stdDt = this.DtSpisHull.DefaultView.ToTable(false, new string[] {
+                    colId.DataPropertyName, colType.DataPropertyName, colStatus.DataPropertyName, colSummaryKr.DataPropertyName,
+                    colDueDate.DataPropertyName, colUpdateDate.DataPropertyName, colDocumentLink.DataPropertyName, colCustomer.DataPropertyName }).
+                    Select(String.Format("customer = '{0}'", customer)).CopyToDataTable();
+                stdGrid.DataSource = stdDt;
+            }
+            
             //metroGrid1.DataSource = dt;
 
             #region Test
@@ -266,11 +288,12 @@ namespace HullMaintenance
             INIHelper iniHelper = new INIHelper(iniPath);
 
             this.tbDbServer.Text = iniHelper.GetPrivateProfileString("Database", "Server", "localhost");
-            this.tbDbId.Text = iniHelper.GetPrivateProfileString("Database", "LoginId", "spis");
-            this.tbDbPw.Text = iniHelper.GetPrivateProfileString("Database", "LoginPw", "spishull");
-            this.tbDbName.Text = iniHelper.GetPrivateProfileString("Database", "DBName", "HULLDB");
-            spisHullDbName = iniHelper.GetPrivateProfileString("Database", "TableName1", "spishull");
-            smartHullDbName = iniHelper.GetPrivateProfileString("Database", "TableName2", "smarthull");
+            this.tbDbId.Text = iniHelper.GetPrivateProfileString("Database", "LoginId", "");
+            this.tbDbPw.Text = iniHelper.GetPrivateProfileString("Database", "LoginPw", "");
+            this.tbDbName.Text = iniHelper.GetPrivateProfileString("Database", "DBName", "");
+            spisHullDbName = iniHelper.GetPrivateProfileString("Database", "StdTableName", "");
+            smartHullDbName = iniHelper.GetPrivateProfileString("Database", "SmhTableName", "");
+            customer = iniHelper.GetPrivateProfileString("Database", "Customer", "");
             this.tbPath1.Text = iniHelper.GetPrivateProfileString("File", "Path1", "");
             this.tbPath2.Text = iniHelper.GetPrivateProfileString("File", "Path2", "");
             this.tbPath3.Text = iniHelper.GetPrivateProfileString("File", "Path3", "");
