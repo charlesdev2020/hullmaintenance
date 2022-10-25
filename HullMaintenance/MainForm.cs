@@ -15,18 +15,18 @@ namespace HullMaintenance
 	public partial class MainForm : MetroForm
     {
         #region Members
-        string spisHullDbName = "";
-        string smartHullDbName = "";
-        string customer = "";
-        #endregion
+		#endregion
 
-        #region Properties
-        public string ConnString { get; private set; }
-        public DataTable DtSpisHull { get; private set; }
-        public DataTable DtSmartHull { get; private set; }
-        #endregion
+		#region Properties
+		public string ConnString { get; private set; }
+        public DataTable StdDt { get; private set; }
+        public DataTable SmhDt { get; private set; }
+		public string stdTableName { get; private set; }
+		public string smhTableName { get; private set; }
+		public string Customer { get; private set; }
+		#endregion
 
-        public MainForm()
+		public MainForm()
         {
             InitializeComponent();
         }
@@ -36,9 +36,9 @@ namespace HullMaintenance
         {
             LoadIni();
             this.ConnString = GetDatabaseConnection();
-            this.DtSpisHull = GetDataTable(spisHullDbName);
-            this.DtSmartHull = GetDataTable(smartHullDbName);
-            LoadDataTables(this.customer);
+            this.StdDt = GetDataTable(stdTableName);
+            this.SmhDt = GetDataTable(smhTableName);
+            LoadDataTables(this.Customer);
             InitStyle();
         }
 
@@ -247,37 +247,42 @@ namespace HullMaintenance
         /// </summary>
         private void LoadDataTables(string customer)
         {
-            //metroGrid1.DataSource = null;
-            DataTable stdDt = null;
-            DataTable smhDt = null;
-            if (DtSpisHull.DefaultView.Table.Rows.Count > 0)
-            {
-                stdDt = this.DtSpisHull.DefaultView.ToTable(false, new string[] {
-                    colId.DataPropertyName, colType.DataPropertyName, colStatus.DataPropertyName, colSummaryKr.DataPropertyName,
-                    colDueDate.DataPropertyName, colUpdateDate.DataPropertyName, colDocumentLink.DataPropertyName, colCustomer.DataPropertyName }).
-                    Select(String.Format("customer = '{0}'", customer)).CopyToDataTable();
-                stdGrid.DataSource = stdDt;
-            }
-            
-            //metroGrid1.DataSource = dt;
+            this.stdGrid.DataSource = null;
+            this.smhGrid.DataSource = null;
 
-            #region Test
-            //dt = this.DtSmartHull.DefaultView.ToTable(false, new string[] { colId.DataPropertyName, colType.DataPropertyName, colStatus.DataPropertyName, colSummaryKr.DataPropertyName, colDueDate.DataPropertyName, colUpdateDate.DataPropertyName, colDocumentLink.DataPropertyName, colCustomer.DataPropertyName }).Select("customer = '이마바리'").CopyToDataTable();
-            //var querySpisIma = (from dt in this.DataTableAll.AsEnumerable()
-            //                   where dt.Field<string>("customer") == "이마바리"
-            //                   select new
-            //                   {
-            //                       id = dt.Field<int>("id"),
-            //                       type = dt.Field<string>("type"),
-            //                       status = dt.Field<string>("status"),
-            //                       summary_kr = dt.Field<string>("summary_kr"),
-            //                       due_date = dt.Field<Nullable<DateTime>>("due_date"),
-            //                       update_date = dt.Field<Nullable<DateTime>>("update_date"),
-            //                       document_name = dt.Field<string>("document_name")
-            //                   }).ToList();
-            //metroGrid1.DataSource = querySpisIma;
-            #endregion
-        }
+            if (StdDt.DefaultView.Table.Rows.Count > 0)
+            {
+				stdGrid.DataSource = this.StdDt.DefaultView.ToTable(false, new string[] {
+                    stdColId.DataPropertyName, stdColType.DataPropertyName, stdColStatus.DataPropertyName, stdColSummaryKr.DataPropertyName,
+					stdColDueDate.DataPropertyName, stdColUpdateDate.DataPropertyName, stdColDocumentLink.DataPropertyName, stdColCustomer.DataPropertyName }).
+                    Select(String.Format("customer = '{0}'", customer)).CopyToDataTable();
+            }
+
+			if (StdDt.DefaultView.Table.Rows.Count > 0)
+			{
+				smhGrid.DataSource = this.StdDt.DefaultView.ToTable(false, new string[] {
+					stdColId.DataPropertyName, stdColType.DataPropertyName, stdColStatus.DataPropertyName, stdColSummaryKr.DataPropertyName,
+					stdColDueDate.DataPropertyName, stdColUpdateDate.DataPropertyName, stdColDocumentLink.DataPropertyName, stdColCustomer.DataPropertyName }).
+					Select(String.Format("customer = '{0}'", customer)).CopyToDataTable();
+			}
+
+			#region Test
+			//dt = this.DtSmartHull.DefaultView.ToTable(false, new string[] { colId.DataPropertyName, colType.DataPropertyName, colStatus.DataPropertyName, colSummaryKr.DataPropertyName, colDueDate.DataPropertyName, colUpdateDate.DataPropertyName, colDocumentLink.DataPropertyName, colCustomer.DataPropertyName }).Select("customer = '이마바리'").CopyToDataTable();
+			//var querySpisIma = (from dt in this.DataTableAll.AsEnumerable()
+			//                   where dt.Field<string>("customer") == "이마바리"
+			//                   select new
+			//                   {
+			//                       id = dt.Field<int>("id"),
+			//                       type = dt.Field<string>("type"),
+			//                       status = dt.Field<string>("status"),
+			//                       summary_kr = dt.Field<string>("summary_kr"),
+			//                       due_date = dt.Field<Nullable<DateTime>>("due_date"),
+			//                       update_date = dt.Field<Nullable<DateTime>>("update_date"),
+			//                       document_name = dt.Field<string>("document_name")
+			//                   }).ToList();
+			//metroGrid1.DataSource = querySpisIma;
+			#endregion
+		}
 
         /// <summary>
         /// Load INI
@@ -291,9 +296,9 @@ namespace HullMaintenance
             this.tbDbId.Text = iniHelper.GetPrivateProfileString("Database", "LoginId", "");
             this.tbDbPw.Text = iniHelper.GetPrivateProfileString("Database", "LoginPw", "");
             this.tbDbName.Text = iniHelper.GetPrivateProfileString("Database", "DBName", "");
-            spisHullDbName = iniHelper.GetPrivateProfileString("Database", "StdTableName", "");
-            smartHullDbName = iniHelper.GetPrivateProfileString("Database", "SmhTableName", "");
-            customer = iniHelper.GetPrivateProfileString("Database", "Customer", "");
+            this.stdTableName = iniHelper.GetPrivateProfileString("Database", "StdTableName", "");
+            this.smhTableName = iniHelper.GetPrivateProfileString("Database", "SmhTableName", "");
+            this.Customer = iniHelper.GetPrivateProfileString("Database", "Customer", "");
             this.tbPath1.Text = iniHelper.GetPrivateProfileString("File", "Path1", "");
             this.tbPath2.Text = iniHelper.GetPrivateProfileString("File", "Path2", "");
             this.tbPath3.Text = iniHelper.GetPrivateProfileString("File", "Path3", "");
