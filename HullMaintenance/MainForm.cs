@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -24,6 +25,8 @@ namespace HullMaintenance
 		public string stdTableName { get; private set; }
 		public string smhTableName { get; private set; }
 		public string Customer { get; private set; }
+        public int ThemeIdx { get; private set; }
+        public int StyleIdx { get; private set; }
 		#endregion
 
 		public MainForm()
@@ -34,7 +37,7 @@ namespace HullMaintenance
         #region Event
         private void MainForm_Load(object sender, EventArgs e)
         {
-            LoadIni();
+            LoadINI();
             this.ConnString = GetDatabaseConnection();
             this.StdDt = GetDataTable(stdTableName);
             this.SmhDt = GetDataTable(smhTableName);
@@ -42,31 +45,9 @@ namespace HullMaintenance
             InitStyle();
         }
 
-        private void MainForm_Resize(object sender, EventArgs e)
-        {
-            //this.tabControl.Width = this.Width - 47;
-            //this.tabControl.Height = this.Height - 50;
-        }
-
         private void metroTabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
 
-        }
-
-        private void grid_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            //DataGridViewColumn selCol = metroGrid1.Columns[e.ColumnIndex];
-
-            //if (selCol.Tag as string == "ASC")
-            //{
-            //    metroGrid1.Sort(selCol, ListSortDirection.Descending);
-            //    selCol.Tag = "DESC";
-            //}
-            //else
-            //{
-            //    metroGrid1.Sort(selCol, ListSortDirection.Ascending);
-            //    selCol.Tag = "ASC";
-            //}
         }
 
         private void btnConnect_Click(object sender, EventArgs e)
@@ -104,10 +85,15 @@ namespace HullMaintenance
             MetroButton mBtn = sender as MetroButton;
 
             string tag = mBtn.Tag.ToString();
-            MetroTextBox tbPath = this.tabPage3.Controls.Find(tag, false).FirstOrDefault() as MetroTextBox;
+            MetroTextBox tbPath = this.settingPage.Controls.Find(tag, true).FirstOrDefault() as MetroTextBox;
 
             FolderBrowserDialog folderDialog = new FolderBrowserDialog();
-            folderDialog.SelectedPath = tbPath.Text;
+
+            if (tbPath != null && Directory.Exists(tbPath.Text) == true)
+            {
+                folderDialog.SelectedPath = tbPath.Text;
+            }
+
             if (folderDialog.ShowDialog(this) == DialogResult.OK)
             {
                 tbPath.Text = folderDialog.SelectedPath;
@@ -119,9 +105,9 @@ namespace HullMaintenance
             MetroButton mBtn = sender as MetroButton;
 
             string tag = mBtn.Tag.ToString();
-            MetroTextBox tbPath = this.tabPage3.Controls.Find(tag, false).FirstOrDefault() as MetroTextBox;
+            MetroTextBox tbPath = this.settingPage.Controls.Find(tag, true).FirstOrDefault() as MetroTextBox;
 
-            if (Directory.Exists(tbPath.Text) == true)
+            if (tbPath != null && Directory.Exists(tbPath.Text) == true)
             {
                 Process.Start(tbPath.Text);
             }
@@ -167,6 +153,17 @@ namespace HullMaintenance
             var rnd = new Random();
             int next = rnd.Next(0, 13);
             styleMgr.Style = (MetroColorStyle)next;
+        }
+
+        private void tbColor_TextChanged(object sender, EventArgs e)
+        {
+            MetroTextBox mtb = sender as MetroTextBox;
+
+            try
+            {
+                mtb.BackColor = ColorTranslator.FromHtml(mtb.Text);
+            }
+            catch (Exception ex) { }
         }
         #endregion
 
@@ -287,7 +284,7 @@ namespace HullMaintenance
         /// <summary>
         /// Load INI
         /// </summary>
-        private void LoadIni()
+        private void LoadINI()
         {
             string iniPath = String.Format(@"{0}\Option.ini", Environment.CurrentDirectory);
             INIHelper iniHelper = new INIHelper(iniPath);
@@ -299,10 +296,75 @@ namespace HullMaintenance
             this.stdTableName = iniHelper.GetPrivateProfileString("Database", "StdTableName", "");
             this.smhTableName = iniHelper.GetPrivateProfileString("Database", "SmhTableName", "");
             this.Customer = iniHelper.GetPrivateProfileString("Database", "Customer", "");
-            this.tbPath1.Text = iniHelper.GetPrivateProfileString("File", "Path1", "");
-            this.tbPath2.Text = iniHelper.GetPrivateProfileString("File", "Path2", "");
-            this.tbPath3.Text = iniHelper.GetPrivateProfileString("File", "Path3", "");
+            this.tbSmhDocPath.Text = iniHelper.GetPrivateProfileString("FilePath", "SmhDocPath", "");
+            this.tbSmhSamplePath.Text = iniHelper.GetPrivateProfileString("FilePath", "SmhSamplePath", "");
+            this.tbStdDocPath.Text = iniHelper.GetPrivateProfileString("FilePath", "StdDocPath", "");
+            this.tbStdSamplePath.Text = iniHelper.GetPrivateProfileString("FilePath", "StdSamplePath", "");
+            this.styleMgr.Theme = (MetroThemeStyle)int.Parse(iniHelper.GetPrivateProfileString("Design", "StartThemeIdx", "1"));
+            this.styleMgr.Style = (MetroColorStyle)int.Parse(iniHelper.GetPrivateProfileString("Design", "StartStyleIdx", "4"));
+            this.tbColorWorking.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "Working", ""));
+            this.tbColorWorkDone.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "WorkDone", ""));
+            this.tbColorPartialDone.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "PartialDone", ""));
+            this.tbColorComplete.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "Complete", ""));
+            this.tbColorPending.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "Pending", ""));
+            this.tbColorWaiting.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "Waiting", ""));
+            this.tbColorError.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "Error", ""));
+            this.tbColorCancel.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "Cancel", ""));
+            this.tbColorImpossible.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "Impossible", ""));
+            this.tbColorD1.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "D-1", ""));
+            this.tbColorD3.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "D-3", ""));
+            this.tbColorD7.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "D-7", ""));
+        }
+
+        private void btnSearchClear_Click(object sender, EventArgs e)
+        {
+            Button mBtn = sender as Button;
+            string tag = mBtn.Tag.ToString();
+            ComboBox cbox = mBtn.Parent.Controls.Find(tag, true).FirstOrDefault() as ComboBox;
+            cbox.Text = "";
+        }
+
+        private void cbSearch_TextChanged(object sender, EventArgs e)
+        {
+            ComboBox cBox = sender as ComboBox;
+            string searchText = cBox.Text;
+
+            if (cBox.Tag.ToString() == "stdGrid")
+            {
+                (stdGrid.DataSource as DataTable).DefaultView.RowFilter = String.Format("summary_kr LIKE '%{0}%' OR document_name LIKE '%{0}%'", searchText);
+            }
+            else
+            {
+                (smhGrid.DataSource as DataTable).DefaultView.RowFilter = String.Format("summary_kr LIKE '%{0}%' OR document_name LIKE '%{0}%'", searchText);
+            }
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            MetroButton mBtn = sender as MetroButton;
+            string tag = mBtn.Tag.ToString();
+            ComboBox cbox = mBtn.Parent.Controls.Find(tag, true).FirstOrDefault() as ComboBox;
+            string searchText = cbox.Text;
+
+            if (String.IsNullOrWhiteSpace(searchText) == false)
+            {
+                cbox.Items.Add(searchText);
+            }
         }
         #endregion
+
+        private void btnAddItem_Click(object sender, EventArgs e)
+        {
+            MetroButton mBtn = sender as MetroButton;
+
+            if (mBtn.Tag.ToString() == "stdGrid")
+            {
+
+            }
+            else
+            {
+
+            }
+        }
     }
 }
