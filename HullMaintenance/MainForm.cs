@@ -13,12 +13,12 @@ using System.Windows.Forms;
 
 namespace HullMaintenance
 {
-	public partial class MainForm : MetroForm
+    public partial class MainForm : MetroForm
     {
         #region Members
-		#endregion
+        #endregion
 
-		#region Properties
+        #region Properties
 		public string ConnString { get; private set; }
         public DataTable StdDt { get; private set; }
         public DataTable SmhDt { get; private set; }
@@ -29,13 +29,13 @@ namespace HullMaintenance
         public int StyleIdx { get; private set; }
 		#endregion
 
-		public MainForm()
+        public MainForm()
         {
             InitializeComponent();
         }
 
         #region Event
-        private void MainForm_Load(object sender, EventArgs e)
+        private void OnLoadMainForm(object sender, EventArgs e)
         {
             LoadINI();
             this.ConnString = GetDatabaseConnection();
@@ -45,17 +45,26 @@ namespace HullMaintenance
             InitStyle();
         }
 
-        private void metroTabControl_SelectedIndexChanged(object sender, EventArgs e)
+        private void OnGridDataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
+            MetroGrid grid = sender as MetroGrid;
 
+            DateTime dateTime;
+            bool isCheck;
+            int count;
+
+            foreach (DataGridViewRow row in grid.Rows)
+            {
+                grid.Rows[row.Index].HeaderCell.Value = (row.Index + 1).ToString();
+            }
         }
 
-        private void btnConnect_Click(object sender, EventArgs e)
+        private void OnClickBtnConnect(object sender, EventArgs e)
         {
             string result = "Wait...";
 
             string connString = String.Format(@"Data Source={0}; Initial Catalog={1}; User ID={2}; Password={3}; Persist Security Info=True;",
-                                               this.tbDbServer.Text, this.tbDbName.Text, this.tbDbId.Text, this.tbDbPw.Text);
+                                               this.ui_tbDbServer.Text, this.ui_tbDbName.Text, this.ui_tbDbId.Text, this.ui_tbDbPw.Text);
 
             string query = "SELECT * FROM spis ORDER BY id DESC";
             try
@@ -76,11 +85,11 @@ namespace HullMaintenance
             }
             finally
             {
-                this.lbDBStatus.Text = result;
+                this.ui_lbDBStatus.Text = result;
             }
         }
 
-        private void btnPath_Click(object sender, EventArgs e)
+        private void OnClickBtnPath(object sender, EventArgs e)
         {
             MetroButton mBtn = sender as MetroButton;
 
@@ -100,7 +109,7 @@ namespace HullMaintenance
             }
         }
 
-        private void btnPathOpen_Click(object sender, EventArgs e)
+        private void OnClickBtnPathOpen(object sender, EventArgs e)
         {
             MetroButton mBtn = sender as MetroButton;
 
@@ -113,49 +122,84 @@ namespace HullMaintenance
             }
         }
 
-        private void tabControl_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Control && e.KeyCode == Keys.F)
-            {
 
-                if (tabControl.SelectedIndex == 0)
-                {
-                    if (collapsibleSmhPanel.Visible == false)
-                    {
-                        collapsibleSmhPanel.Visible = true;
-                    }
-                    else
-                    {
-                        collapsibleSmhPanel.Visible = false;
-                    }
-                }
-                else if (tabControl.SelectedIndex == 1)
-                {
-                    if (collapsibleStdPanel.Visible == false)
-                    {
-                        collapsibleStdPanel.Visible = true;
-                    }
-                    else
-                    {
-                        collapsibleStdPanel.Visible = false;
-                    }
-                }
-            }
+        private void OnClickBtnTheme(object sender, EventArgs e)
+        {
+            ui_styleMgr.Theme = ui_styleMgr.Theme == MetroThemeStyle.Light ? MetroThemeStyle.Dark : MetroThemeStyle.Light;
         }
 
-        private void btnTheme_Click(object sender, EventArgs e)
-        {
-            styleMgr.Theme = styleMgr.Theme == MetroThemeStyle.Light ? MetroThemeStyle.Dark : MetroThemeStyle.Light;
-        }
-
-        private void btnStyle_Click(object sender, EventArgs e)
+        private void OnClickBtnStyle(object sender, EventArgs e)
         {
             var rnd = new Random();
             int next = rnd.Next(0, 13);
-            styleMgr.Style = (MetroColorStyle)next;
+            ui_styleMgr.Style = (MetroColorStyle)next;
         }
 
-        private void tbColor_TextChanged(object sender, EventArgs e)
+        private void OnClickBtnSearchTextClear(object sender, EventArgs e)
+		{
+			Button mBtn = sender as Button;
+			string tag = mBtn.Tag.ToString();
+			ComboBox cbox = mBtn.Parent.Controls.Find(tag, true).FirstOrDefault() as ComboBox;
+			cbox.Text = "";
+		}
+
+        private void OnClickBtnSearch(object sender, EventArgs e)
+		{
+			MetroButton mBtn = sender as MetroButton;
+			string tag = mBtn.Tag.ToString();
+			ComboBox cbox = mBtn.Parent.Controls.Find(tag, true).FirstOrDefault() as ComboBox;
+			string searchText = cbox.Text;
+
+			if (String.IsNullOrWhiteSpace(searchText) == false)
+			{
+				cbox.Items.Add(searchText);
+			}
+        }
+
+        private void OnClickBtnSearchHistoryClear(object sender, EventArgs e)
+        {
+            MetroButton mBtn = sender as MetroButton;
+            string tag = mBtn.Tag.ToString();
+            ComboBox cbox = mBtn.Parent.Controls.Find(tag, true).FirstOrDefault() as ComboBox;
+            cbox.Text = "";
+            cbox.Items.Clear();
+        }
+
+        private void OnClickBtnAddItem(object sender, EventArgs e)
+        {
+            MetroButton mBtn = sender as MetroButton;
+
+            if (mBtn.Tag.ToString() == "ui_gridStd")
+            {
+
+            }
+            else
+            {
+
+            }
+        }
+
+        private void OnTabControlSelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void OnSeachTextChanged(object sender, EventArgs e)
+        {
+            ComboBox cBox = sender as ComboBox;
+            string searchText = cBox.Text;
+
+            if (cBox.Tag.ToString() == "ui_gridStd")
+            {
+                (ui_gridStd.DataSource as DataTable).DefaultView.RowFilter = String.Format("summary_kr LIKE '%{0}%' OR document_name LIKE '%{0}%'", searchText);
+            }
+            else
+            {
+                (ui_gridSmh.DataSource as DataTable).DefaultView.RowFilter = String.Format("summary_kr LIKE '%{0}%' OR document_name LIKE '%{0}%'", searchText);
+            }
+        }
+
+        private void OnColorCodeTextChanged(object sender, EventArgs e)
         {
             MetroTextBox mtb = sender as MetroTextBox;
 
@@ -165,6 +209,49 @@ namespace HullMaintenance
             }
             catch (Exception ex) { }
         }
+
+        private void OnTabControlKeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.Control && e.KeyCode == Keys.F)
+			{
+				if (ui_tabControl.SelectedIndex == 0)
+				{
+					if (ui_panelSmhCollapsible.Visible == false)
+					{
+						ui_panelSmhCollapsible.Visible = true;
+					}
+					else
+					{
+						ui_panelSmhCollapsible.Visible = false;
+					}
+				}
+				else if (ui_tabControl.SelectedIndex == 1)
+				{
+					if (ui_panelStdcollapsible.Visible == false)
+					{
+						ui_panelStdcollapsible.Visible = true;
+					}
+					else
+					{
+						ui_panelStdcollapsible.Visible = false;
+					}
+				}
+			}
+		}
+
+        private void OnSearchTexKeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Enter)
+			{
+				ComboBox cbox = sender as ComboBox;
+				string searchText = cbox.Text;
+
+				if (String.IsNullOrWhiteSpace(searchText) == false)
+				{
+					cbox.Items.Add(searchText);
+				}
+			}
+		}
         #endregion
 
         #region Method
@@ -174,13 +261,13 @@ namespace HullMaintenance
             //metroTabControl.ItemSize = new Size(
             //metroTabControl.Width / metroTabControl.TabPages.Count - 1,
             //metroTabControl.ItemSize.Height);
-            tabControl.SelectedIndex = 1;
+            ui_tabControl.SelectedIndex = 1;
         }
 
         private string  GetDatabaseConnection()
         {
             string connString = String.Format(@"Data Source={0}; Initial Catalog={1}; User ID={2}; Password={3}; Persist Security Info=True;",
-                                              this.tbDbServer.Text, this.tbDbName.Text, this.tbDbId.Text, this.tbDbPw.Text);
+                                              this.ui_tbDbServer.Text, this.ui_tbDbName.Text, this.ui_tbDbId.Text, this.ui_tbDbPw.Text);
 
             return connString;
         }
@@ -194,7 +281,7 @@ namespace HullMaintenance
         {
             DataTable dt = new DataTable();
             string result = "Wait...";
-            this.lbDBStatus.Text = result;
+            this.ui_lbDBStatus.Text = result;
 
             string query = String.Format("SELECT * FROM {0} ORDER BY id DESC", tableName);
 
@@ -224,16 +311,16 @@ namespace HullMaintenance
                     }
                 }
                 result = "OK!";
-                tabControl.SelectedIndex = 0;
+                ui_tabControl.SelectedIndex = 0;
             }
             catch (Exception ex)
             {
                 result = "Failed!";
-                tabControl.SelectedIndex = 3;
+                ui_tabControl.SelectedIndex = 3;
             }
             finally
             {
-                this.lbDBStatus.Text = result;
+                this.ui_lbDBStatus.Text = result;
             }
 
             return dt;
@@ -244,12 +331,12 @@ namespace HullMaintenance
         /// </summary>
         private void LoadDataTables(string customer)
         {
-            this.stdGrid.DataSource = null;
-            this.smhGrid.DataSource = null;
+            this.ui_gridStd.DataSource = null;
+            this.ui_gridSmh.DataSource = null;
 
             if (StdDt.DefaultView.Table.Rows.Count > 0)
             {
-				stdGrid.DataSource = this.StdDt.DefaultView.ToTable(false, new string[] {
+				ui_gridStd.DataSource = this.StdDt.DefaultView.ToTable(false, new string[] {
                     stdColId.DataPropertyName, stdColType.DataPropertyName, stdColStatus.DataPropertyName, stdColSummaryKr.DataPropertyName,
 					stdColDueDate.DataPropertyName, stdColUpdateDate.DataPropertyName, stdColDocumentLink.DataPropertyName, stdColCustomer.DataPropertyName }).
                     Select(String.Format("customer = '{0}'", customer)).CopyToDataTable();
@@ -257,7 +344,7 @@ namespace HullMaintenance
 
 			if (StdDt.DefaultView.Table.Rows.Count > 0)
 			{
-				smhGrid.DataSource = this.StdDt.DefaultView.ToTable(false, new string[] {
+				ui_gridSmh.DataSource = this.StdDt.DefaultView.ToTable(false, new string[] {
 					stdColId.DataPropertyName, stdColType.DataPropertyName, stdColStatus.DataPropertyName, stdColSummaryKr.DataPropertyName,
 					stdColDueDate.DataPropertyName, stdColUpdateDate.DataPropertyName, stdColDocumentLink.DataPropertyName, stdColCustomer.DataPropertyName }).
 					Select(String.Format("customer = '{0}'", customer)).CopyToDataTable();
@@ -289,82 +376,32 @@ namespace HullMaintenance
             string iniPath = String.Format(@"{0}\Option.ini", Environment.CurrentDirectory);
             INIHelper iniHelper = new INIHelper(iniPath);
 
-            this.tbDbServer.Text = iniHelper.GetPrivateProfileString("Database", "Server", "localhost");
-            this.tbDbId.Text = iniHelper.GetPrivateProfileString("Database", "LoginId", "");
-            this.tbDbPw.Text = iniHelper.GetPrivateProfileString("Database", "LoginPw", "");
-            this.tbDbName.Text = iniHelper.GetPrivateProfileString("Database", "DBName", "");
+            this.ui_tbDbServer.Text = iniHelper.GetPrivateProfileString("Database", "Server", "localhost");
+            this.ui_tbDbId.Text = iniHelper.GetPrivateProfileString("Database", "LoginId", "");
+            this.ui_tbDbPw.Text = iniHelper.GetPrivateProfileString("Database", "LoginPw", "");
+            this.ui_tbDbName.Text = iniHelper.GetPrivateProfileString("Database", "DBName", "");
             this.stdTableName = iniHelper.GetPrivateProfileString("Database", "StdTableName", "");
             this.smhTableName = iniHelper.GetPrivateProfileString("Database", "SmhTableName", "");
             this.Customer = iniHelper.GetPrivateProfileString("Database", "Customer", "");
-            this.tbSmhDocPath.Text = iniHelper.GetPrivateProfileString("FilePath", "SmhDocPath", "");
-            this.tbSmhSamplePath.Text = iniHelper.GetPrivateProfileString("FilePath", "SmhSamplePath", "");
-            this.tbStdDocPath.Text = iniHelper.GetPrivateProfileString("FilePath", "StdDocPath", "");
-            this.tbStdSamplePath.Text = iniHelper.GetPrivateProfileString("FilePath", "StdSamplePath", "");
-            this.styleMgr.Theme = (MetroThemeStyle)int.Parse(iniHelper.GetPrivateProfileString("Design", "StartThemeIdx", "1"));
-            this.styleMgr.Style = (MetroColorStyle)int.Parse(iniHelper.GetPrivateProfileString("Design", "StartStyleIdx", "4"));
-            this.tbColorWorking.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "Working", ""));
-            this.tbColorWorkDone.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "WorkDone", ""));
-            this.tbColorPartialDone.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "PartialDone", ""));
-            this.tbColorComplete.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "Complete", ""));
-            this.tbColorPending.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "Pending", ""));
-            this.tbColorWaiting.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "Waiting", ""));
-            this.tbColorError.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "Error", ""));
-            this.tbColorCancel.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "Cancel", ""));
-            this.tbColorImpossible.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "Impossible", ""));
-            this.tbColorD1.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "D-1", ""));
-            this.tbColorD3.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "D-3", ""));
-            this.tbColorD7.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "D-7", ""));
-        }
-
-        private void btnSearchClear_Click(object sender, EventArgs e)
-        {
-            Button mBtn = sender as Button;
-            string tag = mBtn.Tag.ToString();
-            ComboBox cbox = mBtn.Parent.Controls.Find(tag, true).FirstOrDefault() as ComboBox;
-            cbox.Text = "";
-        }
-
-        private void cbSearch_TextChanged(object sender, EventArgs e)
-        {
-            ComboBox cBox = sender as ComboBox;
-            string searchText = cBox.Text;
-
-            if (cBox.Tag.ToString() == "stdGrid")
-            {
-                (stdGrid.DataSource as DataTable).DefaultView.RowFilter = String.Format("summary_kr LIKE '%{0}%' OR document_name LIKE '%{0}%'", searchText);
-            }
-            else
-            {
-                (smhGrid.DataSource as DataTable).DefaultView.RowFilter = String.Format("summary_kr LIKE '%{0}%' OR document_name LIKE '%{0}%'", searchText);
-            }
-        }
-
-        private void btnSearch_Click(object sender, EventArgs e)
-        {
-            MetroButton mBtn = sender as MetroButton;
-            string tag = mBtn.Tag.ToString();
-            ComboBox cbox = mBtn.Parent.Controls.Find(tag, true).FirstOrDefault() as ComboBox;
-            string searchText = cbox.Text;
-
-            if (String.IsNullOrWhiteSpace(searchText) == false)
-            {
-                cbox.Items.Add(searchText);
-            }
+            this.ui_tbSmhDocPath.Text = iniHelper.GetPrivateProfileString("FilePath", "SmhDocPath", "");
+            this.ui_tbSmhSamplePath.Text = iniHelper.GetPrivateProfileString("FilePath", "SmhSamplePath", "");
+            this.ui_tbStdDocPath.Text = iniHelper.GetPrivateProfileString("FilePath", "StdDocPath", "");
+            this.ui_tbStdSamplePath.Text = iniHelper.GetPrivateProfileString("FilePath", "StdSamplePath", "");
+            this.ui_styleMgr.Theme = (MetroThemeStyle)int.Parse(iniHelper.GetPrivateProfileString("Design", "StartThemeIdx", "1"));
+            this.ui_styleMgr.Style = (MetroColorStyle)int.Parse(iniHelper.GetPrivateProfileString("Design", "StartStyleIdx", "4"));
+            this.ui_tbColorWorking.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "Working", ""));
+            this.ui_tbColorWorkDone.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "WorkDone", ""));
+            this.ui_tbColorPartialDone.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "PartialDone", ""));
+            this.ui_tbColorComplete.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "Complete", ""));
+            this.ui_tbColorPending.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "Pending", ""));
+            this.ui_tbColorWaiting.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "Waiting", ""));
+            this.ui_tbColorError.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "Error", ""));
+            this.ui_tbColorCancel.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "Cancel", ""));
+            this.ui_tbColorImpossible.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "Impossible", ""));
+            this.ui_tbColorD1.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "D-1", ""));
+            this.ui_tbColorD3.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "D-3", ""));
+            this.ui_tbColorD7.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "D-7", ""));
         }
         #endregion
-
-        private void btnAddItem_Click(object sender, EventArgs e)
-        {
-            MetroButton mBtn = sender as MetroButton;
-
-            if (mBtn.Tag.ToString() == "stdGrid")
-            {
-
-            }
-            else
-            {
-
-            }
-        }
     }
 }
