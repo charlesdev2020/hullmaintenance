@@ -2,6 +2,7 @@
 using MetroFramework.Controls;
 using MetroFramework.Forms;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
@@ -38,10 +39,18 @@ namespace HullMaintenance
         private void OnLoadMainForm(object sender, EventArgs e)
         {
             LoadINI();
+
             this.ConnString = GetDatabaseConnection();
+
             this.StdDt = GetDataTable(stdTableName);
             this.SmhDt = GetDataTable(smhTableName);
-            LoadDataTables(this.Customer);
+
+            LoadGridDataTable(this.ui_gridStd, this.StdDt);
+            LoadGridDataTable(this.ui_gridSmh, this.SmhDt);
+
+            LoadCustomerList(this.ui_cbStdCustomer, this.StdDt, this.Customer);
+            LoadCustomerList(this.ui_cbSmhCustomer, this.SmhDt, this.Customer);
+
             InitStyle();
         }
 
@@ -121,7 +130,6 @@ namespace HullMaintenance
                 Process.Start(tbPath.Text);
             }
         }
-
 
         private void OnClickBtnTheme(object sender, EventArgs e)
         {
@@ -210,6 +218,31 @@ namespace HullMaintenance
             catch (Exception ex) { }
         }
 
+        private void OnCustomerSelectedValueChanged(object sender, EventArgs e)
+        {
+            ComboBox cBox = sender as ComboBox;
+            string customer = cBox.Text;
+            string filterQuery = "";
+
+            if (customer.Equals("ALL") == true)
+            {
+                filterQuery = String.Empty;
+            }
+            else
+            {
+                filterQuery = String.Format("customer = '{0}'", customer);
+            }
+
+            if (cBox.Tag.ToString() == "ui_gridStd")
+            {
+                (ui_gridStd.DataSource as DataTable).DefaultView.RowFilter = filterQuery;
+            }
+            else
+            {
+                (ui_gridSmh.DataSource as DataTable).DefaultView.RowFilter = filterQuery;
+            }
+        }
+
         private void OnTabControlKeyDown(object sender, KeyEventArgs e)
 		{
 			if (e.Control && e.KeyCode == Keys.F)
@@ -252,18 +285,50 @@ namespace HullMaintenance
 				}
 			}
 		}
+
+        //private void OnSelected
         #endregion
 
         #region Method
-        private void InitStyle()
+        /// <summary>
+        /// Load INI
+        /// </summary>
+        private void LoadINI()
         {
-            // size of TabControl's tabs
-            //metroTabControl.ItemSize = new Size(
-            //metroTabControl.Width / metroTabControl.TabPages.Count - 1,
-            //metroTabControl.ItemSize.Height);
-            ui_tabControl.SelectedIndex = 1;
+            string iniPath = String.Format(@"{0}\Option.ini", Environment.CurrentDirectory);
+            INIHelper iniHelper = new INIHelper(iniPath);
+
+            this.ui_tbDbServer.Text = iniHelper.GetPrivateProfileString("Database", "Server", "localhost");
+            this.ui_tbDbId.Text = iniHelper.GetPrivateProfileString("Database", "LoginId", "");
+            this.ui_tbDbPw.Text = iniHelper.GetPrivateProfileString("Database", "LoginPw", "");
+            this.ui_tbDbName.Text = iniHelper.GetPrivateProfileString("Database", "DBName", "");
+            this.stdTableName = iniHelper.GetPrivateProfileString("Database", "StdTableName", "");
+            this.smhTableName = iniHelper.GetPrivateProfileString("Database", "SmhTableName", "");
+            this.Customer = iniHelper.GetPrivateProfileString("Database", "Customer", "");
+            this.ui_tbSmhDocPath.Text = iniHelper.GetPrivateProfileString("FilePath", "SmhDocPath", "");
+            this.ui_tbSmhSamplePath.Text = iniHelper.GetPrivateProfileString("FilePath", "SmhSamplePath", "");
+            this.ui_tbStdDocPath.Text = iniHelper.GetPrivateProfileString("FilePath", "StdDocPath", "");
+            this.ui_tbStdSamplePath.Text = iniHelper.GetPrivateProfileString("FilePath", "StdSamplePath", "");
+            this.ui_styleMgr.Theme = (MetroThemeStyle)int.Parse(iniHelper.GetPrivateProfileString("Design", "StartThemeIdx", "1"));
+            this.ui_styleMgr.Style = (MetroColorStyle)int.Parse(iniHelper.GetPrivateProfileString("Design", "StartStyleIdx", "4"));
+            this.ui_tbColorWorking.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "Working", ""));
+            this.ui_tbColorWorkDone.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "WorkDone", ""));
+            this.ui_tbColorPartialDone.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "PartialDone", ""));
+            this.ui_tbColorComplete.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "Complete", ""));
+            this.ui_tbColorPending.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "Pending", ""));
+            this.ui_tbColorWaiting.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "Waiting", ""));
+            this.ui_tbColorError.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "Error", ""));
+            this.ui_tbColorCancel.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "Cancel", ""));
+            this.ui_tbColorImpossible.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "Impossible", ""));
+            this.ui_tbColorD1.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "D-1", ""));
+            this.ui_tbColorD3.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "D-3", ""));
+            this.ui_tbColorD7.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "D-7", ""));
         }
 
+        /// <summary>
+        /// Create DB Connection String
+        /// </summary>
+        /// <returns></returns>
         private string  GetDatabaseConnection()
         {
             string connString = String.Format(@"Data Source={0}; Initial Catalog={1}; User ID={2}; Password={3}; Persist Security Info=True;",
@@ -273,7 +338,7 @@ namespace HullMaintenance
         }
 
         /// <summary>
-        /// Get 
+        /// Get DataTable from DB
         /// </summary>
         /// <param name="tableName"></param>
         /// <returns></returns>
@@ -327,80 +392,67 @@ namespace HullMaintenance
         }
 
         /// <summary>
-        /// Load DataTable 
+        /// Load Customer List from DataTable
         /// </summary>
-        private void LoadDataTables(string customer)
+        /// <param name="combo"></param>
+        /// <param name="dt"></param>
+        private void LoadCustomerList(ComboBox combo, DataTable dt, string customer)
         {
-            this.ui_gridStd.DataSource = null;
-            this.ui_gridSmh.DataSource = null;
+            combo.Items.Add("ALL");
 
-            if (StdDt.DefaultView.Table.Rows.Count > 0)
+            if (dt.Rows.Count > 0)
             {
-				ui_gridStd.DataSource = this.StdDt.DefaultView.ToTable(false, new string[] {
-                    stdColId.DataPropertyName, stdColType.DataPropertyName, stdColStatus.DataPropertyName, stdColSummaryKr.DataPropertyName,
-					stdColDueDate.DataPropertyName, stdColUpdateDate.DataPropertyName, stdColDocumentLink.DataPropertyName, stdColCustomer.DataPropertyName }).
-                    Select(String.Format("customer = '{0}'", customer)).CopyToDataTable();
+                List<string> customerList = dt.Select().Select(x => x["customer"]).Cast<string>().Distinct().ToList();
+
+                customerList.ForEach(x => combo.Items.Add(x));
             }
 
-			if (StdDt.DefaultView.Table.Rows.Count > 0)
-			{
-				ui_gridSmh.DataSource = this.StdDt.DefaultView.ToTable(false, new string[] {
-					stdColId.DataPropertyName, stdColType.DataPropertyName, stdColStatus.DataPropertyName, stdColSummaryKr.DataPropertyName,
-					stdColDueDate.DataPropertyName, stdColUpdateDate.DataPropertyName, stdColDocumentLink.DataPropertyName, stdColCustomer.DataPropertyName }).
-					Select(String.Format("customer = '{0}'", customer)).CopyToDataTable();
-			}
-
-			#region Test
-			//dt = this.DtSmartHull.DefaultView.ToTable(false, new string[] { colId.DataPropertyName, colType.DataPropertyName, colStatus.DataPropertyName, colSummaryKr.DataPropertyName, colDueDate.DataPropertyName, colUpdateDate.DataPropertyName, colDocumentLink.DataPropertyName, colCustomer.DataPropertyName }).Select("customer = '이마바리'").CopyToDataTable();
-			//var querySpisIma = (from dt in this.DataTableAll.AsEnumerable()
-			//                   where dt.Field<string>("customer") == "이마바리"
-			//                   select new
-			//                   {
-			//                       id = dt.Field<int>("id"),
-			//                       type = dt.Field<string>("type"),
-			//                       status = dt.Field<string>("status"),
-			//                       summary_kr = dt.Field<string>("summary_kr"),
-			//                       due_date = dt.Field<Nullable<DateTime>>("due_date"),
-			//                       update_date = dt.Field<Nullable<DateTime>>("update_date"),
-			//                       document_name = dt.Field<string>("document_name")
-			//                   }).ToList();
-			//metroGrid1.DataSource = querySpisIma;
-			#endregion
-		}
+            if (String.IsNullOrWhiteSpace(customer) == false && combo.Items.Contains(customer) == true)
+            {
+                combo.SelectedIndex = combo.Items.IndexOf(customer);
+            }
+            else
+            {
+                combo.SelectedIndex = 0;
+            }
+        }
 
         /// <summary>
-        /// Load INI
+        /// Load DataTable 
         /// </summary>
-        private void LoadINI()
+        private void LoadGridDataTable(MetroGrid grid, DataTable dt)
         {
-            string iniPath = String.Format(@"{0}\Option.ini", Environment.CurrentDirectory);
-            INIHelper iniHelper = new INIHelper(iniPath);
+            grid.DataSource = dt.DefaultView.ToTable(false, new string[] {
+                "id", "type", "status", "summary_kr", "due_date", "update_date", "document_name", "customer" }).Select().CopyToDataTable();
 
-            this.ui_tbDbServer.Text = iniHelper.GetPrivateProfileString("Database", "Server", "localhost");
-            this.ui_tbDbId.Text = iniHelper.GetPrivateProfileString("Database", "LoginId", "");
-            this.ui_tbDbPw.Text = iniHelper.GetPrivateProfileString("Database", "LoginPw", "");
-            this.ui_tbDbName.Text = iniHelper.GetPrivateProfileString("Database", "DBName", "");
-            this.stdTableName = iniHelper.GetPrivateProfileString("Database", "StdTableName", "");
-            this.smhTableName = iniHelper.GetPrivateProfileString("Database", "SmhTableName", "");
-            this.Customer = iniHelper.GetPrivateProfileString("Database", "Customer", "");
-            this.ui_tbSmhDocPath.Text = iniHelper.GetPrivateProfileString("FilePath", "SmhDocPath", "");
-            this.ui_tbSmhSamplePath.Text = iniHelper.GetPrivateProfileString("FilePath", "SmhSamplePath", "");
-            this.ui_tbStdDocPath.Text = iniHelper.GetPrivateProfileString("FilePath", "StdDocPath", "");
-            this.ui_tbStdSamplePath.Text = iniHelper.GetPrivateProfileString("FilePath", "StdSamplePath", "");
-            this.ui_styleMgr.Theme = (MetroThemeStyle)int.Parse(iniHelper.GetPrivateProfileString("Design", "StartThemeIdx", "1"));
-            this.ui_styleMgr.Style = (MetroColorStyle)int.Parse(iniHelper.GetPrivateProfileString("Design", "StartStyleIdx", "4"));
-            this.ui_tbColorWorking.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "Working", ""));
-            this.ui_tbColorWorkDone.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "WorkDone", ""));
-            this.ui_tbColorPartialDone.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "PartialDone", ""));
-            this.ui_tbColorComplete.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "Complete", ""));
-            this.ui_tbColorPending.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "Pending", ""));
-            this.ui_tbColorWaiting.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "Waiting", ""));
-            this.ui_tbColorError.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "Error", ""));
-            this.ui_tbColorCancel.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "Cancel", ""));
-            this.ui_tbColorImpossible.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "Impossible", ""));
-            this.ui_tbColorD1.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "D-1", ""));
-            this.ui_tbColorD3.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "D-3", ""));
-            this.ui_tbColorD7.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "D-7", ""));
+            #region Test
+            //dt = this.DtSmartHull.DefaultView.ToTable(false, new string[] { colId.DataPropertyName, colType.DataPropertyName, colStatus.DataPropertyName, colSummaryKr.DataPropertyName, colDueDate.DataPropertyName, colUpdateDate.DataPropertyName, colDocumentLink.DataPropertyName, colCustomer.DataPropertyName }).Select("customer = '이마바리'").CopyToDataTable();
+            //var querySpisIma = (from dt in this.DataTableAll.AsEnumerable()
+            //                   where dt.Field<string>("customer") == "이마바리"
+            //                   select new
+            //                   {
+            //                       id = dt.Field<int>("id"),
+            //                       type = dt.Field<string>("type"),
+            //                       status = dt.Field<string>("status"),
+            //                       summary_kr = dt.Field<string>("summary_kr"),
+            //                       due_date = dt.Field<Nullable<DateTime>>("due_date"),
+            //                       update_date = dt.Field<Nullable<DateTime>>("update_date"),
+            //                       document_name = dt.Field<string>("document_name")
+            //                   }).ToList();
+            //metroGrid1.DataSource = querySpisIma;
+            #endregion
+        }
+
+        /// <summary>
+        /// Initialize for UI Style
+        /// </summary>
+        private void InitStyle()
+        {
+            // size of TabControl's tabs
+            //metroTabControl.ItemSize = new Size(
+            //metroTabControl.Width / metroTabControl.TabPages.Count - 1,
+            //metroTabControl.ItemSize.Height);
+            ui_tabControl.SelectedIndex = 1;
         }
         #endregion
     }

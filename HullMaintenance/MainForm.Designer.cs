@@ -41,11 +41,20 @@
             this.smhPage = new System.Windows.Forms.TabPage();
             this.ui_panelSmh = new MetroFramework.Controls.MetroPanel();
             this.ui_gridSmh = new MetroFramework.Controls.MetroGrid();
+            this.smhColId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.smhColCustomer = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.smhColType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.smhColStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.smhColSummaryKr = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.smhColDueDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.smhColUpdateDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.smhColDocumentLink = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.smhColDocumentPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ui_panelSmhCollapsible = new MetroFramework.Controls.MetroPanel();
             this.ui_panelSubSmh2 = new MetroFramework.Controls.MetroPanel();
             this.ui_btnSmhAddItem = new MetroFramework.Controls.MetroButton();
             this.ui_panelSubSmh1 = new MetroFramework.Controls.MetroPanel();
-            this.ui_cbSmhCustomer = new System.Windows.Forms.ComboBox();
+            this.ui_cbSmhCustomer = new MetroFramework.Controls.MetroComboBox();
             this.ui_btnSmhSearchHistoryClear = new MetroFramework.Controls.MetroButton();
             this.ui_btnSmhSearchTextClear = new System.Windows.Forms.Button();
             this.ui_btnSmhSearch = new MetroFramework.Controls.MetroButton();
@@ -53,20 +62,11 @@
             this.stdPage = new System.Windows.Forms.TabPage();
             this.ui_panelStd = new MetroFramework.Controls.MetroPanel();
             this.ui_gridStd = new MetroFramework.Controls.MetroGrid();
-            this.stdColId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.stdColCustomer = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.stdColType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.stdColStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.stdColSummaryKr = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.stdColDueDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.stdColUpdateDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.stdColDocumentLink = new System.Windows.Forms.DataGridViewLinkColumn();
-            this.stdColDocumentPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ui_panelStdcollapsible = new MetroFramework.Controls.MetroPanel();
             this.ui_panelSubStd2 = new MetroFramework.Controls.MetroPanel();
             this.ui_btnStdAddItem = new MetroFramework.Controls.MetroButton();
             this.ui_panelSubStd1 = new MetroFramework.Controls.MetroPanel();
-            this.ui_cbStdCustomer = new System.Windows.Forms.ComboBox();
+            this.ui_cbStdCustomer = new MetroFramework.Controls.MetroComboBox();
             this.ui_btnStdSearchHistoryClear = new MetroFramework.Controls.MetroButton();
             this.ui_btnStdSearchTextClear = new System.Windows.Forms.Button();
             this.ui_btnStdSearch = new MetroFramework.Controls.MetroButton();
@@ -134,15 +134,15 @@
             this.ui_lbMainTitle3 = new MetroFramework.Controls.MetroLabel();
             this.ui_lbMainVersion = new MetroFramework.Controls.MetroLabel();
             this.ui_styleMgr = new MetroFramework.Components.MetroStyleManager(this.components);
-            this.smhColId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.smhColCustomer = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.smhColType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.smhColStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.smhColSummaryKr = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.smhColDueDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.smhColUpdateDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.smhColDocumentLink = new System.Windows.Forms.DataGridViewLinkColumn();
-            this.smhColDocumentPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.stdColId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.stdColCustomer = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.stdColType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.stdColStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.stdColSummaryKr = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.stdColDueDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.stdColUpdateDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.stdColDocumentLink = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.stdColDocumentPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ui_tabControl.SuspendLayout();
             this.smhPage.SuspendLayout();
             this.ui_panelSmh.SuspendLayout();
@@ -172,11 +172,10 @@
             this.ui_tabControl.Controls.Add(this.settingPage);
             this.ui_tabControl.Controls.Add(this.HelperPage);
             this.ui_tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ui_tabControl.Location = new System.Drawing.Point(23, 38);
-            this.ui_tabControl.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.ui_tabControl.Location = new System.Drawing.Point(20, 30);
             this.ui_tabControl.Name = "ui_tabControl";
-            this.ui_tabControl.SelectedIndex = 0;
-            this.ui_tabControl.Size = new System.Drawing.Size(1417, 897);
+            this.ui_tabControl.SelectedIndex = 1;
+            this.ui_tabControl.Size = new System.Drawing.Size(1240, 718);
             this.ui_tabControl.TabIndex = 0;
             this.ui_tabControl.UseSelectable = true;
             this.ui_tabControl.SelectedIndexChanged += new System.EventHandler(this.OnTabControlSelectedIndexChanged);
@@ -189,9 +188,8 @@
             this.smhPage.Controls.Add(this.ui_panelSmhCollapsible);
             this.smhPage.Font = new System.Drawing.Font("굴림", 9F);
             this.smhPage.Location = new System.Drawing.Point(4, 41);
-            this.smhPage.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.smhPage.Name = "smhPage";
-            this.smhPage.Size = new System.Drawing.Size(1409, 852);
+            this.smhPage.Size = new System.Drawing.Size(1232, 673);
             this.smhPage.TabIndex = 1;
             this.smhPage.Text = "SmartHull";
             // 
@@ -202,17 +200,17 @@
             this.ui_panelSmh.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ui_panelSmh.HorizontalScrollbarBarColor = true;
             this.ui_panelSmh.HorizontalScrollbarHighlightOnWheel = false;
-            this.ui_panelSmh.HorizontalScrollbarSize = 12;
-            this.ui_panelSmh.Location = new System.Drawing.Point(0, 60);
+            this.ui_panelSmh.HorizontalScrollbarSize = 10;
+            this.ui_panelSmh.Location = new System.Drawing.Point(0, 48);
             this.ui_panelSmh.Margin = new System.Windows.Forms.Padding(0);
             this.ui_panelSmh.Name = "ui_panelSmh";
             this.ui_panelSmh.Padding = new System.Windows.Forms.Padding(1);
-            this.ui_panelSmh.Size = new System.Drawing.Size(1409, 792);
+            this.ui_panelSmh.Size = new System.Drawing.Size(1232, 625);
             this.ui_panelSmh.TabIndex = 1;
             this.ui_panelSmh.UseCustomBackColor = true;
             this.ui_panelSmh.VerticalScrollbarBarColor = true;
             this.ui_panelSmh.VerticalScrollbarHighlightOnWheel = false;
-            this.ui_panelSmh.VerticalScrollbarSize = 11;
+            this.ui_panelSmh.VerticalScrollbarSize = 10;
             // 
             // ui_gridSmh
             // 
@@ -262,7 +260,6 @@
             this.ui_gridSmh.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.ui_gridSmh.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.ui_gridSmh.Location = new System.Drawing.Point(1, 1);
-            this.ui_gridSmh.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.ui_gridSmh.MultiSelect = false;
             this.ui_gridSmh.Name = "ui_gridSmh";
             this.ui_gridSmh.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
@@ -279,9 +276,87 @@
             this.ui_gridSmh.RowTemplate.DividerHeight = 1;
             this.ui_gridSmh.RowTemplate.Height = 23;
             this.ui_gridSmh.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.ui_gridSmh.Size = new System.Drawing.Size(1407, 790);
+            this.ui_gridSmh.Size = new System.Drawing.Size(1230, 623);
             this.ui_gridSmh.TabIndex = 1;
             this.ui_gridSmh.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.OnGridDataBindingComplete);
+            // 
+            // smhColId
+            // 
+            this.smhColId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.smhColId.DataPropertyName = "id";
+            this.smhColId.DividerWidth = 1;
+            this.smhColId.HeaderText = "ID";
+            this.smhColId.Name = "smhColId";
+            this.smhColId.Visible = false;
+            // 
+            // smhColCustomer
+            // 
+            this.smhColCustomer.DataPropertyName = "customer";
+            this.smhColCustomer.HeaderText = "Customer";
+            this.smhColCustomer.Name = "smhColCustomer";
+            this.smhColCustomer.Visible = false;
+            // 
+            // smhColType
+            // 
+            this.smhColType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.smhColType.DataPropertyName = "type";
+            this.smhColType.DividerWidth = 1;
+            this.smhColType.HeaderText = "Type";
+            this.smhColType.Name = "smhColType";
+            this.smhColType.Width = 54;
+            // 
+            // smhColStatus
+            // 
+            this.smhColStatus.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.smhColStatus.DataPropertyName = "status";
+            this.smhColStatus.DividerWidth = 1;
+            this.smhColStatus.HeaderText = "Status";
+            this.smhColStatus.Name = "smhColStatus";
+            this.smhColStatus.Width = 63;
+            // 
+            // smhColSummaryKr
+            // 
+            this.smhColSummaryKr.DataPropertyName = "summary_kr";
+            this.smhColSummaryKr.DividerWidth = 1;
+            this.smhColSummaryKr.HeaderText = "Summary";
+            this.smhColSummaryKr.Name = "smhColSummaryKr";
+            // 
+            // smhColDueDate
+            // 
+            this.smhColDueDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.smhColDueDate.DataPropertyName = "due_date";
+            this.smhColDueDate.DividerWidth = 1;
+            this.smhColDueDate.HeaderText = "Due Date";
+            this.smhColDueDate.Name = "smhColDueDate";
+            this.smhColDueDate.Width = 79;
+            // 
+            // smhColUpdateDate
+            // 
+            this.smhColUpdateDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.smhColUpdateDate.DataPropertyName = "update_date";
+            this.smhColUpdateDate.DividerWidth = 1;
+            this.smhColUpdateDate.HeaderText = "Update Date";
+            this.smhColUpdateDate.Name = "smhColUpdateDate";
+            this.smhColUpdateDate.Width = 96;
+            // 
+            // smhColDocumentLink
+            // 
+            this.smhColDocumentLink.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.smhColDocumentLink.DataPropertyName = "document_name";
+            this.smhColDocumentLink.DividerWidth = 1;
+            this.smhColDocumentLink.HeaderText = "File Name";
+            this.smhColDocumentLink.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.smhColDocumentLink.Name = "smhColDocumentLink";
+            this.smhColDocumentLink.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.smhColDocumentLink.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.smhColDocumentLink.Width = 81;
+            // 
+            // smhColDocumentPath
+            // 
+            this.smhColDocumentPath.DataPropertyName = "document_file";
+            this.smhColDocumentPath.HeaderText = "File Path";
+            this.smhColDocumentPath.Name = "smhColDocumentPath";
+            this.smhColDocumentPath.Visible = false;
             // 
             // ui_panelSmhCollapsible
             // 
@@ -295,16 +370,15 @@
             this.ui_panelSmhCollapsible.Dock = System.Windows.Forms.DockStyle.Top;
             this.ui_panelSmhCollapsible.HorizontalScrollbarBarColor = true;
             this.ui_panelSmhCollapsible.HorizontalScrollbarHighlightOnWheel = false;
-            this.ui_panelSmhCollapsible.HorizontalScrollbarSize = 12;
+            this.ui_panelSmhCollapsible.HorizontalScrollbarSize = 10;
             this.ui_panelSmhCollapsible.Location = new System.Drawing.Point(0, 0);
-            this.ui_panelSmhCollapsible.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.ui_panelSmhCollapsible.Name = "ui_panelSmhCollapsible";
-            this.ui_panelSmhCollapsible.Size = new System.Drawing.Size(1409, 60);
+            this.ui_panelSmhCollapsible.Size = new System.Drawing.Size(1232, 48);
             this.ui_panelSmhCollapsible.TabIndex = 0;
             this.ui_panelSmhCollapsible.UseCustomBackColor = true;
             this.ui_panelSmhCollapsible.VerticalScrollbarBarColor = true;
             this.ui_panelSmhCollapsible.VerticalScrollbarHighlightOnWheel = false;
-            this.ui_panelSmhCollapsible.VerticalScrollbarSize = 11;
+            this.ui_panelSmhCollapsible.VerticalScrollbarSize = 10;
             // 
             // ui_panelSubSmh2
             // 
@@ -313,25 +387,25 @@
             this.ui_panelSubSmh2.Dock = System.Windows.Forms.DockStyle.Right;
             this.ui_panelSubSmh2.HorizontalScrollbarBarColor = true;
             this.ui_panelSubSmh2.HorizontalScrollbarHighlightOnWheel = false;
-            this.ui_panelSubSmh2.HorizontalScrollbarSize = 10;
-            this.ui_panelSubSmh2.Location = new System.Drawing.Point(1209, 0);
+            this.ui_panelSubSmh2.HorizontalScrollbarSize = 8;
+            this.ui_panelSubSmh2.Location = new System.Drawing.Point(1057, 0);
+            this.ui_panelSubSmh2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ui_panelSubSmh2.Name = "ui_panelSubSmh2";
-            this.ui_panelSubSmh2.Padding = new System.Windows.Forms.Padding(15, 0, 15, 0);
-            this.ui_panelSubSmh2.Size = new System.Drawing.Size(200, 60);
+            this.ui_panelSubSmh2.Padding = new System.Windows.Forms.Padding(13, 0, 13, 0);
+            this.ui_panelSubSmh2.Size = new System.Drawing.Size(175, 48);
             this.ui_panelSubSmh2.TabIndex = 25;
             this.ui_panelSubSmh2.UseCustomBackColor = true;
             this.ui_panelSubSmh2.VerticalScrollbarBarColor = true;
             this.ui_panelSubSmh2.VerticalScrollbarHighlightOnWheel = false;
-            this.ui_panelSubSmh2.VerticalScrollbarSize = 10;
+            this.ui_panelSubSmh2.VerticalScrollbarSize = 9;
             // 
             // ui_btnSmhAddItem
             // 
             this.ui_btnSmhAddItem.BackColor = System.Drawing.SystemColors.ControlLight;
             this.ui_btnSmhAddItem.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ui_btnSmhAddItem.Location = new System.Drawing.Point(122, 18);
-            this.ui_btnSmhAddItem.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.ui_btnSmhAddItem.Location = new System.Drawing.Point(107, 14);
             this.ui_btnSmhAddItem.Name = "ui_btnSmhAddItem";
-            this.ui_btnSmhAddItem.Size = new System.Drawing.Size(60, 25);
+            this.ui_btnSmhAddItem.Size = new System.Drawing.Size(52, 20);
             this.ui_btnSmhAddItem.TabIndex = 7;
             this.ui_btnSmhAddItem.Tag = "ui_gridSmh";
             this.ui_btnSmhAddItem.Text = "추가";
@@ -346,37 +420,39 @@
             this.ui_panelSubSmh1.Dock = System.Windows.Forms.DockStyle.Left;
             this.ui_panelSubSmh1.HorizontalScrollbarBarColor = true;
             this.ui_panelSubSmh1.HorizontalScrollbarHighlightOnWheel = false;
-            this.ui_panelSubSmh1.HorizontalScrollbarSize = 10;
+            this.ui_panelSubSmh1.HorizontalScrollbarSize = 8;
             this.ui_panelSubSmh1.Location = new System.Drawing.Point(0, 0);
+            this.ui_panelSubSmh1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ui_panelSubSmh1.Name = "ui_panelSubSmh1";
-            this.ui_panelSubSmh1.Padding = new System.Windows.Forms.Padding(15, 0, 15, 0);
-            this.ui_panelSubSmh1.Size = new System.Drawing.Size(200, 60);
+            this.ui_panelSubSmh1.Padding = new System.Windows.Forms.Padding(13, 0, 13, 0);
+            this.ui_panelSubSmh1.Size = new System.Drawing.Size(175, 48);
             this.ui_panelSubSmh1.TabIndex = 24;
             this.ui_panelSubSmh1.UseCustomBackColor = true;
             this.ui_panelSubSmh1.VerticalScrollbarBarColor = true;
             this.ui_panelSubSmh1.VerticalScrollbarHighlightOnWheel = false;
-            this.ui_panelSubSmh1.VerticalScrollbarSize = 10;
+            this.ui_panelSubSmh1.VerticalScrollbarSize = 9;
             // 
             // ui_cbSmhCustomer
             // 
-            this.ui_cbSmhCustomer.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.ui_cbSmhCustomer.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.ui_cbSmhCustomer.FormattingEnabled = true;
-            this.ui_cbSmhCustomer.Location = new System.Drawing.Point(18, 19);
-            this.ui_cbSmhCustomer.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.ui_cbSmhCustomer.ItemHeight = 23;
+            this.ui_cbSmhCustomer.Location = new System.Drawing.Point(16, 10);
             this.ui_cbSmhCustomer.Name = "ui_cbSmhCustomer";
-            this.ui_cbSmhCustomer.Size = new System.Drawing.Size(150, 23);
+            this.ui_cbSmhCustomer.Size = new System.Drawing.Size(121, 29);
+            this.ui_cbSmhCustomer.Sorted = true;
             this.ui_cbSmhCustomer.TabIndex = 2;
+            this.ui_cbSmhCustomer.TabStop = false;
             this.ui_cbSmhCustomer.Tag = "ui_gridSmh";
+            this.ui_cbSmhCustomer.UseSelectable = true;
+            this.ui_cbSmhCustomer.SelectedValueChanged += new System.EventHandler(this.OnCustomerSelectedValueChanged);
             // 
             // ui_btnSmhSearchHistoryClear
             // 
             this.ui_btnSmhSearchHistoryClear.BackColor = System.Drawing.SystemColors.ControlLight;
             this.ui_btnSmhSearchHistoryClear.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ui_btnSmhSearchHistoryClear.Location = new System.Drawing.Point(703, 18);
-            this.ui_btnSmhSearchHistoryClear.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.ui_btnSmhSearchHistoryClear.Location = new System.Drawing.Point(615, 14);
             this.ui_btnSmhSearchHistoryClear.Name = "ui_btnSmhSearchHistoryClear";
-            this.ui_btnSmhSearchHistoryClear.Size = new System.Drawing.Size(60, 25);
+            this.ui_btnSmhSearchHistoryClear.Size = new System.Drawing.Size(52, 20);
             this.ui_btnSmhSearchHistoryClear.TabIndex = 6;
             this.ui_btnSmhSearchHistoryClear.Tag = "ui_cbSmhSearchText";
             this.ui_btnSmhSearchHistoryClear.Text = "Clear";
@@ -392,10 +468,9 @@
             this.ui_btnSmhSearchTextClear.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ui_btnSmhSearchTextClear.FlatAppearance.BorderSize = 0;
             this.ui_btnSmhSearchTextClear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ui_btnSmhSearchTextClear.Location = new System.Drawing.Point(206, 25);
-            this.ui_btnSmhSearchTextClear.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.ui_btnSmhSearchTextClear.Location = new System.Drawing.Point(180, 20);
             this.ui_btnSmhSearchTextClear.Name = "ui_btnSmhSearchTextClear";
-            this.ui_btnSmhSearchTextClear.Size = new System.Drawing.Size(11, 12);
+            this.ui_btnSmhSearchTextClear.Size = new System.Drawing.Size(10, 10);
             this.ui_btnSmhSearchTextClear.TabIndex = 4;
             this.ui_btnSmhSearchTextClear.Tag = "ui_cbSmhSearchText";
             this.ui_btnSmhSearchTextClear.UseVisualStyleBackColor = false;
@@ -405,10 +480,9 @@
             // 
             this.ui_btnSmhSearch.BackColor = System.Drawing.SystemColors.ControlLight;
             this.ui_btnSmhSearch.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ui_btnSmhSearch.Location = new System.Drawing.Point(637, 18);
-            this.ui_btnSmhSearch.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.ui_btnSmhSearch.Location = new System.Drawing.Point(557, 14);
             this.ui_btnSmhSearch.Name = "ui_btnSmhSearch";
-            this.ui_btnSmhSearch.Size = new System.Drawing.Size(60, 25);
+            this.ui_btnSmhSearch.Size = new System.Drawing.Size(52, 20);
             this.ui_btnSmhSearch.TabIndex = 5;
             this.ui_btnSmhSearch.Tag = "ui_cbSmhSearchText";
             this.ui_btnSmhSearch.Text = "Find";
@@ -421,10 +495,9 @@
             this.ui_cbSmhSearchText.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.ui_cbSmhSearchText.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.ui_cbSmhSearchText.FormattingEnabled = true;
-            this.ui_cbSmhSearchText.Location = new System.Drawing.Point(229, 19);
-            this.ui_cbSmhSearchText.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.ui_cbSmhSearchText.Location = new System.Drawing.Point(200, 15);
             this.ui_cbSmhSearchText.Name = "ui_cbSmhSearchText";
-            this.ui_cbSmhSearchText.Size = new System.Drawing.Size(399, 23);
+            this.ui_cbSmhSearchText.Size = new System.Drawing.Size(350, 20);
             this.ui_cbSmhSearchText.TabIndex = 3;
             this.ui_cbSmhSearchText.Tag = "ui_gridSmh";
             this.ui_cbSmhSearchText.TextChanged += new System.EventHandler(this.OnSeachTextChanged);
@@ -438,9 +511,8 @@
             this.stdPage.Controls.Add(this.ui_panelStdcollapsible);
             this.stdPage.Font = new System.Drawing.Font("굴림", 9F);
             this.stdPage.Location = new System.Drawing.Point(4, 41);
-            this.stdPage.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.stdPage.Name = "stdPage";
-            this.stdPage.Size = new System.Drawing.Size(1409, 852);
+            this.stdPage.Size = new System.Drawing.Size(1232, 673);
             this.stdPage.TabIndex = 2;
             this.stdPage.Text = "SpisHull";
             // 
@@ -451,17 +523,17 @@
             this.ui_panelStd.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ui_panelStd.HorizontalScrollbarBarColor = true;
             this.ui_panelStd.HorizontalScrollbarHighlightOnWheel = false;
-            this.ui_panelStd.HorizontalScrollbarSize = 12;
-            this.ui_panelStd.Location = new System.Drawing.Point(0, 60);
+            this.ui_panelStd.HorizontalScrollbarSize = 10;
+            this.ui_panelStd.Location = new System.Drawing.Point(0, 48);
             this.ui_panelStd.Margin = new System.Windows.Forms.Padding(0);
             this.ui_panelStd.Name = "ui_panelStd";
             this.ui_panelStd.Padding = new System.Windows.Forms.Padding(1);
-            this.ui_panelStd.Size = new System.Drawing.Size(1409, 792);
+            this.ui_panelStd.Size = new System.Drawing.Size(1232, 625);
             this.ui_panelStd.TabIndex = 1;
             this.ui_panelStd.UseCustomBackColor = true;
             this.ui_panelStd.VerticalScrollbarBarColor = true;
             this.ui_panelStd.VerticalScrollbarHighlightOnWheel = false;
-            this.ui_panelStd.VerticalScrollbarSize = 11;
+            this.ui_panelStd.VerticalScrollbarSize = 10;
             // 
             // ui_gridStd
             // 
@@ -529,93 +601,9 @@
             this.ui_gridStd.RowTemplate.Height = 23;
             this.ui_gridStd.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.ui_gridStd.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.ui_gridStd.Size = new System.Drawing.Size(1407, 790);
+            this.ui_gridStd.Size = new System.Drawing.Size(1230, 623);
             this.ui_gridStd.TabIndex = 1;
             this.ui_gridStd.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.OnGridDataBindingComplete);
-            // 
-            // stdColId
-            // 
-            this.stdColId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.stdColId.DataPropertyName = "id";
-            this.stdColId.DividerWidth = 1;
-            this.stdColId.FillWeight = 16.98324F;
-            this.stdColId.HeaderText = "ID";
-            this.stdColId.Name = "stdColId";
-            this.stdColId.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.stdColId.Visible = false;
-            // 
-            // stdColCustomer
-            // 
-            this.stdColCustomer.DataPropertyName = "customer";
-            this.stdColCustomer.HeaderText = "Customer";
-            this.stdColCustomer.Name = "stdColCustomer";
-            this.stdColCustomer.Visible = false;
-            // 
-            // stdColType
-            // 
-            this.stdColType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.stdColType.DataPropertyName = "type";
-            this.stdColType.DividerWidth = 1;
-            this.stdColType.FillWeight = 25.33413F;
-            this.stdColType.HeaderText = "Type";
-            this.stdColType.Name = "stdColType";
-            this.stdColType.Width = 59;
-            // 
-            // stdColStatus
-            // 
-            this.stdColStatus.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.stdColStatus.DataPropertyName = "status";
-            this.stdColStatus.DividerWidth = 1;
-            this.stdColStatus.FillWeight = 33.8766F;
-            this.stdColStatus.HeaderText = "Status";
-            this.stdColStatus.Name = "stdColStatus";
-            this.stdColStatus.Width = 67;
-            // 
-            // stdColSummaryKr
-            // 
-            this.stdColSummaryKr.DataPropertyName = "summary_kr";
-            this.stdColSummaryKr.DividerWidth = 1;
-            this.stdColSummaryKr.FillWeight = 76.81911F;
-            this.stdColSummaryKr.HeaderText = "Summary";
-            this.stdColSummaryKr.Name = "stdColSummaryKr";
-            // 
-            // stdColDueDate
-            // 
-            this.stdColDueDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.stdColDueDate.DataPropertyName = "due_date";
-            this.stdColDueDate.DividerWidth = 1;
-            this.stdColDueDate.FillWeight = 51.24502F;
-            this.stdColDueDate.HeaderText = "Due Date";
-            this.stdColDueDate.Name = "stdColDueDate";
-            this.stdColDueDate.Width = 83;
-            // 
-            // stdColUpdateDate
-            // 
-            this.stdColUpdateDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.stdColUpdateDate.DataPropertyName = "update_date";
-            this.stdColUpdateDate.DividerWidth = 1;
-            this.stdColUpdateDate.FillWeight = 51.79351F;
-            this.stdColUpdateDate.HeaderText = "Update Date";
-            this.stdColUpdateDate.Name = "stdColUpdateDate";
-            // 
-            // stdColDocumentLink
-            // 
-            this.stdColDocumentLink.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.stdColDocumentLink.DataPropertyName = "document_name";
-            this.stdColDocumentLink.DividerWidth = 1;
-            this.stdColDocumentLink.FillWeight = 76.66993F;
-            this.stdColDocumentLink.HeaderText = "File Name";
-            this.stdColDocumentLink.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.stdColDocumentLink.Name = "stdColDocumentLink";
-            this.stdColDocumentLink.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.stdColDocumentLink.Width = 88;
-            // 
-            // stdColDocumentPath
-            // 
-            this.stdColDocumentPath.DataPropertyName = "document_file";
-            this.stdColDocumentPath.HeaderText = "File Path";
-            this.stdColDocumentPath.Name = "stdColDocumentPath";
-            this.stdColDocumentPath.Visible = false;
             // 
             // ui_panelStdcollapsible
             // 
@@ -629,16 +617,15 @@
             this.ui_panelStdcollapsible.Dock = System.Windows.Forms.DockStyle.Top;
             this.ui_panelStdcollapsible.HorizontalScrollbarBarColor = true;
             this.ui_panelStdcollapsible.HorizontalScrollbarHighlightOnWheel = false;
-            this.ui_panelStdcollapsible.HorizontalScrollbarSize = 12;
+            this.ui_panelStdcollapsible.HorizontalScrollbarSize = 10;
             this.ui_panelStdcollapsible.Location = new System.Drawing.Point(0, 0);
-            this.ui_panelStdcollapsible.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.ui_panelStdcollapsible.Name = "ui_panelStdcollapsible";
-            this.ui_panelStdcollapsible.Size = new System.Drawing.Size(1409, 60);
+            this.ui_panelStdcollapsible.Size = new System.Drawing.Size(1232, 48);
             this.ui_panelStdcollapsible.TabIndex = 0;
             this.ui_panelStdcollapsible.UseCustomBackColor = true;
             this.ui_panelStdcollapsible.VerticalScrollbarBarColor = true;
             this.ui_panelStdcollapsible.VerticalScrollbarHighlightOnWheel = false;
-            this.ui_panelStdcollapsible.VerticalScrollbarSize = 11;
+            this.ui_panelStdcollapsible.VerticalScrollbarSize = 10;
             // 
             // ui_panelSubStd2
             // 
@@ -647,25 +634,25 @@
             this.ui_panelSubStd2.Dock = System.Windows.Forms.DockStyle.Right;
             this.ui_panelSubStd2.HorizontalScrollbarBarColor = true;
             this.ui_panelSubStd2.HorizontalScrollbarHighlightOnWheel = false;
-            this.ui_panelSubStd2.HorizontalScrollbarSize = 10;
-            this.ui_panelSubStd2.Location = new System.Drawing.Point(1209, 0);
+            this.ui_panelSubStd2.HorizontalScrollbarSize = 8;
+            this.ui_panelSubStd2.Location = new System.Drawing.Point(1057, 0);
+            this.ui_panelSubStd2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ui_panelSubStd2.Name = "ui_panelSubStd2";
-            this.ui_panelSubStd2.Padding = new System.Windows.Forms.Padding(15, 0, 15, 0);
-            this.ui_panelSubStd2.Size = new System.Drawing.Size(200, 60);
+            this.ui_panelSubStd2.Padding = new System.Windows.Forms.Padding(13, 0, 13, 0);
+            this.ui_panelSubStd2.Size = new System.Drawing.Size(175, 48);
             this.ui_panelSubStd2.TabIndex = 31;
             this.ui_panelSubStd2.UseCustomBackColor = true;
             this.ui_panelSubStd2.VerticalScrollbarBarColor = true;
             this.ui_panelSubStd2.VerticalScrollbarHighlightOnWheel = false;
-            this.ui_panelSubStd2.VerticalScrollbarSize = 10;
+            this.ui_panelSubStd2.VerticalScrollbarSize = 9;
             // 
             // ui_btnStdAddItem
             // 
             this.ui_btnStdAddItem.BackColor = System.Drawing.SystemColors.ControlLight;
             this.ui_btnStdAddItem.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ui_btnStdAddItem.Location = new System.Drawing.Point(122, 18);
-            this.ui_btnStdAddItem.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.ui_btnStdAddItem.Location = new System.Drawing.Point(107, 14);
             this.ui_btnStdAddItem.Name = "ui_btnStdAddItem";
-            this.ui_btnStdAddItem.Size = new System.Drawing.Size(60, 25);
+            this.ui_btnStdAddItem.Size = new System.Drawing.Size(52, 20);
             this.ui_btnStdAddItem.TabIndex = 7;
             this.ui_btnStdAddItem.Tag = "ui_gridStd";
             this.ui_btnStdAddItem.Text = "추가";
@@ -680,37 +667,38 @@
             this.ui_panelSubStd1.Dock = System.Windows.Forms.DockStyle.Left;
             this.ui_panelSubStd1.HorizontalScrollbarBarColor = true;
             this.ui_panelSubStd1.HorizontalScrollbarHighlightOnWheel = false;
-            this.ui_panelSubStd1.HorizontalScrollbarSize = 10;
+            this.ui_panelSubStd1.HorizontalScrollbarSize = 8;
             this.ui_panelSubStd1.Location = new System.Drawing.Point(0, 0);
+            this.ui_panelSubStd1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ui_panelSubStd1.Name = "ui_panelSubStd1";
-            this.ui_panelSubStd1.Padding = new System.Windows.Forms.Padding(15, 0, 15, 0);
-            this.ui_panelSubStd1.Size = new System.Drawing.Size(200, 60);
+            this.ui_panelSubStd1.Padding = new System.Windows.Forms.Padding(13, 0, 13, 0);
+            this.ui_panelSubStd1.Size = new System.Drawing.Size(175, 48);
             this.ui_panelSubStd1.TabIndex = 30;
             this.ui_panelSubStd1.UseCustomBackColor = true;
             this.ui_panelSubStd1.VerticalScrollbarBarColor = true;
             this.ui_panelSubStd1.VerticalScrollbarHighlightOnWheel = false;
-            this.ui_panelSubStd1.VerticalScrollbarSize = 10;
+            this.ui_panelSubStd1.VerticalScrollbarSize = 9;
             // 
             // ui_cbStdCustomer
             // 
-            this.ui_cbStdCustomer.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.ui_cbStdCustomer.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.ui_cbStdCustomer.FormattingEnabled = true;
-            this.ui_cbStdCustomer.Location = new System.Drawing.Point(18, 19);
-            this.ui_cbStdCustomer.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.ui_cbStdCustomer.ItemHeight = 23;
+            this.ui_cbStdCustomer.Location = new System.Drawing.Point(16, 10);
             this.ui_cbStdCustomer.Name = "ui_cbStdCustomer";
-            this.ui_cbStdCustomer.Size = new System.Drawing.Size(150, 23);
+            this.ui_cbStdCustomer.Size = new System.Drawing.Size(121, 29);
+            this.ui_cbStdCustomer.Sorted = true;
             this.ui_cbStdCustomer.TabIndex = 2;
             this.ui_cbStdCustomer.Tag = "ui_gridStd";
+            this.ui_cbStdCustomer.UseSelectable = true;
+            this.ui_cbStdCustomer.SelectedValueChanged += new System.EventHandler(this.OnCustomerSelectedValueChanged);
             // 
             // ui_btnStdSearchHistoryClear
             // 
             this.ui_btnStdSearchHistoryClear.BackColor = System.Drawing.SystemColors.ControlLight;
             this.ui_btnStdSearchHistoryClear.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ui_btnStdSearchHistoryClear.Location = new System.Drawing.Point(703, 18);
-            this.ui_btnStdSearchHistoryClear.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.ui_btnStdSearchHistoryClear.Location = new System.Drawing.Point(615, 14);
             this.ui_btnStdSearchHistoryClear.Name = "ui_btnStdSearchHistoryClear";
-            this.ui_btnStdSearchHistoryClear.Size = new System.Drawing.Size(60, 25);
+            this.ui_btnStdSearchHistoryClear.Size = new System.Drawing.Size(52, 20);
             this.ui_btnStdSearchHistoryClear.TabIndex = 6;
             this.ui_btnStdSearchHistoryClear.Tag = "ui_cbStdSearchText";
             this.ui_btnStdSearchHistoryClear.Text = "Clear";
@@ -727,10 +715,9 @@
             this.ui_btnStdSearchTextClear.FlatAppearance.BorderSize = 0;
             this.ui_btnStdSearchTextClear.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
             this.ui_btnStdSearchTextClear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ui_btnStdSearchTextClear.Location = new System.Drawing.Point(206, 25);
-            this.ui_btnStdSearchTextClear.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.ui_btnStdSearchTextClear.Location = new System.Drawing.Point(180, 20);
             this.ui_btnStdSearchTextClear.Name = "ui_btnStdSearchTextClear";
-            this.ui_btnStdSearchTextClear.Size = new System.Drawing.Size(11, 12);
+            this.ui_btnStdSearchTextClear.Size = new System.Drawing.Size(10, 10);
             this.ui_btnStdSearchTextClear.TabIndex = 4;
             this.ui_btnStdSearchTextClear.Tag = "ui_cbStdSearchText";
             this.ui_btnStdSearchTextClear.UseVisualStyleBackColor = false;
@@ -740,10 +727,9 @@
             // 
             this.ui_btnStdSearch.BackColor = System.Drawing.SystemColors.ControlLight;
             this.ui_btnStdSearch.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ui_btnStdSearch.Location = new System.Drawing.Point(637, 18);
-            this.ui_btnStdSearch.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.ui_btnStdSearch.Location = new System.Drawing.Point(557, 14);
             this.ui_btnStdSearch.Name = "ui_btnStdSearch";
-            this.ui_btnStdSearch.Size = new System.Drawing.Size(60, 25);
+            this.ui_btnStdSearch.Size = new System.Drawing.Size(52, 20);
             this.ui_btnStdSearch.TabIndex = 5;
             this.ui_btnStdSearch.Tag = "ui_cbStdSearchText";
             this.ui_btnStdSearch.Text = "Find";
@@ -756,10 +742,9 @@
             this.ui_cbStdSearchText.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.ui_cbStdSearchText.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.ui_cbStdSearchText.FormattingEnabled = true;
-            this.ui_cbStdSearchText.Location = new System.Drawing.Point(229, 19);
-            this.ui_cbStdSearchText.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.ui_cbStdSearchText.Location = new System.Drawing.Point(200, 15);
             this.ui_cbStdSearchText.Name = "ui_cbStdSearchText";
-            this.ui_cbStdSearchText.Size = new System.Drawing.Size(399, 23);
+            this.ui_cbStdSearchText.Size = new System.Drawing.Size(350, 20);
             this.ui_cbStdSearchText.TabIndex = 3;
             this.ui_cbStdSearchText.Tag = "ui_gridStd";
             this.ui_cbStdSearchText.TextChanged += new System.EventHandler(this.OnSeachTextChanged);
@@ -774,9 +759,8 @@
             this.settingPage.Controls.Add(this.ui_gbSmh);
             this.settingPage.Controls.Add(this.ui_gbDb);
             this.settingPage.Location = new System.Drawing.Point(4, 41);
-            this.settingPage.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.settingPage.Name = "settingPage";
-            this.settingPage.Size = new System.Drawing.Size(1409, 852);
+            this.settingPage.Size = new System.Drawing.Size(1232, 673);
             this.settingPage.TabIndex = 4;
             this.settingPage.Text = "Settings";
             // 
@@ -808,11 +792,9 @@
             this.ui_gbColorCode.Controls.Add(this.ui_lbColorPartialDone);
             this.ui_gbColorCode.Controls.Add(this.ui_lbColorWorkDone);
             this.ui_gbColorCode.Controls.Add(this.ui_lbColorWorking);
-            this.ui_gbColorCode.Location = new System.Drawing.Point(11, 475);
-            this.ui_gbColorCode.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.ui_gbColorCode.Location = new System.Drawing.Point(10, 380);
             this.ui_gbColorCode.Name = "ui_gbColorCode";
-            this.ui_gbColorCode.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.ui_gbColorCode.Size = new System.Drawing.Size(464, 356);
+            this.ui_gbColorCode.Size = new System.Drawing.Size(406, 285);
             this.ui_gbColorCode.TabIndex = 20;
             this.ui_gbColorCode.TabStop = false;
             this.ui_gbColorCode.Text = "Color Code (Hexadecimal)";
@@ -821,10 +803,10 @@
             // 
             this.ui_btnTheme.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ui_btnTheme.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ui_btnTheme.Location = new System.Drawing.Point(298, 311);
+            this.ui_btnTheme.Location = new System.Drawing.Point(261, 249);
             this.ui_btnTheme.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ui_btnTheme.Name = "ui_btnTheme";
-            this.ui_btnTheme.Size = new System.Drawing.Size(87, 30);
+            this.ui_btnTheme.Size = new System.Drawing.Size(76, 24);
             this.ui_btnTheme.TabIndex = 30;
             this.ui_btnTheme.Tag = "";
             this.ui_btnTheme.Text = "Theme";
@@ -835,10 +817,10 @@
             // 
             this.ui_btnStyle.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ui_btnStyle.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ui_btnStyle.Location = new System.Drawing.Point(395, 311);
+            this.ui_btnStyle.Location = new System.Drawing.Point(346, 249);
             this.ui_btnStyle.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ui_btnStyle.Name = "ui_btnStyle";
-            this.ui_btnStyle.Size = new System.Drawing.Size(46, 30);
+            this.ui_btnStyle.Size = new System.Drawing.Size(40, 24);
             this.ui_btnStyle.TabIndex = 31;
             this.ui_btnStyle.Tag = "";
             this.ui_btnStyle.Text = "Style";
@@ -851,18 +833,17 @@
             // 
             // 
             this.ui_tbColorD7.CustomButton.Image = null;
-            this.ui_tbColorD7.CustomButton.Location = new System.Drawing.Point(86, 1);
+            this.ui_tbColorD7.CustomButton.Location = new System.Drawing.Point(78, 1);
             this.ui_tbColorD7.CustomButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ui_tbColorD7.CustomButton.Name = "";
-            this.ui_tbColorD7.CustomButton.Size = new System.Drawing.Size(27, 27);
+            this.ui_tbColorD7.CustomButton.Size = new System.Drawing.Size(21, 21);
             this.ui_tbColorD7.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
             this.ui_tbColorD7.CustomButton.TabIndex = 1;
             this.ui_tbColorD7.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
             this.ui_tbColorD7.CustomButton.UseSelectable = true;
             this.ui_tbColorD7.CustomButton.Visible = false;
             this.ui_tbColorD7.Lines = new string[0];
-            this.ui_tbColorD7.Location = new System.Drawing.Point(327, 100);
-            this.ui_tbColorD7.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.ui_tbColorD7.Location = new System.Drawing.Point(286, 80);
             this.ui_tbColorD7.MaxLength = 32767;
             this.ui_tbColorD7.Name = "ui_tbColorD7";
             this.ui_tbColorD7.PasswordChar = '\0';
@@ -872,7 +853,7 @@
             this.ui_tbColorD7.SelectionLength = 0;
             this.ui_tbColorD7.SelectionStart = 0;
             this.ui_tbColorD7.ShortcutsEnabled = true;
-            this.ui_tbColorD7.Size = new System.Drawing.Size(114, 29);
+            this.ui_tbColorD7.Size = new System.Drawing.Size(100, 23);
             this.ui_tbColorD7.TabIndex = 29;
             this.ui_tbColorD7.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.ui_tbColorD7.UseCustomBackColor = true;
@@ -884,9 +865,9 @@
             // 
             // ui_lbColorD7
             // 
-            this.ui_lbColorD7.Location = new System.Drawing.Point(251, 100);
+            this.ui_lbColorD7.Location = new System.Drawing.Point(220, 80);
             this.ui_lbColorD7.Name = "ui_lbColorD7";
-            this.ui_lbColorD7.Size = new System.Drawing.Size(69, 24);
+            this.ui_lbColorD7.Size = new System.Drawing.Size(60, 19);
             this.ui_lbColorD7.TabIndex = 31;
             this.ui_lbColorD7.Text = "D-7 :";
             this.ui_lbColorD7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -897,18 +878,17 @@
             // 
             // 
             this.ui_tbColorD3.CustomButton.Image = null;
-            this.ui_tbColorD3.CustomButton.Location = new System.Drawing.Point(86, 1);
+            this.ui_tbColorD3.CustomButton.Location = new System.Drawing.Point(78, 1);
             this.ui_tbColorD3.CustomButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ui_tbColorD3.CustomButton.Name = "";
-            this.ui_tbColorD3.CustomButton.Size = new System.Drawing.Size(27, 27);
+            this.ui_tbColorD3.CustomButton.Size = new System.Drawing.Size(21, 21);
             this.ui_tbColorD3.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
             this.ui_tbColorD3.CustomButton.TabIndex = 1;
             this.ui_tbColorD3.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
             this.ui_tbColorD3.CustomButton.UseSelectable = true;
             this.ui_tbColorD3.CustomButton.Visible = false;
             this.ui_tbColorD3.Lines = new string[0];
-            this.ui_tbColorD3.Location = new System.Drawing.Point(327, 64);
-            this.ui_tbColorD3.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.ui_tbColorD3.Location = new System.Drawing.Point(286, 51);
             this.ui_tbColorD3.MaxLength = 32767;
             this.ui_tbColorD3.Name = "ui_tbColorD3";
             this.ui_tbColorD3.PasswordChar = '\0';
@@ -918,7 +898,7 @@
             this.ui_tbColorD3.SelectionLength = 0;
             this.ui_tbColorD3.SelectionStart = 0;
             this.ui_tbColorD3.ShortcutsEnabled = true;
-            this.ui_tbColorD3.Size = new System.Drawing.Size(114, 29);
+            this.ui_tbColorD3.Size = new System.Drawing.Size(100, 23);
             this.ui_tbColorD3.TabIndex = 28;
             this.ui_tbColorD3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.ui_tbColorD3.UseCustomBackColor = true;
@@ -930,9 +910,9 @@
             // 
             // ui_lbColorD3
             // 
-            this.ui_lbColorD3.Location = new System.Drawing.Point(251, 64);
+            this.ui_lbColorD3.Location = new System.Drawing.Point(220, 51);
             this.ui_lbColorD3.Name = "ui_lbColorD3";
-            this.ui_lbColorD3.Size = new System.Drawing.Size(69, 24);
+            this.ui_lbColorD3.Size = new System.Drawing.Size(60, 19);
             this.ui_lbColorD3.TabIndex = 29;
             this.ui_lbColorD3.Text = "D-3 :";
             this.ui_lbColorD3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -943,18 +923,17 @@
             // 
             // 
             this.ui_tbColorD1.CustomButton.Image = null;
-            this.ui_tbColorD1.CustomButton.Location = new System.Drawing.Point(86, 1);
+            this.ui_tbColorD1.CustomButton.Location = new System.Drawing.Point(78, 1);
             this.ui_tbColorD1.CustomButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ui_tbColorD1.CustomButton.Name = "";
-            this.ui_tbColorD1.CustomButton.Size = new System.Drawing.Size(27, 27);
+            this.ui_tbColorD1.CustomButton.Size = new System.Drawing.Size(21, 21);
             this.ui_tbColorD1.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
             this.ui_tbColorD1.CustomButton.TabIndex = 1;
             this.ui_tbColorD1.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
             this.ui_tbColorD1.CustomButton.UseSelectable = true;
             this.ui_tbColorD1.CustomButton.Visible = false;
             this.ui_tbColorD1.Lines = new string[0];
-            this.ui_tbColorD1.Location = new System.Drawing.Point(327, 28);
-            this.ui_tbColorD1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.ui_tbColorD1.Location = new System.Drawing.Point(286, 22);
             this.ui_tbColorD1.MaxLength = 32767;
             this.ui_tbColorD1.Name = "ui_tbColorD1";
             this.ui_tbColorD1.PasswordChar = '\0';
@@ -964,7 +943,7 @@
             this.ui_tbColorD1.SelectionLength = 0;
             this.ui_tbColorD1.SelectionStart = 0;
             this.ui_tbColorD1.ShortcutsEnabled = true;
-            this.ui_tbColorD1.Size = new System.Drawing.Size(114, 29);
+            this.ui_tbColorD1.Size = new System.Drawing.Size(100, 23);
             this.ui_tbColorD1.TabIndex = 27;
             this.ui_tbColorD1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.ui_tbColorD1.UseCustomBackColor = true;
@@ -976,9 +955,9 @@
             // 
             // ui_lbColorD1
             // 
-            this.ui_lbColorD1.Location = new System.Drawing.Point(251, 28);
+            this.ui_lbColorD1.Location = new System.Drawing.Point(220, 22);
             this.ui_lbColorD1.Name = "ui_lbColorD1";
-            this.ui_lbColorD1.Size = new System.Drawing.Size(69, 24);
+            this.ui_lbColorD1.Size = new System.Drawing.Size(60, 19);
             this.ui_lbColorD1.TabIndex = 27;
             this.ui_lbColorD1.Text = "D-1 :";
             this.ui_lbColorD1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -989,18 +968,17 @@
             // 
             // 
             this.ui_tbColorError.CustomButton.Image = null;
-            this.ui_tbColorError.CustomButton.Location = new System.Drawing.Point(86, 1);
+            this.ui_tbColorError.CustomButton.Location = new System.Drawing.Point(78, 1);
             this.ui_tbColorError.CustomButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ui_tbColorError.CustomButton.Name = "";
-            this.ui_tbColorError.CustomButton.Size = new System.Drawing.Size(27, 27);
+            this.ui_tbColorError.CustomButton.Size = new System.Drawing.Size(21, 21);
             this.ui_tbColorError.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
             this.ui_tbColorError.CustomButton.TabIndex = 1;
             this.ui_tbColorError.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
             this.ui_tbColorError.CustomButton.UseSelectable = true;
             this.ui_tbColorError.CustomButton.Visible = false;
             this.ui_tbColorError.Lines = new string[0];
-            this.ui_tbColorError.Location = new System.Drawing.Point(121, 318);
-            this.ui_tbColorError.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.ui_tbColorError.Location = new System.Drawing.Point(106, 254);
             this.ui_tbColorError.MaxLength = 32767;
             this.ui_tbColorError.Name = "ui_tbColorError";
             this.ui_tbColorError.PasswordChar = '\0';
@@ -1010,7 +988,7 @@
             this.ui_tbColorError.SelectionLength = 0;
             this.ui_tbColorError.SelectionStart = 0;
             this.ui_tbColorError.ShortcutsEnabled = true;
-            this.ui_tbColorError.Size = new System.Drawing.Size(114, 29);
+            this.ui_tbColorError.Size = new System.Drawing.Size(100, 23);
             this.ui_tbColorError.TabIndex = 26;
             this.ui_tbColorError.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.ui_tbColorError.UseCustomBackColor = true;
@@ -1026,18 +1004,17 @@
             // 
             // 
             this.ui_tbColorImpossible.CustomButton.Image = null;
-            this.ui_tbColorImpossible.CustomButton.Location = new System.Drawing.Point(86, 1);
+            this.ui_tbColorImpossible.CustomButton.Location = new System.Drawing.Point(78, 1);
             this.ui_tbColorImpossible.CustomButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ui_tbColorImpossible.CustomButton.Name = "";
-            this.ui_tbColorImpossible.CustomButton.Size = new System.Drawing.Size(27, 27);
+            this.ui_tbColorImpossible.CustomButton.Size = new System.Drawing.Size(21, 21);
             this.ui_tbColorImpossible.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
             this.ui_tbColorImpossible.CustomButton.TabIndex = 1;
             this.ui_tbColorImpossible.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
             this.ui_tbColorImpossible.CustomButton.UseSelectable = true;
             this.ui_tbColorImpossible.CustomButton.Visible = false;
             this.ui_tbColorImpossible.Lines = new string[0];
-            this.ui_tbColorImpossible.Location = new System.Drawing.Point(121, 281);
-            this.ui_tbColorImpossible.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.ui_tbColorImpossible.Location = new System.Drawing.Point(106, 225);
             this.ui_tbColorImpossible.MaxLength = 32767;
             this.ui_tbColorImpossible.Name = "ui_tbColorImpossible";
             this.ui_tbColorImpossible.PasswordChar = '\0';
@@ -1047,7 +1024,7 @@
             this.ui_tbColorImpossible.SelectionLength = 0;
             this.ui_tbColorImpossible.SelectionStart = 0;
             this.ui_tbColorImpossible.ShortcutsEnabled = true;
-            this.ui_tbColorImpossible.Size = new System.Drawing.Size(114, 29);
+            this.ui_tbColorImpossible.Size = new System.Drawing.Size(100, 23);
             this.ui_tbColorImpossible.TabIndex = 25;
             this.ui_tbColorImpossible.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.ui_tbColorImpossible.UseCustomBackColor = true;
@@ -1063,18 +1040,17 @@
             // 
             // 
             this.ui_tbColorCancel.CustomButton.Image = null;
-            this.ui_tbColorCancel.CustomButton.Location = new System.Drawing.Point(86, 1);
+            this.ui_tbColorCancel.CustomButton.Location = new System.Drawing.Point(78, 1);
             this.ui_tbColorCancel.CustomButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ui_tbColorCancel.CustomButton.Name = "";
-            this.ui_tbColorCancel.CustomButton.Size = new System.Drawing.Size(27, 27);
+            this.ui_tbColorCancel.CustomButton.Size = new System.Drawing.Size(21, 21);
             this.ui_tbColorCancel.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
             this.ui_tbColorCancel.CustomButton.TabIndex = 1;
             this.ui_tbColorCancel.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
             this.ui_tbColorCancel.CustomButton.UseSelectable = true;
             this.ui_tbColorCancel.CustomButton.Visible = false;
             this.ui_tbColorCancel.Lines = new string[0];
-            this.ui_tbColorCancel.Location = new System.Drawing.Point(121, 245);
-            this.ui_tbColorCancel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.ui_tbColorCancel.Location = new System.Drawing.Point(106, 196);
             this.ui_tbColorCancel.MaxLength = 32767;
             this.ui_tbColorCancel.Name = "ui_tbColorCancel";
             this.ui_tbColorCancel.PasswordChar = '\0';
@@ -1084,7 +1060,7 @@
             this.ui_tbColorCancel.SelectionLength = 0;
             this.ui_tbColorCancel.SelectionStart = 0;
             this.ui_tbColorCancel.ShortcutsEnabled = true;
-            this.ui_tbColorCancel.Size = new System.Drawing.Size(114, 29);
+            this.ui_tbColorCancel.Size = new System.Drawing.Size(100, 23);
             this.ui_tbColorCancel.TabIndex = 24;
             this.ui_tbColorCancel.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.ui_tbColorCancel.UseCustomBackColor = true;
@@ -1100,18 +1076,17 @@
             // 
             // 
             this.ui_tbColorWaiting.CustomButton.Image = null;
-            this.ui_tbColorWaiting.CustomButton.Location = new System.Drawing.Point(86, 1);
+            this.ui_tbColorWaiting.CustomButton.Location = new System.Drawing.Point(78, 1);
             this.ui_tbColorWaiting.CustomButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ui_tbColorWaiting.CustomButton.Name = "";
-            this.ui_tbColorWaiting.CustomButton.Size = new System.Drawing.Size(27, 27);
+            this.ui_tbColorWaiting.CustomButton.Size = new System.Drawing.Size(21, 21);
             this.ui_tbColorWaiting.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
             this.ui_tbColorWaiting.CustomButton.TabIndex = 1;
             this.ui_tbColorWaiting.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
             this.ui_tbColorWaiting.CustomButton.UseSelectable = true;
             this.ui_tbColorWaiting.CustomButton.Visible = false;
             this.ui_tbColorWaiting.Lines = new string[0];
-            this.ui_tbColorWaiting.Location = new System.Drawing.Point(121, 209);
-            this.ui_tbColorWaiting.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.ui_tbColorWaiting.Location = new System.Drawing.Point(106, 167);
             this.ui_tbColorWaiting.MaxLength = 32767;
             this.ui_tbColorWaiting.Name = "ui_tbColorWaiting";
             this.ui_tbColorWaiting.PasswordChar = '\0';
@@ -1121,7 +1096,7 @@
             this.ui_tbColorWaiting.SelectionLength = 0;
             this.ui_tbColorWaiting.SelectionStart = 0;
             this.ui_tbColorWaiting.ShortcutsEnabled = true;
-            this.ui_tbColorWaiting.Size = new System.Drawing.Size(114, 29);
+            this.ui_tbColorWaiting.Size = new System.Drawing.Size(100, 23);
             this.ui_tbColorWaiting.TabIndex = 23;
             this.ui_tbColorWaiting.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.ui_tbColorWaiting.UseCustomBackColor = true;
@@ -1137,18 +1112,17 @@
             // 
             // 
             this.ui_tbColorPending.CustomButton.Image = null;
-            this.ui_tbColorPending.CustomButton.Location = new System.Drawing.Point(86, 1);
+            this.ui_tbColorPending.CustomButton.Location = new System.Drawing.Point(78, 1);
             this.ui_tbColorPending.CustomButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ui_tbColorPending.CustomButton.Name = "";
-            this.ui_tbColorPending.CustomButton.Size = new System.Drawing.Size(27, 27);
+            this.ui_tbColorPending.CustomButton.Size = new System.Drawing.Size(21, 21);
             this.ui_tbColorPending.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
             this.ui_tbColorPending.CustomButton.TabIndex = 1;
             this.ui_tbColorPending.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
             this.ui_tbColorPending.CustomButton.UseSelectable = true;
             this.ui_tbColorPending.CustomButton.Visible = false;
             this.ui_tbColorPending.Lines = new string[0];
-            this.ui_tbColorPending.Location = new System.Drawing.Point(121, 172);
-            this.ui_tbColorPending.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.ui_tbColorPending.Location = new System.Drawing.Point(106, 138);
             this.ui_tbColorPending.MaxLength = 32767;
             this.ui_tbColorPending.Name = "ui_tbColorPending";
             this.ui_tbColorPending.PasswordChar = '\0';
@@ -1158,7 +1132,7 @@
             this.ui_tbColorPending.SelectionLength = 0;
             this.ui_tbColorPending.SelectionStart = 0;
             this.ui_tbColorPending.ShortcutsEnabled = true;
-            this.ui_tbColorPending.Size = new System.Drawing.Size(114, 29);
+            this.ui_tbColorPending.Size = new System.Drawing.Size(100, 23);
             this.ui_tbColorPending.TabIndex = 22;
             this.ui_tbColorPending.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.ui_tbColorPending.UseCustomBackColor = true;
@@ -1174,18 +1148,17 @@
             // 
             // 
             this.ui_tbColorComplete.CustomButton.Image = null;
-            this.ui_tbColorComplete.CustomButton.Location = new System.Drawing.Point(86, 1);
+            this.ui_tbColorComplete.CustomButton.Location = new System.Drawing.Point(78, 1);
             this.ui_tbColorComplete.CustomButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ui_tbColorComplete.CustomButton.Name = "";
-            this.ui_tbColorComplete.CustomButton.Size = new System.Drawing.Size(27, 27);
+            this.ui_tbColorComplete.CustomButton.Size = new System.Drawing.Size(21, 21);
             this.ui_tbColorComplete.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
             this.ui_tbColorComplete.CustomButton.TabIndex = 1;
             this.ui_tbColorComplete.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
             this.ui_tbColorComplete.CustomButton.UseSelectable = true;
             this.ui_tbColorComplete.CustomButton.Visible = false;
             this.ui_tbColorComplete.Lines = new string[0];
-            this.ui_tbColorComplete.Location = new System.Drawing.Point(121, 136);
-            this.ui_tbColorComplete.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.ui_tbColorComplete.Location = new System.Drawing.Point(106, 109);
             this.ui_tbColorComplete.MaxLength = 32767;
             this.ui_tbColorComplete.Name = "ui_tbColorComplete";
             this.ui_tbColorComplete.PasswordChar = '\0';
@@ -1195,7 +1168,7 @@
             this.ui_tbColorComplete.SelectionLength = 0;
             this.ui_tbColorComplete.SelectionStart = 0;
             this.ui_tbColorComplete.ShortcutsEnabled = true;
-            this.ui_tbColorComplete.Size = new System.Drawing.Size(114, 29);
+            this.ui_tbColorComplete.Size = new System.Drawing.Size(100, 23);
             this.ui_tbColorComplete.TabIndex = 21;
             this.ui_tbColorComplete.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.ui_tbColorComplete.UseCustomBackColor = true;
@@ -1211,18 +1184,17 @@
             // 
             // 
             this.ui_tbColorPartialDone.CustomButton.Image = null;
-            this.ui_tbColorPartialDone.CustomButton.Location = new System.Drawing.Point(86, 1);
+            this.ui_tbColorPartialDone.CustomButton.Location = new System.Drawing.Point(78, 1);
             this.ui_tbColorPartialDone.CustomButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ui_tbColorPartialDone.CustomButton.Name = "";
-            this.ui_tbColorPartialDone.CustomButton.Size = new System.Drawing.Size(27, 27);
+            this.ui_tbColorPartialDone.CustomButton.Size = new System.Drawing.Size(21, 21);
             this.ui_tbColorPartialDone.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
             this.ui_tbColorPartialDone.CustomButton.TabIndex = 1;
             this.ui_tbColorPartialDone.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
             this.ui_tbColorPartialDone.CustomButton.UseSelectable = true;
             this.ui_tbColorPartialDone.CustomButton.Visible = false;
             this.ui_tbColorPartialDone.Lines = new string[0];
-            this.ui_tbColorPartialDone.Location = new System.Drawing.Point(121, 100);
-            this.ui_tbColorPartialDone.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.ui_tbColorPartialDone.Location = new System.Drawing.Point(106, 80);
             this.ui_tbColorPartialDone.MaxLength = 32767;
             this.ui_tbColorPartialDone.Name = "ui_tbColorPartialDone";
             this.ui_tbColorPartialDone.PasswordChar = '\0';
@@ -1232,7 +1204,7 @@
             this.ui_tbColorPartialDone.SelectionLength = 0;
             this.ui_tbColorPartialDone.SelectionStart = 0;
             this.ui_tbColorPartialDone.ShortcutsEnabled = true;
-            this.ui_tbColorPartialDone.Size = new System.Drawing.Size(114, 29);
+            this.ui_tbColorPartialDone.Size = new System.Drawing.Size(100, 23);
             this.ui_tbColorPartialDone.TabIndex = 20;
             this.ui_tbColorPartialDone.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.ui_tbColorPartialDone.UseCustomBackColor = true;
@@ -1248,18 +1220,17 @@
             // 
             // 
             this.ui_tbColorWorkDone.CustomButton.Image = null;
-            this.ui_tbColorWorkDone.CustomButton.Location = new System.Drawing.Point(86, 1);
+            this.ui_tbColorWorkDone.CustomButton.Location = new System.Drawing.Point(78, 1);
             this.ui_tbColorWorkDone.CustomButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ui_tbColorWorkDone.CustomButton.Name = "";
-            this.ui_tbColorWorkDone.CustomButton.Size = new System.Drawing.Size(27, 27);
+            this.ui_tbColorWorkDone.CustomButton.Size = new System.Drawing.Size(21, 21);
             this.ui_tbColorWorkDone.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
             this.ui_tbColorWorkDone.CustomButton.TabIndex = 1;
             this.ui_tbColorWorkDone.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
             this.ui_tbColorWorkDone.CustomButton.UseSelectable = true;
             this.ui_tbColorWorkDone.CustomButton.Visible = false;
             this.ui_tbColorWorkDone.Lines = new string[0];
-            this.ui_tbColorWorkDone.Location = new System.Drawing.Point(121, 64);
-            this.ui_tbColorWorkDone.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.ui_tbColorWorkDone.Location = new System.Drawing.Point(106, 51);
             this.ui_tbColorWorkDone.MaxLength = 32767;
             this.ui_tbColorWorkDone.Name = "ui_tbColorWorkDone";
             this.ui_tbColorWorkDone.PasswordChar = '\0';
@@ -1269,7 +1240,7 @@
             this.ui_tbColorWorkDone.SelectionLength = 0;
             this.ui_tbColorWorkDone.SelectionStart = 0;
             this.ui_tbColorWorkDone.ShortcutsEnabled = true;
-            this.ui_tbColorWorkDone.Size = new System.Drawing.Size(114, 29);
+            this.ui_tbColorWorkDone.Size = new System.Drawing.Size(100, 23);
             this.ui_tbColorWorkDone.TabIndex = 19;
             this.ui_tbColorWorkDone.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.ui_tbColorWorkDone.UseCustomBackColor = true;
@@ -1285,18 +1256,17 @@
             // 
             // 
             this.ui_tbColorWorking.CustomButton.Image = null;
-            this.ui_tbColorWorking.CustomButton.Location = new System.Drawing.Point(86, 1);
+            this.ui_tbColorWorking.CustomButton.Location = new System.Drawing.Point(78, 1);
             this.ui_tbColorWorking.CustomButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ui_tbColorWorking.CustomButton.Name = "";
-            this.ui_tbColorWorking.CustomButton.Size = new System.Drawing.Size(27, 27);
+            this.ui_tbColorWorking.CustomButton.Size = new System.Drawing.Size(21, 21);
             this.ui_tbColorWorking.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
             this.ui_tbColorWorking.CustomButton.TabIndex = 1;
             this.ui_tbColorWorking.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
             this.ui_tbColorWorking.CustomButton.UseSelectable = true;
             this.ui_tbColorWorking.CustomButton.Visible = false;
             this.ui_tbColorWorking.Lines = new string[0];
-            this.ui_tbColorWorking.Location = new System.Drawing.Point(121, 28);
-            this.ui_tbColorWorking.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.ui_tbColorWorking.Location = new System.Drawing.Point(106, 22);
             this.ui_tbColorWorking.MaxLength = 32767;
             this.ui_tbColorWorking.Name = "ui_tbColorWorking";
             this.ui_tbColorWorking.PasswordChar = '\0';
@@ -1306,7 +1276,7 @@
             this.ui_tbColorWorking.SelectionLength = 0;
             this.ui_tbColorWorking.SelectionStart = 0;
             this.ui_tbColorWorking.ShortcutsEnabled = true;
-            this.ui_tbColorWorking.Size = new System.Drawing.Size(114, 29);
+            this.ui_tbColorWorking.Size = new System.Drawing.Size(100, 23);
             this.ui_tbColorWorking.TabIndex = 18;
             this.ui_tbColorWorking.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.ui_tbColorWorking.UseCustomBackColor = true;
@@ -1318,81 +1288,81 @@
             // 
             // ui_lbColorError
             // 
-            this.ui_lbColorError.Location = new System.Drawing.Point(13, 318);
+            this.ui_lbColorError.Location = new System.Drawing.Point(11, 254);
             this.ui_lbColorError.Name = "ui_lbColorError";
-            this.ui_lbColorError.Size = new System.Drawing.Size(103, 24);
+            this.ui_lbColorError.Size = new System.Drawing.Size(90, 19);
             this.ui_lbColorError.TabIndex = 17;
             this.ui_lbColorError.Text = "Error :";
             this.ui_lbColorError.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // ui_lbColorImpossible
             // 
-            this.ui_lbColorImpossible.Location = new System.Drawing.Point(13, 281);
+            this.ui_lbColorImpossible.Location = new System.Drawing.Point(11, 225);
             this.ui_lbColorImpossible.Name = "ui_lbColorImpossible";
-            this.ui_lbColorImpossible.Size = new System.Drawing.Size(103, 24);
+            this.ui_lbColorImpossible.Size = new System.Drawing.Size(90, 19);
             this.ui_lbColorImpossible.TabIndex = 14;
             this.ui_lbColorImpossible.Text = "Impossible :";
             this.ui_lbColorImpossible.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // ui_lbColorCancel
             // 
-            this.ui_lbColorCancel.Location = new System.Drawing.Point(13, 245);
+            this.ui_lbColorCancel.Location = new System.Drawing.Point(11, 196);
             this.ui_lbColorCancel.Name = "ui_lbColorCancel";
-            this.ui_lbColorCancel.Size = new System.Drawing.Size(103, 24);
+            this.ui_lbColorCancel.Size = new System.Drawing.Size(90, 19);
             this.ui_lbColorCancel.TabIndex = 13;
             this.ui_lbColorCancel.Text = "Cancel :";
             this.ui_lbColorCancel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // ui_lbColorWaiting
             // 
-            this.ui_lbColorWaiting.Location = new System.Drawing.Point(13, 209);
+            this.ui_lbColorWaiting.Location = new System.Drawing.Point(11, 167);
             this.ui_lbColorWaiting.Name = "ui_lbColorWaiting";
-            this.ui_lbColorWaiting.Size = new System.Drawing.Size(103, 24);
+            this.ui_lbColorWaiting.Size = new System.Drawing.Size(90, 19);
             this.ui_lbColorWaiting.TabIndex = 12;
             this.ui_lbColorWaiting.Text = "Waiting :";
             this.ui_lbColorWaiting.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // ui_lbColorPending
             // 
-            this.ui_lbColorPending.Location = new System.Drawing.Point(13, 172);
+            this.ui_lbColorPending.Location = new System.Drawing.Point(11, 138);
             this.ui_lbColorPending.Name = "ui_lbColorPending";
-            this.ui_lbColorPending.Size = new System.Drawing.Size(103, 24);
+            this.ui_lbColorPending.Size = new System.Drawing.Size(90, 19);
             this.ui_lbColorPending.TabIndex = 4;
             this.ui_lbColorPending.Text = "Pending :";
             this.ui_lbColorPending.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // ui_lbColorComplete
             // 
-            this.ui_lbColorComplete.Location = new System.Drawing.Point(13, 136);
+            this.ui_lbColorComplete.Location = new System.Drawing.Point(11, 109);
             this.ui_lbColorComplete.Name = "ui_lbColorComplete";
-            this.ui_lbColorComplete.Size = new System.Drawing.Size(103, 24);
+            this.ui_lbColorComplete.Size = new System.Drawing.Size(90, 19);
             this.ui_lbColorComplete.TabIndex = 3;
             this.ui_lbColorComplete.Text = "Complete :";
             this.ui_lbColorComplete.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // ui_lbColorPartialDone
             // 
-            this.ui_lbColorPartialDone.Location = new System.Drawing.Point(13, 100);
+            this.ui_lbColorPartialDone.Location = new System.Drawing.Point(11, 80);
             this.ui_lbColorPartialDone.Name = "ui_lbColorPartialDone";
-            this.ui_lbColorPartialDone.Size = new System.Drawing.Size(103, 24);
+            this.ui_lbColorPartialDone.Size = new System.Drawing.Size(90, 19);
             this.ui_lbColorPartialDone.TabIndex = 2;
             this.ui_lbColorPartialDone.Text = "Partial Done :";
             this.ui_lbColorPartialDone.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // ui_lbColorWorkDone
             // 
-            this.ui_lbColorWorkDone.Location = new System.Drawing.Point(13, 64);
+            this.ui_lbColorWorkDone.Location = new System.Drawing.Point(11, 51);
             this.ui_lbColorWorkDone.Name = "ui_lbColorWorkDone";
-            this.ui_lbColorWorkDone.Size = new System.Drawing.Size(103, 24);
+            this.ui_lbColorWorkDone.Size = new System.Drawing.Size(90, 19);
             this.ui_lbColorWorkDone.TabIndex = 1;
             this.ui_lbColorWorkDone.Text = "Work Done :";
             this.ui_lbColorWorkDone.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // ui_lbColorWorking
             // 
-            this.ui_lbColorWorking.Location = new System.Drawing.Point(13, 28);
+            this.ui_lbColorWorking.Location = new System.Drawing.Point(11, 22);
             this.ui_lbColorWorking.Name = "ui_lbColorWorking";
-            this.ui_lbColorWorking.Size = new System.Drawing.Size(103, 24);
+            this.ui_lbColorWorking.Size = new System.Drawing.Size(90, 19);
             this.ui_lbColorWorking.TabIndex = 0;
             this.ui_lbColorWorking.Text = "Working :";
             this.ui_lbColorWorking.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1407,11 +1377,9 @@
             this.ui_gbStd.Controls.Add(this.ui_btnStdDocPath);
             this.ui_gbStd.Controls.Add(this.ui_tbStdDocPath);
             this.ui_gbStd.Controls.Add(this.ui_lbStdDocDir);
-            this.ui_gbStd.Location = new System.Drawing.Point(11, 338);
-            this.ui_gbStd.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.ui_gbStd.Location = new System.Drawing.Point(10, 270);
             this.ui_gbStd.Name = "ui_gbStd";
-            this.ui_gbStd.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.ui_gbStd.Size = new System.Drawing.Size(994, 125);
+            this.ui_gbStd.Size = new System.Drawing.Size(870, 100);
             this.ui_gbStd.TabIndex = 19;
             this.ui_gbStd.TabStop = false;
             this.ui_gbStd.Text = "SpisHull";
@@ -1420,10 +1388,10 @@
             // 
             this.ui_btnStdSamplePathOpen.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ui_btnStdSamplePathOpen.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ui_btnStdSamplePathOpen.Location = new System.Drawing.Point(931, 64);
+            this.ui_btnStdSamplePathOpen.Location = new System.Drawing.Point(815, 51);
             this.ui_btnStdSamplePathOpen.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ui_btnStdSamplePathOpen.Name = "ui_btnStdSamplePathOpen";
-            this.ui_btnStdSamplePathOpen.Size = new System.Drawing.Size(40, 30);
+            this.ui_btnStdSamplePathOpen.Size = new System.Drawing.Size(35, 24);
             this.ui_btnStdSamplePathOpen.TabIndex = 17;
             this.ui_btnStdSamplePathOpen.Tag = "ui_tbStdSamplePath";
             this.ui_btnStdSamplePathOpen.Text = "Open";
@@ -1434,10 +1402,10 @@
             // 
             this.ui_btnStdSamplePath.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ui_btnStdSamplePath.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ui_btnStdSamplePath.Location = new System.Drawing.Point(885, 64);
+            this.ui_btnStdSamplePath.Location = new System.Drawing.Point(774, 51);
             this.ui_btnStdSamplePath.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ui_btnStdSamplePath.Name = "ui_btnStdSamplePath";
-            this.ui_btnStdSamplePath.Size = new System.Drawing.Size(40, 30);
+            this.ui_btnStdSamplePath.Size = new System.Drawing.Size(35, 24);
             this.ui_btnStdSamplePath.TabIndex = 16;
             this.ui_btnStdSamplePath.Tag = "ui_tbStdSamplePath";
             this.ui_btnStdSamplePath.Text = "···";
@@ -1450,18 +1418,17 @@
             // 
             // 
             this.ui_tbStdSamplePath.CustomButton.Image = null;
-            this.ui_tbStdSamplePath.CustomButton.Location = new System.Drawing.Point(671, 1);
+            this.ui_tbStdSamplePath.CustomButton.Location = new System.Drawing.Point(590, 1);
             this.ui_tbStdSamplePath.CustomButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ui_tbStdSamplePath.CustomButton.Name = "";
-            this.ui_tbStdSamplePath.CustomButton.Size = new System.Drawing.Size(27, 27);
+            this.ui_tbStdSamplePath.CustomButton.Size = new System.Drawing.Size(21, 21);
             this.ui_tbStdSamplePath.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
             this.ui_tbStdSamplePath.CustomButton.TabIndex = 1;
             this.ui_tbStdSamplePath.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
             this.ui_tbStdSamplePath.CustomButton.UseSelectable = true;
             this.ui_tbStdSamplePath.CustomButton.Visible = false;
             this.ui_tbStdSamplePath.Lines = new string[0];
-            this.ui_tbStdSamplePath.Location = new System.Drawing.Point(178, 64);
-            this.ui_tbStdSamplePath.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.ui_tbStdSamplePath.Location = new System.Drawing.Point(156, 51);
             this.ui_tbStdSamplePath.MaxLength = 32767;
             this.ui_tbStdSamplePath.Name = "ui_tbStdSamplePath";
             this.ui_tbStdSamplePath.PasswordChar = '\0';
@@ -1470,7 +1437,7 @@
             this.ui_tbStdSamplePath.SelectionLength = 0;
             this.ui_tbStdSamplePath.SelectionStart = 0;
             this.ui_tbStdSamplePath.ShortcutsEnabled = true;
-            this.ui_tbStdSamplePath.Size = new System.Drawing.Size(699, 29);
+            this.ui_tbStdSamplePath.Size = new System.Drawing.Size(612, 23);
             this.ui_tbStdSamplePath.TabIndex = 15;
             this.ui_tbStdSamplePath.UseSelectable = true;
             this.ui_tbStdSamplePath.UseStyleColors = true;
@@ -1479,9 +1446,9 @@
             // 
             // ui_lbStdSampleDir
             // 
-            this.ui_lbStdSampleDir.Location = new System.Drawing.Point(13, 65);
+            this.ui_lbStdSampleDir.Location = new System.Drawing.Point(11, 52);
             this.ui_lbStdSampleDir.Name = "ui_lbStdSampleDir";
-            this.ui_lbStdSampleDir.Size = new System.Drawing.Size(160, 25);
+            this.ui_lbStdSampleDir.Size = new System.Drawing.Size(140, 20);
             this.ui_lbStdSampleDir.TabIndex = 19;
             this.ui_lbStdSampleDir.Text = "Sample Directory :";
             this.ui_lbStdSampleDir.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1490,10 +1457,10 @@
             // 
             this.ui_btnStdDocPathOpen.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ui_btnStdDocPathOpen.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ui_btnStdDocPathOpen.Location = new System.Drawing.Point(931, 28);
+            this.ui_btnStdDocPathOpen.Location = new System.Drawing.Point(815, 22);
             this.ui_btnStdDocPathOpen.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ui_btnStdDocPathOpen.Name = "ui_btnStdDocPathOpen";
-            this.ui_btnStdDocPathOpen.Size = new System.Drawing.Size(40, 30);
+            this.ui_btnStdDocPathOpen.Size = new System.Drawing.Size(35, 24);
             this.ui_btnStdDocPathOpen.TabIndex = 14;
             this.ui_btnStdDocPathOpen.Tag = "ui_tbStdDocPath";
             this.ui_btnStdDocPathOpen.Text = "Open";
@@ -1504,10 +1471,10 @@
             // 
             this.ui_btnStdDocPath.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ui_btnStdDocPath.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ui_btnStdDocPath.Location = new System.Drawing.Point(885, 28);
+            this.ui_btnStdDocPath.Location = new System.Drawing.Point(774, 22);
             this.ui_btnStdDocPath.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ui_btnStdDocPath.Name = "ui_btnStdDocPath";
-            this.ui_btnStdDocPath.Size = new System.Drawing.Size(40, 30);
+            this.ui_btnStdDocPath.Size = new System.Drawing.Size(35, 24);
             this.ui_btnStdDocPath.TabIndex = 13;
             this.ui_btnStdDocPath.Tag = "ui_tbStdDocPath";
             this.ui_btnStdDocPath.Text = "···";
@@ -1520,18 +1487,17 @@
             // 
             // 
             this.ui_tbStdDocPath.CustomButton.Image = null;
-            this.ui_tbStdDocPath.CustomButton.Location = new System.Drawing.Point(671, 1);
+            this.ui_tbStdDocPath.CustomButton.Location = new System.Drawing.Point(590, 1);
             this.ui_tbStdDocPath.CustomButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ui_tbStdDocPath.CustomButton.Name = "";
-            this.ui_tbStdDocPath.CustomButton.Size = new System.Drawing.Size(27, 27);
+            this.ui_tbStdDocPath.CustomButton.Size = new System.Drawing.Size(21, 21);
             this.ui_tbStdDocPath.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
             this.ui_tbStdDocPath.CustomButton.TabIndex = 1;
             this.ui_tbStdDocPath.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
             this.ui_tbStdDocPath.CustomButton.UseSelectable = true;
             this.ui_tbStdDocPath.CustomButton.Visible = false;
             this.ui_tbStdDocPath.Lines = new string[0];
-            this.ui_tbStdDocPath.Location = new System.Drawing.Point(178, 28);
-            this.ui_tbStdDocPath.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.ui_tbStdDocPath.Location = new System.Drawing.Point(156, 22);
             this.ui_tbStdDocPath.MaxLength = 32767;
             this.ui_tbStdDocPath.Name = "ui_tbStdDocPath";
             this.ui_tbStdDocPath.PasswordChar = '\0';
@@ -1540,7 +1506,7 @@
             this.ui_tbStdDocPath.SelectionLength = 0;
             this.ui_tbStdDocPath.SelectionStart = 0;
             this.ui_tbStdDocPath.ShortcutsEnabled = true;
-            this.ui_tbStdDocPath.Size = new System.Drawing.Size(699, 29);
+            this.ui_tbStdDocPath.Size = new System.Drawing.Size(612, 23);
             this.ui_tbStdDocPath.TabIndex = 12;
             this.ui_tbStdDocPath.UseSelectable = true;
             this.ui_tbStdDocPath.UseStyleColors = true;
@@ -1549,9 +1515,9 @@
             // 
             // ui_lbStdDocDir
             // 
-            this.ui_lbStdDocDir.Location = new System.Drawing.Point(13, 29);
+            this.ui_lbStdDocDir.Location = new System.Drawing.Point(11, 23);
             this.ui_lbStdDocDir.Name = "ui_lbStdDocDir";
-            this.ui_lbStdDocDir.Size = new System.Drawing.Size(160, 25);
+            this.ui_lbStdDocDir.Size = new System.Drawing.Size(140, 20);
             this.ui_lbStdDocDir.TabIndex = 15;
             this.ui_lbStdDocDir.Text = "Document Directory :";
             this.ui_lbStdDocDir.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1566,11 +1532,9 @@
             this.ui_gbSmh.Controls.Add(this.ui_btnSmhDocPath);
             this.ui_gbSmh.Controls.Add(this.ui_tbSmhDocPath);
             this.ui_gbSmh.Controls.Add(this.ui_lbSmhDocDir);
-            this.ui_gbSmh.Location = new System.Drawing.Point(11, 200);
-            this.ui_gbSmh.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.ui_gbSmh.Location = new System.Drawing.Point(10, 160);
             this.ui_gbSmh.Name = "ui_gbSmh";
-            this.ui_gbSmh.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.ui_gbSmh.Size = new System.Drawing.Size(994, 125);
+            this.ui_gbSmh.Size = new System.Drawing.Size(870, 100);
             this.ui_gbSmh.TabIndex = 18;
             this.ui_gbSmh.TabStop = false;
             this.ui_gbSmh.Text = "SmartHull";
@@ -1579,10 +1543,10 @@
             // 
             this.ui_btnSmhSamplePathOpen.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ui_btnSmhSamplePathOpen.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ui_btnSmhSamplePathOpen.Location = new System.Drawing.Point(931, 66);
+            this.ui_btnSmhSamplePathOpen.Location = new System.Drawing.Point(815, 53);
             this.ui_btnSmhSamplePathOpen.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ui_btnSmhSamplePathOpen.Name = "ui_btnSmhSamplePathOpen";
-            this.ui_btnSmhSamplePathOpen.Size = new System.Drawing.Size(40, 30);
+            this.ui_btnSmhSamplePathOpen.Size = new System.Drawing.Size(35, 24);
             this.ui_btnSmhSamplePathOpen.TabIndex = 11;
             this.ui_btnSmhSamplePathOpen.Tag = "ui_tbSmhSamplePath";
             this.ui_btnSmhSamplePathOpen.Text = "Open";
@@ -1593,10 +1557,10 @@
             // 
             this.ui_btnSmhDocPathOpen.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ui_btnSmhDocPathOpen.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ui_btnSmhDocPathOpen.Location = new System.Drawing.Point(931, 30);
+            this.ui_btnSmhDocPathOpen.Location = new System.Drawing.Point(815, 24);
             this.ui_btnSmhDocPathOpen.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ui_btnSmhDocPathOpen.Name = "ui_btnSmhDocPathOpen";
-            this.ui_btnSmhDocPathOpen.Size = new System.Drawing.Size(40, 30);
+            this.ui_btnSmhDocPathOpen.Size = new System.Drawing.Size(35, 24);
             this.ui_btnSmhDocPathOpen.TabIndex = 8;
             this.ui_btnSmhDocPathOpen.Tag = "ui_tbSmhDocPath";
             this.ui_btnSmhDocPathOpen.Text = "Open";
@@ -1607,10 +1571,10 @@
             // 
             this.ui_btnSmhSamplePath.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ui_btnSmhSamplePath.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ui_btnSmhSamplePath.Location = new System.Drawing.Point(885, 66);
+            this.ui_btnSmhSamplePath.Location = new System.Drawing.Point(774, 53);
             this.ui_btnSmhSamplePath.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ui_btnSmhSamplePath.Name = "ui_btnSmhSamplePath";
-            this.ui_btnSmhSamplePath.Size = new System.Drawing.Size(40, 30);
+            this.ui_btnSmhSamplePath.Size = new System.Drawing.Size(35, 24);
             this.ui_btnSmhSamplePath.TabIndex = 10;
             this.ui_btnSmhSamplePath.Tag = "ui_tbSmhSamplePath";
             this.ui_btnSmhSamplePath.Text = "···";
@@ -1623,18 +1587,17 @@
             // 
             // 
             this.ui_tbSmhSamplePath.CustomButton.Image = null;
-            this.ui_tbSmhSamplePath.CustomButton.Location = new System.Drawing.Point(671, 1);
+            this.ui_tbSmhSamplePath.CustomButton.Location = new System.Drawing.Point(590, 1);
             this.ui_tbSmhSamplePath.CustomButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ui_tbSmhSamplePath.CustomButton.Name = "";
-            this.ui_tbSmhSamplePath.CustomButton.Size = new System.Drawing.Size(27, 27);
+            this.ui_tbSmhSamplePath.CustomButton.Size = new System.Drawing.Size(21, 21);
             this.ui_tbSmhSamplePath.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
             this.ui_tbSmhSamplePath.CustomButton.TabIndex = 1;
             this.ui_tbSmhSamplePath.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
             this.ui_tbSmhSamplePath.CustomButton.UseSelectable = true;
             this.ui_tbSmhSamplePath.CustomButton.Visible = false;
             this.ui_tbSmhSamplePath.Lines = new string[0];
-            this.ui_tbSmhSamplePath.Location = new System.Drawing.Point(178, 66);
-            this.ui_tbSmhSamplePath.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.ui_tbSmhSamplePath.Location = new System.Drawing.Point(156, 53);
             this.ui_tbSmhSamplePath.MaxLength = 32767;
             this.ui_tbSmhSamplePath.Name = "ui_tbSmhSamplePath";
             this.ui_tbSmhSamplePath.PasswordChar = '\0';
@@ -1643,7 +1606,7 @@
             this.ui_tbSmhSamplePath.SelectionLength = 0;
             this.ui_tbSmhSamplePath.SelectionStart = 0;
             this.ui_tbSmhSamplePath.ShortcutsEnabled = true;
-            this.ui_tbSmhSamplePath.Size = new System.Drawing.Size(699, 29);
+            this.ui_tbSmhSamplePath.Size = new System.Drawing.Size(612, 23);
             this.ui_tbSmhSamplePath.TabIndex = 9;
             this.ui_tbSmhSamplePath.UseSelectable = true;
             this.ui_tbSmhSamplePath.UseStyleColors = true;
@@ -1652,9 +1615,9 @@
             // 
             // ui_lbSmhSampleDir
             // 
-            this.ui_lbSmhSampleDir.Location = new System.Drawing.Point(13, 68);
+            this.ui_lbSmhSampleDir.Location = new System.Drawing.Point(11, 54);
             this.ui_lbSmhSampleDir.Name = "ui_lbSmhSampleDir";
-            this.ui_lbSmhSampleDir.Size = new System.Drawing.Size(160, 25);
+            this.ui_lbSmhSampleDir.Size = new System.Drawing.Size(140, 20);
             this.ui_lbSmhSampleDir.TabIndex = 12;
             this.ui_lbSmhSampleDir.Text = "Sample Directory :";
             this.ui_lbSmhSampleDir.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1663,10 +1626,10 @@
             // 
             this.ui_btnSmhDocPath.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ui_btnSmhDocPath.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ui_btnSmhDocPath.Location = new System.Drawing.Point(885, 30);
+            this.ui_btnSmhDocPath.Location = new System.Drawing.Point(774, 24);
             this.ui_btnSmhDocPath.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ui_btnSmhDocPath.Name = "ui_btnSmhDocPath";
-            this.ui_btnSmhDocPath.Size = new System.Drawing.Size(40, 30);
+            this.ui_btnSmhDocPath.Size = new System.Drawing.Size(35, 24);
             this.ui_btnSmhDocPath.TabIndex = 7;
             this.ui_btnSmhDocPath.Tag = "ui_tbSmhDocPath";
             this.ui_btnSmhDocPath.Text = "···";
@@ -1679,18 +1642,17 @@
             // 
             // 
             this.ui_tbSmhDocPath.CustomButton.Image = null;
-            this.ui_tbSmhDocPath.CustomButton.Location = new System.Drawing.Point(671, 1);
+            this.ui_tbSmhDocPath.CustomButton.Location = new System.Drawing.Point(590, 1);
             this.ui_tbSmhDocPath.CustomButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ui_tbSmhDocPath.CustomButton.Name = "";
-            this.ui_tbSmhDocPath.CustomButton.Size = new System.Drawing.Size(27, 27);
+            this.ui_tbSmhDocPath.CustomButton.Size = new System.Drawing.Size(21, 21);
             this.ui_tbSmhDocPath.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
             this.ui_tbSmhDocPath.CustomButton.TabIndex = 1;
             this.ui_tbSmhDocPath.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
             this.ui_tbSmhDocPath.CustomButton.UseSelectable = true;
             this.ui_tbSmhDocPath.CustomButton.Visible = false;
             this.ui_tbSmhDocPath.Lines = new string[0];
-            this.ui_tbSmhDocPath.Location = new System.Drawing.Point(178, 30);
-            this.ui_tbSmhDocPath.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.ui_tbSmhDocPath.Location = new System.Drawing.Point(156, 24);
             this.ui_tbSmhDocPath.MaxLength = 32767;
             this.ui_tbSmhDocPath.Name = "ui_tbSmhDocPath";
             this.ui_tbSmhDocPath.PasswordChar = '\0';
@@ -1699,7 +1661,7 @@
             this.ui_tbSmhDocPath.SelectionLength = 0;
             this.ui_tbSmhDocPath.SelectionStart = 0;
             this.ui_tbSmhDocPath.ShortcutsEnabled = true;
-            this.ui_tbSmhDocPath.Size = new System.Drawing.Size(699, 29);
+            this.ui_tbSmhDocPath.Size = new System.Drawing.Size(612, 23);
             this.ui_tbSmhDocPath.TabIndex = 6;
             this.ui_tbSmhDocPath.UseSelectable = true;
             this.ui_tbSmhDocPath.UseStyleColors = true;
@@ -1708,9 +1670,9 @@
             // 
             // ui_lbSmhDocDir
             // 
-            this.ui_lbSmhDocDir.Location = new System.Drawing.Point(13, 31);
+            this.ui_lbSmhDocDir.Location = new System.Drawing.Point(11, 25);
             this.ui_lbSmhDocDir.Name = "ui_lbSmhDocDir";
-            this.ui_lbSmhDocDir.Size = new System.Drawing.Size(160, 25);
+            this.ui_lbSmhDocDir.Size = new System.Drawing.Size(140, 20);
             this.ui_lbSmhDocDir.TabIndex = 13;
             this.ui_lbSmhDocDir.Text = "Document Directory :";
             this.ui_lbSmhDocDir.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1727,11 +1689,9 @@
             this.ui_gbDb.Controls.Add(this.ui_lbPassword);
             this.ui_gbDb.Controls.Add(this.ui_lbLoginId);
             this.ui_gbDb.Controls.Add(this.ui_lbServer);
-            this.ui_gbDb.Location = new System.Drawing.Point(11, 12);
-            this.ui_gbDb.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.ui_gbDb.Location = new System.Drawing.Point(10, 10);
             this.ui_gbDb.Name = "ui_gbDb";
-            this.ui_gbDb.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.ui_gbDb.Size = new System.Drawing.Size(411, 175);
+            this.ui_gbDb.Size = new System.Drawing.Size(360, 140);
             this.ui_gbDb.TabIndex = 17;
             this.ui_gbDb.TabStop = false;
             this.ui_gbDb.Text = "Database";
@@ -1741,9 +1701,9 @@
             // 
             this.ui_lbDBStatus.FontWeight = MetroFramework.MetroLabelWeight.Regular;
             this.ui_lbDBStatus.ForeColor = System.Drawing.Color.Red;
-            this.ui_lbDBStatus.Location = new System.Drawing.Point(298, 131);
+            this.ui_lbDBStatus.Location = new System.Drawing.Point(261, 105);
             this.ui_lbDBStatus.Name = "ui_lbDBStatus";
-            this.ui_lbDBStatus.Size = new System.Drawing.Size(86, 25);
+            this.ui_lbDBStatus.Size = new System.Drawing.Size(75, 20);
             this.ui_lbDBStatus.TabIndex = 17;
             this.ui_lbDBStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.ui_lbDBStatus.UseCustomForeColor = true;
@@ -1751,10 +1711,9 @@
             // ui_btnConnect
             // 
             this.ui_btnConnect.Highlight = true;
-            this.ui_btnConnect.Location = new System.Drawing.Point(298, 59);
-            this.ui_btnConnect.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.ui_btnConnect.Location = new System.Drawing.Point(261, 47);
             this.ui_btnConnect.Name = "ui_btnConnect";
-            this.ui_btnConnect.Size = new System.Drawing.Size(86, 64);
+            this.ui_btnConnect.Size = new System.Drawing.Size(75, 51);
             this.ui_btnConnect.TabIndex = 5;
             this.ui_btnConnect.Text = "Connection\r\nTest";
             this.ui_btnConnect.UseSelectable = true;
@@ -1766,18 +1725,17 @@
             // 
             // 
             this.ui_tbDbName.CustomButton.Image = null;
-            this.ui_tbDbName.CustomButton.Location = new System.Drawing.Point(143, 1);
+            this.ui_tbDbName.CustomButton.Location = new System.Drawing.Point(128, 1);
             this.ui_tbDbName.CustomButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ui_tbDbName.CustomButton.Name = "";
-            this.ui_tbDbName.CustomButton.Size = new System.Drawing.Size(27, 27);
+            this.ui_tbDbName.CustomButton.Size = new System.Drawing.Size(21, 21);
             this.ui_tbDbName.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
             this.ui_tbDbName.CustomButton.TabIndex = 1;
             this.ui_tbDbName.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
             this.ui_tbDbName.CustomButton.UseSelectable = true;
             this.ui_tbDbName.CustomButton.Visible = false;
             this.ui_tbDbName.Lines = new string[0];
-            this.ui_tbDbName.Location = new System.Drawing.Point(121, 130);
-            this.ui_tbDbName.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.ui_tbDbName.Location = new System.Drawing.Point(106, 104);
             this.ui_tbDbName.MaxLength = 32767;
             this.ui_tbDbName.Name = "ui_tbDbName";
             this.ui_tbDbName.PasswordChar = '\0';
@@ -1786,7 +1744,7 @@
             this.ui_tbDbName.SelectionLength = 0;
             this.ui_tbDbName.SelectionStart = 0;
             this.ui_tbDbName.ShortcutsEnabled = true;
-            this.ui_tbDbName.Size = new System.Drawing.Size(171, 29);
+            this.ui_tbDbName.Size = new System.Drawing.Size(150, 23);
             this.ui_tbDbName.TabIndex = 4;
             this.ui_tbDbName.UseSelectable = true;
             this.ui_tbDbName.UseStyleColors = true;
@@ -1799,18 +1757,17 @@
             // 
             // 
             this.ui_tbDbPw.CustomButton.Image = null;
-            this.ui_tbDbPw.CustomButton.Location = new System.Drawing.Point(143, 1);
+            this.ui_tbDbPw.CustomButton.Location = new System.Drawing.Point(128, 1);
             this.ui_tbDbPw.CustomButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ui_tbDbPw.CustomButton.Name = "";
-            this.ui_tbDbPw.CustomButton.Size = new System.Drawing.Size(27, 27);
+            this.ui_tbDbPw.CustomButton.Size = new System.Drawing.Size(21, 21);
             this.ui_tbDbPw.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
             this.ui_tbDbPw.CustomButton.TabIndex = 1;
             this.ui_tbDbPw.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
             this.ui_tbDbPw.CustomButton.UseSelectable = true;
             this.ui_tbDbPw.CustomButton.Visible = false;
             this.ui_tbDbPw.Lines = new string[0];
-            this.ui_tbDbPw.Location = new System.Drawing.Point(121, 94);
-            this.ui_tbDbPw.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.ui_tbDbPw.Location = new System.Drawing.Point(106, 75);
             this.ui_tbDbPw.MaxLength = 32767;
             this.ui_tbDbPw.Name = "ui_tbDbPw";
             this.ui_tbDbPw.PasswordChar = '*';
@@ -1819,7 +1776,7 @@
             this.ui_tbDbPw.SelectionLength = 0;
             this.ui_tbDbPw.SelectionStart = 0;
             this.ui_tbDbPw.ShortcutsEnabled = true;
-            this.ui_tbDbPw.Size = new System.Drawing.Size(171, 29);
+            this.ui_tbDbPw.Size = new System.Drawing.Size(150, 23);
             this.ui_tbDbPw.TabIndex = 3;
             this.ui_tbDbPw.UseSelectable = true;
             this.ui_tbDbPw.UseStyleColors = true;
@@ -1832,18 +1789,17 @@
             // 
             // 
             this.ui_tbDbId.CustomButton.Image = null;
-            this.ui_tbDbId.CustomButton.Location = new System.Drawing.Point(143, 1);
+            this.ui_tbDbId.CustomButton.Location = new System.Drawing.Point(128, 1);
             this.ui_tbDbId.CustomButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ui_tbDbId.CustomButton.Name = "";
-            this.ui_tbDbId.CustomButton.Size = new System.Drawing.Size(27, 27);
+            this.ui_tbDbId.CustomButton.Size = new System.Drawing.Size(21, 21);
             this.ui_tbDbId.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
             this.ui_tbDbId.CustomButton.TabIndex = 1;
             this.ui_tbDbId.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
             this.ui_tbDbId.CustomButton.UseSelectable = true;
             this.ui_tbDbId.CustomButton.Visible = false;
             this.ui_tbDbId.Lines = new string[0];
-            this.ui_tbDbId.Location = new System.Drawing.Point(121, 59);
-            this.ui_tbDbId.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.ui_tbDbId.Location = new System.Drawing.Point(106, 47);
             this.ui_tbDbId.MaxLength = 32767;
             this.ui_tbDbId.Name = "ui_tbDbId";
             this.ui_tbDbId.PasswordChar = '\0';
@@ -1852,7 +1808,7 @@
             this.ui_tbDbId.SelectionLength = 0;
             this.ui_tbDbId.SelectionStart = 0;
             this.ui_tbDbId.ShortcutsEnabled = true;
-            this.ui_tbDbId.Size = new System.Drawing.Size(171, 29);
+            this.ui_tbDbId.Size = new System.Drawing.Size(150, 23);
             this.ui_tbDbId.TabIndex = 2;
             this.ui_tbDbId.UseSelectable = true;
             this.ui_tbDbId.UseStyleColors = true;
@@ -1865,18 +1821,17 @@
             // 
             // 
             this.ui_tbDbServer.CustomButton.Image = null;
-            this.ui_tbDbServer.CustomButton.Location = new System.Drawing.Point(235, 1);
+            this.ui_tbDbServer.CustomButton.Location = new System.Drawing.Point(208, 1);
             this.ui_tbDbServer.CustomButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ui_tbDbServer.CustomButton.Name = "";
-            this.ui_tbDbServer.CustomButton.Size = new System.Drawing.Size(27, 27);
+            this.ui_tbDbServer.CustomButton.Size = new System.Drawing.Size(21, 21);
             this.ui_tbDbServer.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
             this.ui_tbDbServer.CustomButton.TabIndex = 1;
             this.ui_tbDbServer.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
             this.ui_tbDbServer.CustomButton.UseSelectable = true;
             this.ui_tbDbServer.CustomButton.Visible = false;
             this.ui_tbDbServer.Lines = new string[0];
-            this.ui_tbDbServer.Location = new System.Drawing.Point(121, 24);
-            this.ui_tbDbServer.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.ui_tbDbServer.Location = new System.Drawing.Point(106, 19);
             this.ui_tbDbServer.MaxLength = 32767;
             this.ui_tbDbServer.Name = "ui_tbDbServer";
             this.ui_tbDbServer.PasswordChar = '\0';
@@ -1885,7 +1840,7 @@
             this.ui_tbDbServer.SelectionLength = 0;
             this.ui_tbDbServer.SelectionStart = 0;
             this.ui_tbDbServer.ShortcutsEnabled = true;
-            this.ui_tbDbServer.Size = new System.Drawing.Size(263, 29);
+            this.ui_tbDbServer.Size = new System.Drawing.Size(230, 23);
             this.ui_tbDbServer.TabIndex = 1;
             this.ui_tbDbServer.UseSelectable = true;
             this.ui_tbDbServer.UseStyleColors = true;
@@ -1894,36 +1849,36 @@
             // 
             // ui_lbDbName
             // 
-            this.ui_lbDbName.Location = new System.Drawing.Point(13, 129);
+            this.ui_lbDbName.Location = new System.Drawing.Point(11, 103);
             this.ui_lbDbName.Name = "ui_lbDbName";
-            this.ui_lbDbName.Size = new System.Drawing.Size(103, 25);
+            this.ui_lbDbName.Size = new System.Drawing.Size(90, 20);
             this.ui_lbDbName.TabIndex = 11;
             this.ui_lbDbName.Text = "DB Name :";
             this.ui_lbDbName.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // ui_lbPassword
             // 
-            this.ui_lbPassword.Location = new System.Drawing.Point(13, 92);
+            this.ui_lbPassword.Location = new System.Drawing.Point(11, 74);
             this.ui_lbPassword.Name = "ui_lbPassword";
-            this.ui_lbPassword.Size = new System.Drawing.Size(103, 25);
+            this.ui_lbPassword.Size = new System.Drawing.Size(90, 20);
             this.ui_lbPassword.TabIndex = 12;
             this.ui_lbPassword.Text = "Password :";
             this.ui_lbPassword.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // ui_lbLoginId
             // 
-            this.ui_lbLoginId.Location = new System.Drawing.Point(13, 58);
+            this.ui_lbLoginId.Location = new System.Drawing.Point(11, 46);
             this.ui_lbLoginId.Name = "ui_lbLoginId";
-            this.ui_lbLoginId.Size = new System.Drawing.Size(103, 25);
+            this.ui_lbLoginId.Size = new System.Drawing.Size(90, 20);
             this.ui_lbLoginId.TabIndex = 8;
             this.ui_lbLoginId.Text = "Login ID :";
             this.ui_lbLoginId.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // ui_lbServer
             // 
-            this.ui_lbServer.Location = new System.Drawing.Point(13, 22);
+            this.ui_lbServer.Location = new System.Drawing.Point(11, 18);
             this.ui_lbServer.Name = "ui_lbServer";
-            this.ui_lbServer.Size = new System.Drawing.Size(103, 25);
+            this.ui_lbServer.Size = new System.Drawing.Size(90, 20);
             this.ui_lbServer.TabIndex = 9;
             this.ui_lbServer.Text = "Server :";
             this.ui_lbServer.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1932,9 +1887,8 @@
             // 
             this.HelperPage.BackColor = System.Drawing.SystemColors.Window;
             this.HelperPage.Location = new System.Drawing.Point(4, 41);
-            this.HelperPage.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.HelperPage.Name = "HelperPage";
-            this.HelperPage.Size = new System.Drawing.Size(1409, 852);
+            this.HelperPage.Size = new System.Drawing.Size(1232, 673);
             this.HelperPage.TabIndex = 5;
             this.HelperPage.Text = "Helper";
             // 
@@ -1943,9 +1897,9 @@
             this.ui_lbMainTitle1.AutoSize = true;
             this.ui_lbMainTitle1.FontWeight = MetroFramework.MetroLabelWeight.Regular;
             this.ui_lbMainTitle1.ForeColor = System.Drawing.Color.Gray;
-            this.ui_lbMainTitle1.Location = new System.Drawing.Point(34, 9);
+            this.ui_lbMainTitle1.Location = new System.Drawing.Point(30, 7);
             this.ui_lbMainTitle1.Name = "ui_lbMainTitle1";
-            this.ui_lbMainTitle1.Size = new System.Drawing.Size(125, 20);
+            this.ui_lbMainTitle1.Size = new System.Drawing.Size(116, 19);
             this.ui_lbMainTitle1.TabIndex = 1;
             this.ui_lbMainTitle1.Text = "Hull Maintenance";
             this.ui_lbMainTitle1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1957,9 +1911,9 @@
             this.ui_lbMainTitle2.AutoSize = true;
             this.ui_lbMainTitle2.FontSize = MetroFramework.MetroLabelSize.Small;
             this.ui_lbMainTitle2.ForeColor = System.Drawing.Color.DarkGray;
-            this.ui_lbMainTitle2.Location = new System.Drawing.Point(194, 14);
+            this.ui_lbMainTitle2.Location = new System.Drawing.Point(170, 11);
             this.ui_lbMainTitle2.Name = "ui_lbMainTitle2";
-            this.ui_lbMainTitle2.Size = new System.Drawing.Size(140, 17);
+            this.ui_lbMainTitle2.Size = new System.Drawing.Size(127, 15);
             this.ui_lbMainTitle2.TabIndex = 1;
             this.ui_lbMainTitle2.Text = "Cadwin System Co., Ltd.";
             this.ui_lbMainTitle2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1970,9 +1924,9 @@
             // 
             this.ui_lbMainTitle3.AutoSize = true;
             this.ui_lbMainTitle3.ForeColor = System.Drawing.Color.DarkGray;
-            this.ui_lbMainTitle3.Location = new System.Drawing.Point(174, 9);
+            this.ui_lbMainTitle3.Location = new System.Drawing.Point(152, 7);
             this.ui_lbMainTitle3.Name = "ui_lbMainTitle3";
-            this.ui_lbMainTitle3.Size = new System.Drawing.Size(12, 20);
+            this.ui_lbMainTitle3.Size = new System.Drawing.Size(12, 19);
             this.ui_lbMainTitle3.TabIndex = 1;
             this.ui_lbMainTitle3.Text = "|";
             this.ui_lbMainTitle3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1984,9 +1938,9 @@
             this.ui_lbMainVersion.AutoSize = true;
             this.ui_lbMainVersion.FontSize = MetroFramework.MetroLabelSize.Small;
             this.ui_lbMainVersion.ForeColor = System.Drawing.Color.DarkGray;
-            this.ui_lbMainVersion.Location = new System.Drawing.Point(346, 14);
+            this.ui_lbMainVersion.Location = new System.Drawing.Point(303, 11);
             this.ui_lbMainVersion.Name = "ui_lbMainVersion";
-            this.ui_lbMainVersion.Size = new System.Drawing.Size(90, 17);
+            this.ui_lbMainVersion.Size = new System.Drawing.Size(81, 15);
             this.ui_lbMainVersion.TabIndex = 1;
             this.ui_lbMainVersion.Text = "version=1.0.0.0";
             this.ui_lbMainVersion.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1997,99 +1951,106 @@
             // 
             this.ui_styleMgr.Owner = this;
             // 
-            // smhColId
+            // stdColId
             // 
-            this.smhColId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.smhColId.DataPropertyName = "id";
-            this.smhColId.DividerWidth = 1;
-            this.smhColId.HeaderText = "ID";
-            this.smhColId.Name = "smhColId";
-            this.smhColId.Visible = false;
-            this.smhColId.Width = 46;
+            this.stdColId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.stdColId.DataPropertyName = "id";
+            this.stdColId.DividerWidth = 1;
+            this.stdColId.FillWeight = 16.98324F;
+            this.stdColId.HeaderText = "ID";
+            this.stdColId.Name = "stdColId";
+            this.stdColId.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.stdColId.Visible = false;
+            this.stdColId.Width = 42;
             // 
-            // smhColCustomer
+            // stdColCustomer
             // 
-            this.smhColCustomer.DataPropertyName = "customer";
-            this.smhColCustomer.HeaderText = "Customer";
-            this.smhColCustomer.Name = "smhColCustomer";
-            this.smhColCustomer.Visible = false;
+            this.stdColCustomer.DataPropertyName = "customer";
+            this.stdColCustomer.HeaderText = "Customer";
+            this.stdColCustomer.Name = "stdColCustomer";
+            this.stdColCustomer.Visible = false;
             // 
-            // smhColType
+            // stdColType
             // 
-            this.smhColType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.smhColType.DataPropertyName = "type";
-            this.smhColType.DividerWidth = 1;
-            this.smhColType.HeaderText = "Type";
-            this.smhColType.Name = "smhColType";
-            this.smhColType.Width = 59;
+            this.stdColType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.stdColType.DataPropertyName = "type";
+            this.stdColType.DividerWidth = 1;
+            this.stdColType.FillWeight = 25.33413F;
+            this.stdColType.HeaderText = "Type";
+            this.stdColType.Name = "stdColType";
+            this.stdColType.Width = 54;
             // 
-            // smhColStatus
+            // stdColStatus
             // 
-            this.smhColStatus.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.smhColStatus.DataPropertyName = "status";
-            this.smhColStatus.DividerWidth = 1;
-            this.smhColStatus.HeaderText = "Status";
-            this.smhColStatus.Name = "smhColStatus";
-            this.smhColStatus.Width = 67;
+            this.stdColStatus.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.stdColStatus.DataPropertyName = "status";
+            this.stdColStatus.DividerWidth = 1;
+            this.stdColStatus.FillWeight = 33.8766F;
+            this.stdColStatus.HeaderText = "Status";
+            this.stdColStatus.Name = "stdColStatus";
+            this.stdColStatus.Width = 63;
             // 
-            // smhColSummaryKr
+            // stdColSummaryKr
             // 
-            this.smhColSummaryKr.DataPropertyName = "summary_kr";
-            this.smhColSummaryKr.DividerWidth = 1;
-            this.smhColSummaryKr.HeaderText = "Summary";
-            this.smhColSummaryKr.Name = "smhColSummaryKr";
+            this.stdColSummaryKr.DataPropertyName = "summary_kr";
+            this.stdColSummaryKr.DividerWidth = 1;
+            this.stdColSummaryKr.FillWeight = 76.81911F;
+            this.stdColSummaryKr.HeaderText = "Summary";
+            this.stdColSummaryKr.Name = "stdColSummaryKr";
             // 
-            // smhColDueDate
+            // stdColDueDate
             // 
-            this.smhColDueDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.smhColDueDate.DataPropertyName = "due_date";
-            this.smhColDueDate.DividerWidth = 1;
-            this.smhColDueDate.HeaderText = "Due Date";
-            this.smhColDueDate.Name = "smhColDueDate";
-            this.smhColDueDate.Width = 83;
+            this.stdColDueDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.stdColDueDate.DataPropertyName = "due_date";
+            this.stdColDueDate.DividerWidth = 1;
+            this.stdColDueDate.FillWeight = 51.24502F;
+            this.stdColDueDate.HeaderText = "Due Date";
+            this.stdColDueDate.Name = "stdColDueDate";
+            this.stdColDueDate.Width = 79;
             // 
-            // smhColUpdateDate
+            // stdColUpdateDate
             // 
-            this.smhColUpdateDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.smhColUpdateDate.DataPropertyName = "update_date";
-            this.smhColUpdateDate.DividerWidth = 1;
-            this.smhColUpdateDate.HeaderText = "Update Date";
-            this.smhColUpdateDate.Name = "smhColUpdateDate";
+            this.stdColUpdateDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.stdColUpdateDate.DataPropertyName = "update_date";
+            this.stdColUpdateDate.DividerWidth = 1;
+            this.stdColUpdateDate.FillWeight = 51.79351F;
+            this.stdColUpdateDate.HeaderText = "Update Date";
+            this.stdColUpdateDate.Name = "stdColUpdateDate";
+            this.stdColUpdateDate.Width = 96;
             // 
-            // smhColDocumentLink
+            // stdColDocumentLink
             // 
-            this.smhColDocumentLink.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.smhColDocumentLink.DataPropertyName = "document_name";
-            this.smhColDocumentLink.DividerWidth = 1;
-            this.smhColDocumentLink.HeaderText = "File Name";
-            this.smhColDocumentLink.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.smhColDocumentLink.Name = "smhColDocumentLink";
-            this.smhColDocumentLink.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.smhColDocumentLink.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.smhColDocumentLink.Width = 88;
+            this.stdColDocumentLink.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.stdColDocumentLink.DataPropertyName = "document_name";
+            this.stdColDocumentLink.DividerWidth = 1;
+            this.stdColDocumentLink.FillWeight = 76.66993F;
+            this.stdColDocumentLink.HeaderText = "File Name";
+            this.stdColDocumentLink.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.stdColDocumentLink.Name = "stdColDocumentLink";
+            this.stdColDocumentLink.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.stdColDocumentLink.Width = 81;
             // 
-            // smhColDocumentPath
+            // stdColDocumentPath
             // 
-            this.smhColDocumentPath.DataPropertyName = "document_file";
-            this.smhColDocumentPath.HeaderText = "File Path";
-            this.smhColDocumentPath.Name = "smhColDocumentPath";
-            this.smhColDocumentPath.Visible = false;
+            this.stdColDocumentPath.DataPropertyName = "document_file";
+            this.stdColDocumentPath.HeaderText = "File Path";
+            this.stdColDocumentPath.Name = "stdColDocumentPath";
+            this.stdColDocumentPath.Visible = false;
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1463, 960);
+            this.ClientSize = new System.Drawing.Size(1280, 768);
             this.Controls.Add(this.ui_lbMainVersion);
             this.Controls.Add(this.ui_lbMainTitle3);
             this.Controls.Add(this.ui_lbMainTitle2);
             this.Controls.Add(this.ui_lbMainTitle1);
             this.Controls.Add(this.ui_tabControl);
             this.DisplayHeader = false;
-            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.MinimumSize = new System.Drawing.Size(1463, 960);
+            this.MinimumSize = new System.Drawing.Size(1280, 768);
             this.Name = "MainForm";
-            this.Padding = new System.Windows.Forms.Padding(23, 38, 23, 25);
+            this.Padding = new System.Windows.Forms.Padding(20, 30, 20, 20);
             this.StartPosition = System.Windows.Forms.FormStartPosition.WindowsDefaultLocation;
             this.StyleManager = this.ui_styleMgr;
             this.Text = "Hull Maintenance";
@@ -2199,24 +2160,13 @@
 		private System.Windows.Forms.Button ui_btnSmhSearchTextClear;
 		private MetroFramework.Controls.MetroButton ui_btnSmhSearch;
 		private System.Windows.Forms.ComboBox ui_cbSmhSearchText;
-		private System.Windows.Forms.ComboBox ui_cbSmhCustomer;
 		private MetroFramework.Controls.MetroPanel ui_panelSubStd2;
 		private MetroFramework.Controls.MetroButton ui_btnStdAddItem;
 		private MetroFramework.Controls.MetroPanel ui_panelSubStd1;
-		private System.Windows.Forms.ComboBox ui_cbStdCustomer;
 		private MetroFramework.Controls.MetroButton ui_btnStdSearchHistoryClear;
 		private System.Windows.Forms.Button ui_btnStdSearchTextClear;
 		private MetroFramework.Controls.MetroButton ui_btnStdSearch;
 		private System.Windows.Forms.ComboBox ui_cbStdSearchText;
-        private System.Windows.Forms.DataGridViewTextBoxColumn stdColId;
-        private System.Windows.Forms.DataGridViewTextBoxColumn stdColCustomer;
-        private System.Windows.Forms.DataGridViewTextBoxColumn stdColType;
-        private System.Windows.Forms.DataGridViewTextBoxColumn stdColStatus;
-        private System.Windows.Forms.DataGridViewTextBoxColumn stdColSummaryKr;
-        private System.Windows.Forms.DataGridViewTextBoxColumn stdColDueDate;
-        private System.Windows.Forms.DataGridViewTextBoxColumn stdColUpdateDate;
-        private System.Windows.Forms.DataGridViewLinkColumn stdColDocumentLink;
-        private System.Windows.Forms.DataGridViewTextBoxColumn stdColDocumentPath;
         private System.Windows.Forms.DataGridViewTextBoxColumn smhColId;
         private System.Windows.Forms.DataGridViewTextBoxColumn smhColCustomer;
         private System.Windows.Forms.DataGridViewTextBoxColumn smhColType;
@@ -2226,6 +2176,17 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn smhColUpdateDate;
         private System.Windows.Forms.DataGridViewLinkColumn smhColDocumentLink;
         private System.Windows.Forms.DataGridViewTextBoxColumn smhColDocumentPath;
+        private MetroFramework.Controls.MetroComboBox ui_cbSmhCustomer;
+        private MetroFramework.Controls.MetroComboBox ui_cbStdCustomer;
+        private System.Windows.Forms.DataGridViewTextBoxColumn stdColId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn stdColCustomer;
+        private System.Windows.Forms.DataGridViewTextBoxColumn stdColType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn stdColStatus;
+        private System.Windows.Forms.DataGridViewTextBoxColumn stdColSummaryKr;
+        private System.Windows.Forms.DataGridViewTextBoxColumn stdColDueDate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn stdColUpdateDate;
+        private System.Windows.Forms.DataGridViewLinkColumn stdColDocumentLink;
+        private System.Windows.Forms.DataGridViewTextBoxColumn stdColDocumentPath;
     }
 }
 
