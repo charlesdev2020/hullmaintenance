@@ -26,6 +26,7 @@ namespace HullMaintenance
 		public string stdTableName { get; private set; }
 		public string smhTableName { get; private set; }
 		public string Customer { get; private set; }
+        public string Period { get; private set; }
         public int ThemeIdx { get; private set; }
         public int StyleIdx { get; private set; }
 		#endregion
@@ -48,8 +49,11 @@ namespace HullMaintenance
             LoadGridDataTable(this.ui_gridStd, this.StdDt);
             LoadGridDataTable(this.ui_gridSmh, this.SmhDt);
 
-            LoadCustomerList(this.ui_cbStdCustomer, this.StdDt, this.Customer);
-            LoadCustomerList(this.ui_cbSmhCustomer, this.SmhDt, this.Customer);
+            LoadConditionList(this.ui_cbStdCustomer, this.ui_cbStdPeriod, this.StdDt, this.Customer, this.Period);
+            LoadConditionList(this.ui_cbSmhCustomer, this.ui_cbSmhPeriod, this.SmhDt, this.Customer, this.Period);
+
+            //LoadPeriodList(this.ui_cbStdCustomer, this.StdDt, this.Customer);
+            //LoadPeriodList(this.ui_cbSmhCustomer, this.SmhDt, this.Customer);
 
             InitStyle();
         }
@@ -218,7 +222,7 @@ namespace HullMaintenance
             catch (Exception ex) { }
         }
 
-        private void OnCustomerSelectedValueChanged(object sender, EventArgs e)
+        private void OnConditionSelectedValueChanged(object sender, EventArgs e)
         {
             ComboBox cBox = sender as ComboBox;
             string customer = cBox.Text;
@@ -304,7 +308,8 @@ namespace HullMaintenance
             this.ui_tbDbName.Text = iniHelper.GetPrivateProfileString("Database", "DBName", "");
             this.stdTableName = iniHelper.GetPrivateProfileString("Database", "StdTableName", "");
             this.smhTableName = iniHelper.GetPrivateProfileString("Database", "SmhTableName", "");
-            this.Customer = iniHelper.GetPrivateProfileString("Database", "Customer", "");
+            this.Customer = iniHelper.GetPrivateProfileString("Condition", "Customer", "ALL");
+            this.Period = iniHelper.GetPrivateProfileString("Condition", "Period", "ALL");
             this.ui_tbSmhDocPath.Text = iniHelper.GetPrivateProfileString("FilePath", "SmhDocPath", "");
             this.ui_tbSmhSamplePath.Text = iniHelper.GetPrivateProfileString("FilePath", "SmhSamplePath", "");
             this.ui_tbStdDocPath.Text = iniHelper.GetPrivateProfileString("FilePath", "StdDocPath", "");
@@ -396,24 +401,60 @@ namespace HullMaintenance
         /// </summary>
         /// <param name="combo"></param>
         /// <param name="dt"></param>
-        private void LoadCustomerList(ComboBox combo, DataTable dt, string customer)
+        /// <param name="customer"></param>
+        private void LoadConditionList(ComboBox cbCustmer, ComboBox cbPeriod, DataTable dt, string customer, string period)
         {
-            combo.Items.Add("ALL");
-
             if (dt.Rows.Count > 0)
             {
                 List<string> customerList = dt.Select().Select(x => x["customer"]).Cast<string>().Distinct().ToList();
+                List<string> periodList = new List<string>();
+                var dtList = dt.Select().Select(x => x["receive_date"]).ToList();
 
-                customerList.ForEach(x => combo.Items.Add(x));
+                foreach (var date in dtList)
+                {
+                    if ((date as DateTime?).HasValue == false)
+                    {
+                        continue;
+                    }
+
+                    DateTime? nullDate = date as DateTime?;
+                    string strDate = nullDate.Value.Year.ToString();
+                    int year;
+                    if (int.TryParse(strDate, out year) == true && periodList.Contains(strDate) == false)
+                    {
+                        periodList.Add(strDate);
+                    }
+                }
+
+                customerList = customerList.OrderByDescending(x => x).ToList();
+                periodList = periodList.OrderByDescending(x => x).ToList();
+
+                customerList.ForEach(x => cbCustmer.Items.Add(x));
+                periodList.ForEach(x => cbPeriod.Items.Add(x));
             }
 
-            if (String.IsNullOrWhiteSpace(customer) == false && combo.Items.Contains(customer) == true)
+            cbCustmer.Items.Insert(0, "All Customer");
+            cbPeriod.Items.Insert(0, "All Period");
+
+            customer = customer.Replace("ALL", "ALL Customer");
+            period = period.Replace("ALL", "ALL Period");
+
+            if (String.IsNullOrWhiteSpace(customer) == false && cbCustmer.Items.Contains(customer) == true)
             {
-                combo.SelectedIndex = combo.Items.IndexOf(customer);
+                cbCustmer.SelectedItem = customer;
             }
             else
             {
-                combo.SelectedIndex = 0;
+                cbCustmer.SelectedIndex = 0;
+            }
+
+            if (String.IsNullOrWhiteSpace(period) == false && cbPeriod.Items.Contains(period) == true)
+            {
+                cbPeriod.SelectedItem = period;
+            }
+            else
+            {
+                cbPeriod.SelectedIndex = 0;
             }
         }
 

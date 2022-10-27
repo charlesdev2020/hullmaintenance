@@ -54,7 +54,8 @@
             this.ui_panelSubSmh2 = new MetroFramework.Controls.MetroPanel();
             this.ui_btnSmhAddItem = new MetroFramework.Controls.MetroButton();
             this.ui_panelSubSmh1 = new MetroFramework.Controls.MetroPanel();
-            this.ui_cbSmhCustomer = new MetroFramework.Controls.MetroComboBox();
+            this.ui_cbSmhPeriod = new System.Windows.Forms.ComboBox();
+            this.ui_cbSmhCustomer = new System.Windows.Forms.ComboBox();
             this.ui_btnSmhSearchHistoryClear = new MetroFramework.Controls.MetroButton();
             this.ui_btnSmhSearchTextClear = new System.Windows.Forms.Button();
             this.ui_btnSmhSearch = new MetroFramework.Controls.MetroButton();
@@ -66,7 +67,8 @@
             this.ui_panelSubStd2 = new MetroFramework.Controls.MetroPanel();
             this.ui_btnStdAddItem = new MetroFramework.Controls.MetroButton();
             this.ui_panelSubStd1 = new MetroFramework.Controls.MetroPanel();
-            this.ui_cbStdCustomer = new MetroFramework.Controls.MetroComboBox();
+            this.ui_cbStdPeriod = new System.Windows.Forms.ComboBox();
+            this.ui_cbStdCustomer = new System.Windows.Forms.ComboBox();
             this.ui_btnStdSearchHistoryClear = new MetroFramework.Controls.MetroButton();
             this.ui_btnStdSearchTextClear = new System.Windows.Forms.Button();
             this.ui_btnStdSearch = new MetroFramework.Controls.MetroButton();
@@ -416,6 +418,7 @@
             // ui_panelSubSmh1
             // 
             this.ui_panelSubSmh1.BackColor = System.Drawing.Color.Transparent;
+            this.ui_panelSubSmh1.Controls.Add(this.ui_cbSmhPeriod);
             this.ui_panelSubSmh1.Controls.Add(this.ui_cbSmhCustomer);
             this.ui_panelSubSmh1.Dock = System.Windows.Forms.DockStyle.Left;
             this.ui_panelSubSmh1.HorizontalScrollbarBarColor = true;
@@ -425,32 +428,44 @@
             this.ui_panelSubSmh1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ui_panelSubSmh1.Name = "ui_panelSubSmh1";
             this.ui_panelSubSmh1.Padding = new System.Windows.Forms.Padding(13, 0, 13, 0);
-            this.ui_panelSubSmh1.Size = new System.Drawing.Size(175, 48);
+            this.ui_panelSubSmh1.Size = new System.Drawing.Size(300, 48);
             this.ui_panelSubSmh1.TabIndex = 24;
             this.ui_panelSubSmh1.UseCustomBackColor = true;
             this.ui_panelSubSmh1.VerticalScrollbarBarColor = true;
             this.ui_panelSubSmh1.VerticalScrollbarHighlightOnWheel = false;
             this.ui_panelSubSmh1.VerticalScrollbarSize = 9;
             // 
+            // ui_cbSmhPeriod
+            // 
+            this.ui_cbSmhPeriod.BackColor = System.Drawing.SystemColors.Window;
+            this.ui_cbSmhPeriod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ui_cbSmhPeriod.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.ui_cbSmhPeriod.Font = new System.Drawing.Font("굴림", 9F);
+            this.ui_cbSmhPeriod.FormattingEnabled = true;
+            this.ui_cbSmhPeriod.ItemHeight = 12;
+            this.ui_cbSmhPeriod.Location = new System.Drawing.Point(164, 14);
+            this.ui_cbSmhPeriod.Name = "ui_cbSmhPeriod";
+            this.ui_cbSmhPeriod.Size = new System.Drawing.Size(120, 20);
+            this.ui_cbSmhPeriod.TabIndex = 4;
+            this.ui_cbSmhPeriod.Tag = "ui_gridStd";
+            // 
             // ui_cbSmhCustomer
             // 
+            this.ui_cbSmhCustomer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ui_cbSmhCustomer.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.ui_cbSmhCustomer.FormattingEnabled = true;
-            this.ui_cbSmhCustomer.ItemHeight = 23;
-            this.ui_cbSmhCustomer.Location = new System.Drawing.Point(16, 10);
+            this.ui_cbSmhCustomer.Location = new System.Drawing.Point(16, 14);
             this.ui_cbSmhCustomer.Name = "ui_cbSmhCustomer";
-            this.ui_cbSmhCustomer.Size = new System.Drawing.Size(121, 29);
-            this.ui_cbSmhCustomer.Sorted = true;
+            this.ui_cbSmhCustomer.Size = new System.Drawing.Size(120, 20);
             this.ui_cbSmhCustomer.TabIndex = 2;
-            this.ui_cbSmhCustomer.TabStop = false;
             this.ui_cbSmhCustomer.Tag = "ui_gridSmh";
-            this.ui_cbSmhCustomer.UseSelectable = true;
-            this.ui_cbSmhCustomer.SelectedValueChanged += new System.EventHandler(this.OnCustomerSelectedValueChanged);
+            this.ui_cbSmhCustomer.SelectedValueChanged += new System.EventHandler(this.OnConditionSelectedValueChanged);
             // 
             // ui_btnSmhSearchHistoryClear
             // 
             this.ui_btnSmhSearchHistoryClear.BackColor = System.Drawing.SystemColors.ControlLight;
             this.ui_btnSmhSearchHistoryClear.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ui_btnSmhSearchHistoryClear.Location = new System.Drawing.Point(615, 14);
+            this.ui_btnSmhSearchHistoryClear.Location = new System.Drawing.Point(741, 14);
             this.ui_btnSmhSearchHistoryClear.Name = "ui_btnSmhSearchHistoryClear";
             this.ui_btnSmhSearchHistoryClear.Size = new System.Drawing.Size(52, 20);
             this.ui_btnSmhSearchHistoryClear.TabIndex = 6;
@@ -468,7 +483,7 @@
             this.ui_btnSmhSearchTextClear.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ui_btnSmhSearchTextClear.FlatAppearance.BorderSize = 0;
             this.ui_btnSmhSearchTextClear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ui_btnSmhSearchTextClear.Location = new System.Drawing.Point(180, 20);
+            this.ui_btnSmhSearchTextClear.Location = new System.Drawing.Point(306, 20);
             this.ui_btnSmhSearchTextClear.Name = "ui_btnSmhSearchTextClear";
             this.ui_btnSmhSearchTextClear.Size = new System.Drawing.Size(10, 10);
             this.ui_btnSmhSearchTextClear.TabIndex = 4;
@@ -480,7 +495,7 @@
             // 
             this.ui_btnSmhSearch.BackColor = System.Drawing.SystemColors.ControlLight;
             this.ui_btnSmhSearch.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ui_btnSmhSearch.Location = new System.Drawing.Point(557, 14);
+            this.ui_btnSmhSearch.Location = new System.Drawing.Point(683, 14);
             this.ui_btnSmhSearch.Name = "ui_btnSmhSearch";
             this.ui_btnSmhSearch.Size = new System.Drawing.Size(52, 20);
             this.ui_btnSmhSearch.TabIndex = 5;
@@ -495,7 +510,7 @@
             this.ui_cbSmhSearchText.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.ui_cbSmhSearchText.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.ui_cbSmhSearchText.FormattingEnabled = true;
-            this.ui_cbSmhSearchText.Location = new System.Drawing.Point(200, 15);
+            this.ui_cbSmhSearchText.Location = new System.Drawing.Point(326, 15);
             this.ui_cbSmhSearchText.Name = "ui_cbSmhSearchText";
             this.ui_cbSmhSearchText.Size = new System.Drawing.Size(350, 20);
             this.ui_cbSmhSearchText.TabIndex = 3;
@@ -663,6 +678,7 @@
             // ui_panelSubStd1
             // 
             this.ui_panelSubStd1.BackColor = System.Drawing.Color.Transparent;
+            this.ui_panelSubStd1.Controls.Add(this.ui_cbStdPeriod);
             this.ui_panelSubStd1.Controls.Add(this.ui_cbStdCustomer);
             this.ui_panelSubStd1.Dock = System.Windows.Forms.DockStyle.Left;
             this.ui_panelSubStd1.HorizontalScrollbarBarColor = true;
@@ -672,31 +688,47 @@
             this.ui_panelSubStd1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ui_panelSubStd1.Name = "ui_panelSubStd1";
             this.ui_panelSubStd1.Padding = new System.Windows.Forms.Padding(13, 0, 13, 0);
-            this.ui_panelSubStd1.Size = new System.Drawing.Size(175, 48);
+            this.ui_panelSubStd1.Size = new System.Drawing.Size(300, 48);
             this.ui_panelSubStd1.TabIndex = 30;
             this.ui_panelSubStd1.UseCustomBackColor = true;
             this.ui_panelSubStd1.VerticalScrollbarBarColor = true;
             this.ui_panelSubStd1.VerticalScrollbarHighlightOnWheel = false;
             this.ui_panelSubStd1.VerticalScrollbarSize = 9;
             // 
+            // ui_cbStdPeriod
+            // 
+            this.ui_cbStdPeriod.BackColor = System.Drawing.SystemColors.Window;
+            this.ui_cbStdPeriod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ui_cbStdPeriod.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.ui_cbStdPeriod.Font = new System.Drawing.Font("굴림", 9F);
+            this.ui_cbStdPeriod.FormattingEnabled = true;
+            this.ui_cbStdPeriod.ItemHeight = 12;
+            this.ui_cbStdPeriod.Location = new System.Drawing.Point(164, 14);
+            this.ui_cbStdPeriod.Name = "ui_cbStdPeriod";
+            this.ui_cbStdPeriod.Size = new System.Drawing.Size(120, 20);
+            this.ui_cbStdPeriod.TabIndex = 3;
+            this.ui_cbStdPeriod.Tag = "ui_gridStd";
+            // 
             // ui_cbStdCustomer
             // 
+            this.ui_cbStdCustomer.BackColor = System.Drawing.SystemColors.Window;
+            this.ui_cbStdCustomer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ui_cbStdCustomer.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.ui_cbStdCustomer.Font = new System.Drawing.Font("굴림", 9F);
             this.ui_cbStdCustomer.FormattingEnabled = true;
-            this.ui_cbStdCustomer.ItemHeight = 23;
-            this.ui_cbStdCustomer.Location = new System.Drawing.Point(16, 10);
+            this.ui_cbStdCustomer.ItemHeight = 12;
+            this.ui_cbStdCustomer.Location = new System.Drawing.Point(16, 14);
             this.ui_cbStdCustomer.Name = "ui_cbStdCustomer";
-            this.ui_cbStdCustomer.Size = new System.Drawing.Size(121, 29);
-            this.ui_cbStdCustomer.Sorted = true;
+            this.ui_cbStdCustomer.Size = new System.Drawing.Size(120, 20);
             this.ui_cbStdCustomer.TabIndex = 2;
             this.ui_cbStdCustomer.Tag = "ui_gridStd";
-            this.ui_cbStdCustomer.UseSelectable = true;
-            this.ui_cbStdCustomer.SelectedValueChanged += new System.EventHandler(this.OnCustomerSelectedValueChanged);
+            this.ui_cbStdCustomer.SelectedValueChanged += new System.EventHandler(this.OnConditionSelectedValueChanged);
             // 
             // ui_btnStdSearchHistoryClear
             // 
             this.ui_btnStdSearchHistoryClear.BackColor = System.Drawing.SystemColors.ControlLight;
             this.ui_btnStdSearchHistoryClear.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ui_btnStdSearchHistoryClear.Location = new System.Drawing.Point(615, 14);
+            this.ui_btnStdSearchHistoryClear.Location = new System.Drawing.Point(741, 14);
             this.ui_btnStdSearchHistoryClear.Name = "ui_btnStdSearchHistoryClear";
             this.ui_btnStdSearchHistoryClear.Size = new System.Drawing.Size(52, 20);
             this.ui_btnStdSearchHistoryClear.TabIndex = 6;
@@ -715,7 +747,7 @@
             this.ui_btnStdSearchTextClear.FlatAppearance.BorderSize = 0;
             this.ui_btnStdSearchTextClear.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
             this.ui_btnStdSearchTextClear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ui_btnStdSearchTextClear.Location = new System.Drawing.Point(180, 20);
+            this.ui_btnStdSearchTextClear.Location = new System.Drawing.Point(306, 20);
             this.ui_btnStdSearchTextClear.Name = "ui_btnStdSearchTextClear";
             this.ui_btnStdSearchTextClear.Size = new System.Drawing.Size(10, 10);
             this.ui_btnStdSearchTextClear.TabIndex = 4;
@@ -727,7 +759,7 @@
             // 
             this.ui_btnStdSearch.BackColor = System.Drawing.SystemColors.ControlLight;
             this.ui_btnStdSearch.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ui_btnStdSearch.Location = new System.Drawing.Point(557, 14);
+            this.ui_btnStdSearch.Location = new System.Drawing.Point(683, 14);
             this.ui_btnStdSearch.Name = "ui_btnStdSearch";
             this.ui_btnStdSearch.Size = new System.Drawing.Size(52, 20);
             this.ui_btnStdSearch.TabIndex = 5;
@@ -741,8 +773,9 @@
             // 
             this.ui_cbStdSearchText.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.ui_cbStdSearchText.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.ui_cbStdSearchText.Font = new System.Drawing.Font("굴림", 9F);
             this.ui_cbStdSearchText.FormattingEnabled = true;
-            this.ui_cbStdSearchText.Location = new System.Drawing.Point(200, 15);
+            this.ui_cbStdSearchText.Location = new System.Drawing.Point(326, 15);
             this.ui_cbStdSearchText.Name = "ui_cbStdSearchText";
             this.ui_cbStdSearchText.Size = new System.Drawing.Size(350, 20);
             this.ui_cbStdSearchText.TabIndex = 3;
@@ -2176,8 +2209,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn smhColUpdateDate;
         private System.Windows.Forms.DataGridViewLinkColumn smhColDocumentLink;
         private System.Windows.Forms.DataGridViewTextBoxColumn smhColDocumentPath;
-        private MetroFramework.Controls.MetroComboBox ui_cbSmhCustomer;
-        private MetroFramework.Controls.MetroComboBox ui_cbStdCustomer;
+        private System.Windows.Forms.ComboBox ui_cbStdCustomer;
+        private System.Windows.Forms.ComboBox ui_cbStdPeriod;
+        private System.Windows.Forms.ComboBox ui_cbSmhPeriod;
+        private System.Windows.Forms.ComboBox ui_cbSmhCustomer;
         private System.Windows.Forms.DataGridViewTextBoxColumn stdColId;
         private System.Windows.Forms.DataGridViewTextBoxColumn stdColCustomer;
         private System.Windows.Forms.DataGridViewTextBoxColumn stdColType;
