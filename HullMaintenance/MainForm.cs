@@ -225,25 +225,48 @@ namespace HullMaintenance
         private void OnConditionSelectedValueChanged(object sender, EventArgs e)
         {
             ComboBox cBox = sender as ComboBox;
-            string customer = cBox.Text;
-            string filterQuery = "";
-
-            if (customer.Equals("ALL") == true)
-            {
-                filterQuery = String.Empty;
-            }
-            else
-            {
-                filterQuery = String.Format("customer = '{0}'", customer);
-            }
+            ComboBox customerBox;
+            ComboBox periodBox;
+            MetroGrid grid;
+            DataTable dt;
 
             if (cBox.Tag.ToString() == "ui_gridStd")
             {
-                (ui_gridStd.DataSource as DataTable).DefaultView.RowFilter = filterQuery;
+                grid = ui_gridStd;
+                customerBox = ui_cbStdCustomer;
+                periodBox = ui_cbStdPeriod;
+                dt = this.StdDt;
             }
             else
             {
-                (ui_gridSmh.DataSource as DataTable).DefaultView.RowFilter = filterQuery;
+                grid = ui_gridSmh;
+                customerBox = ui_cbSmhCustomer;
+                periodBox = ui_cbSmhPeriod;
+                dt = this.SmhDt;
+            }
+
+            string customer = customerBox.Text;
+            string period = periodBox.Text;
+
+            DataTable tempDt = dt.Copy();
+
+            if (String.IsNullOrEmpty(customer) == false && customer.Contains("ALL") == false)
+            {
+                tempDt = tempDt.Select(String.Format("customer = '{0}'", customer)).CopyToDataTable();
+            }
+
+            if (String.IsNullOrEmpty(period) == false && period.Contains("ALL") == false)
+            {
+                //
+            }
+
+            tempDt = tempDt.Select("", "id DESC").CopyToDataTable();
+
+            //selectQuery += " ORDER BY id DESC";
+            if (tempDt.Rows.Count > 0)
+            {
+                grid.DataSource = tempDt.DefaultView.ToTable(false, new string[] {
+                "id", "type", "status", "summary_kr", "due_date", "update_date", "document_name", "customer" }).Select().CopyToDataTable();
             }
         }
 
@@ -433,8 +456,8 @@ namespace HullMaintenance
                 periodList.ForEach(x => cbPeriod.Items.Add(x));
             }
 
-            cbCustmer.Items.Insert(0, "All Customer");
-            cbPeriod.Items.Insert(0, "All Period");
+            cbCustmer.Items.Insert(0, "ALL Customer");
+            cbPeriod.Items.Insert(0, "ALL Period");
 
             customer = customer.Replace("ALL", "ALL Customer");
             period = period.Replace("ALL", "ALL Period");
@@ -463,8 +486,11 @@ namespace HullMaintenance
         /// </summary>
         private void LoadGridDataTable(MetroGrid grid, DataTable dt)
         {
-            grid.DataSource = dt.DefaultView.ToTable(false, new string[] {
+            if (dt.Rows.Count > 0 )
+            {
+                grid.DataSource = dt.DefaultView.ToTable(false, new string[] {
                 "id", "type", "status", "summary_kr", "due_date", "update_date", "document_name", "customer" }).Select().CopyToDataTable();
+            }
 
             #region Test
             //dt = this.DtSmartHull.DefaultView.ToTable(false, new string[] { colId.DataPropertyName, colType.DataPropertyName, colStatus.DataPropertyName, colSummaryKr.DataPropertyName, colDueDate.DataPropertyName, colUpdateDate.DataPropertyName, colDocumentLink.DataPropertyName, colCustomer.DataPropertyName }).Select("customer = '이마바리'").CopyToDataTable();

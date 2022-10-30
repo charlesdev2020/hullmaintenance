@@ -63,6 +63,15 @@
             this.stdPage = new System.Windows.Forms.TabPage();
             this.ui_panelStd = new MetroFramework.Controls.MetroPanel();
             this.ui_gridStd = new MetroFramework.Controls.MetroGrid();
+            this.stdColId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.stdColCustomer = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.stdColType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.stdColStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.stdColSummaryKr = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.stdColDueDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.stdColUpdateDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.stdColDocumentLink = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.stdColDocumentPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ui_panelStdcollapsible = new MetroFramework.Controls.MetroPanel();
             this.ui_panelSubStd2 = new MetroFramework.Controls.MetroPanel();
             this.ui_btnStdAddItem = new MetroFramework.Controls.MetroButton();
@@ -136,15 +145,6 @@
             this.ui_lbMainTitle3 = new MetroFramework.Controls.MetroLabel();
             this.ui_lbMainVersion = new MetroFramework.Controls.MetroLabel();
             this.ui_styleMgr = new MetroFramework.Components.MetroStyleManager(this.components);
-            this.stdColId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.stdColCustomer = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.stdColType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.stdColStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.stdColSummaryKr = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.stdColDueDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.stdColUpdateDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.stdColDocumentLink = new System.Windows.Forms.DataGridViewLinkColumn();
-            this.stdColDocumentPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ui_tabControl.SuspendLayout();
             this.smhPage.SuspendLayout();
             this.ui_panelSmh.SuspendLayout();
@@ -176,7 +176,7 @@
             this.ui_tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ui_tabControl.Location = new System.Drawing.Point(20, 30);
             this.ui_tabControl.Name = "ui_tabControl";
-            this.ui_tabControl.SelectedIndex = 1;
+            this.ui_tabControl.SelectedIndex = 0;
             this.ui_tabControl.Size = new System.Drawing.Size(1240, 718);
             this.ui_tabControl.TabIndex = 0;
             this.ui_tabControl.UseSelectable = true;
@@ -448,6 +448,7 @@
             this.ui_cbSmhPeriod.Size = new System.Drawing.Size(120, 20);
             this.ui_cbSmhPeriod.TabIndex = 4;
             this.ui_cbSmhPeriod.Tag = "ui_gridStd";
+            this.ui_cbSmhPeriod.SelectedValueChanged += new System.EventHandler(this.OnConditionSelectedValueChanged);
             // 
             // ui_cbSmhCustomer
             // 
@@ -620,6 +621,91 @@
             this.ui_gridStd.TabIndex = 1;
             this.ui_gridStd.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.OnGridDataBindingComplete);
             // 
+            // stdColId
+            // 
+            this.stdColId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.stdColId.DataPropertyName = "id";
+            this.stdColId.DividerWidth = 1;
+            this.stdColId.FillWeight = 16.98324F;
+            this.stdColId.HeaderText = "ID";
+            this.stdColId.Name = "stdColId";
+            this.stdColId.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.stdColId.Visible = false;
+            // 
+            // stdColCustomer
+            // 
+            this.stdColCustomer.DataPropertyName = "customer";
+            this.stdColCustomer.HeaderText = "Customer";
+            this.stdColCustomer.Name = "stdColCustomer";
+            this.stdColCustomer.Visible = false;
+            // 
+            // stdColType
+            // 
+            this.stdColType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.stdColType.DataPropertyName = "type";
+            this.stdColType.DividerWidth = 1;
+            this.stdColType.FillWeight = 25.33413F;
+            this.stdColType.HeaderText = "Type";
+            this.stdColType.Name = "stdColType";
+            this.stdColType.Width = 54;
+            // 
+            // stdColStatus
+            // 
+            this.stdColStatus.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.stdColStatus.DataPropertyName = "status";
+            this.stdColStatus.DividerWidth = 1;
+            this.stdColStatus.FillWeight = 33.8766F;
+            this.stdColStatus.HeaderText = "Status";
+            this.stdColStatus.Name = "stdColStatus";
+            this.stdColStatus.Width = 63;
+            // 
+            // stdColSummaryKr
+            // 
+            this.stdColSummaryKr.DataPropertyName = "summary_kr";
+            this.stdColSummaryKr.DividerWidth = 1;
+            this.stdColSummaryKr.FillWeight = 76.81911F;
+            this.stdColSummaryKr.HeaderText = "Summary";
+            this.stdColSummaryKr.Name = "stdColSummaryKr";
+            // 
+            // stdColDueDate
+            // 
+            this.stdColDueDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.stdColDueDate.DataPropertyName = "due_date";
+            this.stdColDueDate.DividerWidth = 1;
+            this.stdColDueDate.FillWeight = 51.24502F;
+            this.stdColDueDate.HeaderText = "Due Date";
+            this.stdColDueDate.Name = "stdColDueDate";
+            this.stdColDueDate.Width = 79;
+            // 
+            // stdColUpdateDate
+            // 
+            this.stdColUpdateDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.stdColUpdateDate.DataPropertyName = "update_date";
+            this.stdColUpdateDate.DividerWidth = 1;
+            this.stdColUpdateDate.FillWeight = 51.79351F;
+            this.stdColUpdateDate.HeaderText = "Update Date";
+            this.stdColUpdateDate.Name = "stdColUpdateDate";
+            this.stdColUpdateDate.Width = 96;
+            // 
+            // stdColDocumentLink
+            // 
+            this.stdColDocumentLink.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.stdColDocumentLink.DataPropertyName = "document_name";
+            this.stdColDocumentLink.DividerWidth = 1;
+            this.stdColDocumentLink.FillWeight = 76.66993F;
+            this.stdColDocumentLink.HeaderText = "File Name";
+            this.stdColDocumentLink.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.stdColDocumentLink.Name = "stdColDocumentLink";
+            this.stdColDocumentLink.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.stdColDocumentLink.Width = 81;
+            // 
+            // stdColDocumentPath
+            // 
+            this.stdColDocumentPath.DataPropertyName = "document_file";
+            this.stdColDocumentPath.HeaderText = "File Path";
+            this.stdColDocumentPath.Name = "stdColDocumentPath";
+            this.stdColDocumentPath.Visible = false;
+            // 
             // ui_panelStdcollapsible
             // 
             this.ui_panelStdcollapsible.BackColor = System.Drawing.SystemColors.ButtonFace;
@@ -708,6 +794,7 @@
             this.ui_cbStdPeriod.Size = new System.Drawing.Size(120, 20);
             this.ui_cbStdPeriod.TabIndex = 3;
             this.ui_cbStdPeriod.Tag = "ui_gridStd";
+            this.ui_cbStdPeriod.SelectedValueChanged += new System.EventHandler(this.OnConditionSelectedValueChanged);
             // 
             // ui_cbStdCustomer
             // 
@@ -1983,92 +2070,6 @@
             // ui_styleMgr
             // 
             this.ui_styleMgr.Owner = this;
-            // 
-            // stdColId
-            // 
-            this.stdColId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.stdColId.DataPropertyName = "id";
-            this.stdColId.DividerWidth = 1;
-            this.stdColId.FillWeight = 16.98324F;
-            this.stdColId.HeaderText = "ID";
-            this.stdColId.Name = "stdColId";
-            this.stdColId.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.stdColId.Visible = false;
-            this.stdColId.Width = 42;
-            // 
-            // stdColCustomer
-            // 
-            this.stdColCustomer.DataPropertyName = "customer";
-            this.stdColCustomer.HeaderText = "Customer";
-            this.stdColCustomer.Name = "stdColCustomer";
-            this.stdColCustomer.Visible = false;
-            // 
-            // stdColType
-            // 
-            this.stdColType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.stdColType.DataPropertyName = "type";
-            this.stdColType.DividerWidth = 1;
-            this.stdColType.FillWeight = 25.33413F;
-            this.stdColType.HeaderText = "Type";
-            this.stdColType.Name = "stdColType";
-            this.stdColType.Width = 54;
-            // 
-            // stdColStatus
-            // 
-            this.stdColStatus.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.stdColStatus.DataPropertyName = "status";
-            this.stdColStatus.DividerWidth = 1;
-            this.stdColStatus.FillWeight = 33.8766F;
-            this.stdColStatus.HeaderText = "Status";
-            this.stdColStatus.Name = "stdColStatus";
-            this.stdColStatus.Width = 63;
-            // 
-            // stdColSummaryKr
-            // 
-            this.stdColSummaryKr.DataPropertyName = "summary_kr";
-            this.stdColSummaryKr.DividerWidth = 1;
-            this.stdColSummaryKr.FillWeight = 76.81911F;
-            this.stdColSummaryKr.HeaderText = "Summary";
-            this.stdColSummaryKr.Name = "stdColSummaryKr";
-            // 
-            // stdColDueDate
-            // 
-            this.stdColDueDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.stdColDueDate.DataPropertyName = "due_date";
-            this.stdColDueDate.DividerWidth = 1;
-            this.stdColDueDate.FillWeight = 51.24502F;
-            this.stdColDueDate.HeaderText = "Due Date";
-            this.stdColDueDate.Name = "stdColDueDate";
-            this.stdColDueDate.Width = 79;
-            // 
-            // stdColUpdateDate
-            // 
-            this.stdColUpdateDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.stdColUpdateDate.DataPropertyName = "update_date";
-            this.stdColUpdateDate.DividerWidth = 1;
-            this.stdColUpdateDate.FillWeight = 51.79351F;
-            this.stdColUpdateDate.HeaderText = "Update Date";
-            this.stdColUpdateDate.Name = "stdColUpdateDate";
-            this.stdColUpdateDate.Width = 96;
-            // 
-            // stdColDocumentLink
-            // 
-            this.stdColDocumentLink.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.stdColDocumentLink.DataPropertyName = "document_name";
-            this.stdColDocumentLink.DividerWidth = 1;
-            this.stdColDocumentLink.FillWeight = 76.66993F;
-            this.stdColDocumentLink.HeaderText = "File Name";
-            this.stdColDocumentLink.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.stdColDocumentLink.Name = "stdColDocumentLink";
-            this.stdColDocumentLink.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.stdColDocumentLink.Width = 81;
-            // 
-            // stdColDocumentPath
-            // 
-            this.stdColDocumentPath.DataPropertyName = "document_file";
-            this.stdColDocumentPath.HeaderText = "File Path";
-            this.stdColDocumentPath.Name = "stdColDocumentPath";
-            this.stdColDocumentPath.Visible = false;
             // 
             // MainForm
             // 
