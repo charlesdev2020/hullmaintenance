@@ -52,23 +52,21 @@ namespace HullMaintenance
             LoadConditionList(this.ui_cbStdCustomer, this.ui_cbStdPeriod, this.StdDt, this.Customer, this.Period);
             LoadConditionList(this.ui_cbSmhCustomer, this.ui_cbSmhPeriod, this.SmhDt, this.Customer, this.Period);
 
-            //LoadPeriodList(this.ui_cbStdCustomer, this.StdDt, this.Customer);
-            //LoadPeriodList(this.ui_cbSmhCustomer, this.SmhDt, this.Customer);
-
             InitStyle();
         }
 
         private void OnGridDataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             MetroGrid grid = sender as MetroGrid;
-
-            DateTime dateTime;
-            bool isCheck;
-            int count;
+            string module = grid.Name.ToLower().Contains("std") == true ? "std" : "smh";
 
             foreach (DataGridViewRow row in grid.Rows)
             {
                 grid.Rows[row.Index].HeaderCell.Value = (row.Index + 1).ToString();
+
+                CheckDueDateCell(row, module);
+
+                CheckStatusCell(row, module);
             }
         }
 
@@ -257,16 +255,16 @@ namespace HullMaintenance
 
             if (String.IsNullOrEmpty(period) == false && period.Contains("ALL") == false)
             {
-                //
+                tempDt = tempDt.Select().Where(x => x["receive_date"].ToString().StartsWith(period)).CopyToDataTable();
             }
-
-            tempDt = tempDt.Select("", "id DESC").CopyToDataTable();
 
             //selectQuery += " ORDER BY id DESC";
             if (tempDt.Rows.Count > 0)
             {
+                tempDt = tempDt.Select("", "id DESC").CopyToDataTable();
+
                 grid.DataSource = tempDt.DefaultView.ToTable(false, new string[] {
-                "id", "type", "status", "summary_kr", "due_date", "update_date", "document_name", "customer" }).Select().CopyToDataTable();
+                "id", "customer", "type", "status", "summary_kr", "receive_date", "due_date", "update_date", "document_name", }).Select().CopyToDataTable();
             }
         }
 
@@ -317,6 +315,74 @@ namespace HullMaintenance
         #endregion
 
         #region Method
+        /// <summary>
+        /// Check the deadline.
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="module"></param>
+        private void CheckDueDateCell(DataGridViewRow row, string module)
+        {
+            DateTime dateTime;
+            bool isUpdate = false;
+            double days;
+
+            if (DateTime.TryParse(row.Cells[String.Format("{0}ColUpdateDate", module)].Value.ToString(), out dateTime))
+            {
+                isUpdate = true;
+            }
+            else
+            {
+                isUpdate = false;
+            }
+
+            DataGridViewCell dueDateCell = row.Cells[String.Format("{0}ColDueDate", module)];
+            DataGridViewCell statusCell = row.Cells[String.Format("{0}ColStatus", module)];
+
+            if (DateTime.TryParse(dueDateCell.Value.ToString(), out dateTime) == false || isUpdate == true ||
+                (statusCell.Value.ToString() != "" && row.Cells[String.Format("{0}ColStatus", module)].Value.ToString() != "진행중"))
+            {
+                return;
+            }
+
+            // due_date가 현재보다 미래
+            if (DateTime.Now.CompareTo(dateTime) == -1)
+            {
+                days = Math.Truncate((dateTime - DateTime.Now).TotalDays);
+
+                if (days <= 7 && days > 3)      // 7일 이내
+                {
+                    dueDateCell.Style.BackColor = ColorTranslator.FromHtml(this.ui_tbColorD7.Text);
+                    dueDateCell.Style.ForeColor = Color.White;
+                }
+                else if (days <= 3 && days > 1) // 3일 이내
+                {
+                    dueDateCell.Style.BackColor = ColorTranslator.FromHtml(this.ui_tbColorD3.Text);
+                    dueDateCell.Style.ForeColor = Color.White;
+                }
+                else if (days <= 1)             // 1일 남음
+                {
+                    dueDateCell.Style.BackColor = ColorTranslator.FromHtml(this.ui_tbColorD1.Text);
+                    dueDateCell.Style.ForeColor = Color.White;
+                }
+            }
+            else
+            {
+                // 납기일 초과
+                row.Cells[String.Format("{0}ColDueDate", module)].Style.BackColor = ColorTranslator.FromHtml(this.ui_tbColorD1.Text);
+                row.Cells[String.Format("{0}ColDueDate", module)].Style.ForeColor = Color.White;
+            }
+        }
+
+        /// <summary>
+        /// Check th status.
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="module"></param>
+        private void CheckStatusCell(DataGridViewRow row, string module)
+        {
+
+        }
+
         /// <summary>
         /// Load INI
         /// </summary>
@@ -489,7 +555,7 @@ namespace HullMaintenance
             if (dt.Rows.Count > 0 )
             {
                 grid.DataSource = dt.DefaultView.ToTable(false, new string[] {
-                "id", "type", "status", "summary_kr", "due_date", "update_date", "document_name", "customer" }).Select().CopyToDataTable();
+                "id",  "customer", "type", "status", "summary_kr", "receive_date", "due_date", "update_date", "document_name" }).Select().CopyToDataTable();
             }
 
             #region Test
