@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 
 namespace HullMaintenance
@@ -29,6 +30,10 @@ namespace HullMaintenance
         public string Period { get; private set; }
         public int ThemeIdx { get; private set; }
         public int StyleIdx { get; private set; }
+        public string SearchColumns { get; private set; }
+        public string StaticSearchQuery { get; private set; }
+        public string DynamicSearchQuery { get; private set; }
+        public Dictionary<string, string> StatusColorDic { get; private set; }
 		#endregion
 
         public MainForm()
@@ -157,13 +162,24 @@ namespace HullMaintenance
 		{
 			MetroButton mBtn = sender as MetroButton;
 			string tag = mBtn.Tag.ToString();
-			ComboBox cbox = mBtn.Parent.Controls.Find(tag, true).FirstOrDefault() as ComboBox;
-			string searchText = cbox.Text;
+			ComboBox cBox = mBtn.Parent.Controls.Find(tag, true).FirstOrDefault() as ComboBox;
+			string searchText = cBox.Text;
 
 			if (String.IsNullOrWhiteSpace(searchText) == false)
 			{
-				cbox.Items.Add(searchText);
-			}
+                cBox.Items.Add(searchText);
+
+                if (cBox.Tag.ToString() == "ui_gridStd")
+                {
+                    this.StdDt.DefaultView.RowFilter = String.Format(this.StaticSearchQuery, searchText);
+                    //ui_gridStd.DataSource = this.StdDt.DefaultView;
+                }
+                else
+                {
+                    this.SmhDt.DefaultView.RowFilter = String.Format(this.StaticSearchQuery, searchText);
+                    //ui_gridSmh.DataSource = this.SmhDt.DefaultView;
+                }
+            }
         }
 
         private void OnClickBtnSearchHistoryClear(object sender, EventArgs e)
@@ -201,11 +217,13 @@ namespace HullMaintenance
 
             if (cBox.Tag.ToString() == "ui_gridStd")
             {
-                (ui_gridStd.DataSource as DataTable).DefaultView.RowFilter = String.Format("summary_kr LIKE '%{0}%' OR document_name LIKE '%{0}%'", searchText);
+                //this.StdDt.DefaultView.RowFilter = String.Format(this.SearchQuery, searchText);
+                //ui_gridStd.DataSource = this.StdDt.DefaultView;
+                (ui_gridStd.DataSource as DataTable).DefaultView.RowFilter = String.Format(this.DynamicSearchQuery, searchText);
             }
             else
             {
-                (ui_gridSmh.DataSource as DataTable).DefaultView.RowFilter = String.Format("summary_kr LIKE '%{0}%' OR document_name LIKE '%{0}%'", searchText);
+                (ui_gridSmh.DataSource as DataTable).DefaultView.RowFilter = String.Format(this.DynamicSearchQuery, searchText);
             }
         }
 
@@ -264,7 +282,7 @@ namespace HullMaintenance
                 tempDt = tempDt.Select("", "id DESC").CopyToDataTable();
 
                 grid.DataSource = tempDt.DefaultView.ToTable(false, new string[] {
-                "id", "customer", "type", "status", "summary_kr", "receive_date", "due_date", "update_date", "document_name", }).Select().CopyToDataTable();
+                "id", "customer", "type", "status", "summary_kr", "receive_date", "due_date", "start_date", "end_date", "verification_date", "update_date", "document_name", }).Select().CopyToDataTable();
             }
         }
 
@@ -310,8 +328,6 @@ namespace HullMaintenance
 				}
 			}
 		}
-
-        //private void OnSelected
         #endregion
 
         #region Method
@@ -326,7 +342,11 @@ namespace HullMaintenance
             bool isUpdate = false;
             double days;
 
-            if (DateTime.TryParse(row.Cells[String.Format("{0}ColUpdateDate", module)].Value.ToString(), out dateTime))
+            DataGridViewCell statusCell = row.Cells[String.Format("{0}ColStatus", module)];
+            DataGridViewCell dueDateCell = row.Cells[String.Format("{0}ColDueDate", module)];
+            DataGridViewCell updateDateCell = row.Cells[String.Format("{0}ColUpdateDate", module)];
+
+            if (DateTime.TryParse(updateDateCell.Value.ToString(), out dateTime))
             {
                 isUpdate = true;
             }
@@ -335,41 +355,44 @@ namespace HullMaintenance
                 isUpdate = false;
             }
 
-            DataGridViewCell dueDateCell = row.Cells[String.Format("{0}ColDueDate", module)];
-            DataGridViewCell statusCell = row.Cells[String.Format("{0}ColStatus", module)];
-
             if (DateTime.TryParse(dueDateCell.Value.ToString(), out dateTime) == false || isUpdate == true ||
                 (statusCell.Value.ToString() != "" && row.Cells[String.Format("{0}ColStatus", module)].Value.ToString() != "진행중"))
             {
                 return;
             }
 
-            // due_date가 현재보다 미래
-            if (DateTime.Now.CompareTo(dateTime) == -1)
+            try
             {
-                days = Math.Truncate((dateTime - DateTime.Now).TotalDays);
+                // due_date가 현재보다 미래
+                if (DateTime.Now.CompareTo(dateTime) == -1)
+                {
+                    days = Math.Truncate((dateTime - DateTime.Now).TotalDays);
 
-                if (days <= 7 && days > 3)      // 7일 이내
-                {
-                    dueDateCell.Style.BackColor = ColorTranslator.FromHtml(this.ui_tbColorD7.Text);
-                    dueDateCell.Style.ForeColor = Color.White;
+                    if (days <= 7 && days > 3)      // 7일 이내
+                    {
+                        dueDateCell.Style.BackColor = ColorTranslator.FromHtml(this.ui_tbColorD7.Text);
+                        dueDateCell.Style.ForeColor = Color.White;
+                    }
+                    else if (days <= 3 && days > 1) // 3일 이내
+                    {
+                        dueDateCell.Style.BackColor = ColorTranslator.FromHtml(this.ui_tbColorD3.Text);
+                        dueDateCell.Style.ForeColor = Color.White;
+                    }
+                    else if (days <= 1)             // 1일 남음
+                    {
+                        dueDateCell.Style.BackColor = ColorTranslator.FromHtml(this.ui_tbColorD1.Text);
+                        dueDateCell.Style.ForeColor = Color.White;
+                    }
                 }
-                else if (days <= 3 && days > 1) // 3일 이내
+                else
                 {
-                    dueDateCell.Style.BackColor = ColorTranslator.FromHtml(this.ui_tbColorD3.Text);
-                    dueDateCell.Style.ForeColor = Color.White;
-                }
-                else if (days <= 1)             // 1일 남음
-                {
+                    // 납기일 초과
                     dueDateCell.Style.BackColor = ColorTranslator.FromHtml(this.ui_tbColorD1.Text);
                     dueDateCell.Style.ForeColor = Color.White;
                 }
             }
-            else
+            catch (Exception ex)
             {
-                // 납기일 초과
-                row.Cells[String.Format("{0}ColDueDate", module)].Style.BackColor = ColorTranslator.FromHtml(this.ui_tbColorD1.Text);
-                row.Cells[String.Format("{0}ColDueDate", module)].Style.ForeColor = Color.White;
             }
         }
 
@@ -380,11 +403,56 @@ namespace HullMaintenance
         /// <param name="module"></param>
         private void CheckStatusCell(DataGridViewRow row, string module)
         {
+            DateTime dateTime;
 
+            DataGridViewCell statusCell = row.Cells[String.Format("{0}ColStatus", module)];
+            DataGridViewCell endDateCell = row.Cells[String.Format("{0}ColEndDate", module)];
+            DataGridViewCell verifyDateCell = row.Cells[String.Format("{0}ColVerificationDate", module)];
+            DataGridViewCell updateDateCell = row.Cells[String.Format("{0}ColUpdateDate", module)];
+
+            try
+            {
+                if (StatusColorDic.ContainsKey(statusCell.Value.ToString()) == true)
+                {
+                    string status = statusCell.Value.ToString();
+
+                    if (status == "진행중" || status == "보류" || status == "대기" || status == "처리불가" || status == "취소")
+                    {
+                        statusCell.Style.BackColor = ColorTranslator.FromHtml(StatusColorDic[statusCell.Value.ToString()]);
+
+                        if (status == "처리불가" || status == "취소")
+                        {
+                            statusCell.Style.ForeColor = Color.White;
+                        }
+                    }
+                    else if (status == "처리완료" && DateTime.TryParse(endDateCell.Value.ToString(), out dateTime) == true)
+                    {
+                        statusCell.Style.BackColor = ColorTranslator.FromHtml(StatusColorDic[statusCell.Value.ToString()]);
+                    }
+                    else if (status == "부분완료" && DateTime.TryParse(updateDateCell.Value.ToString(), out dateTime) == true)
+                    {
+                        statusCell.Style.BackColor = ColorTranslator.FromHtml(StatusColorDic[statusCell.Value.ToString()]);
+                    }
+                    else if (status == "완료" && DateTime.TryParse(updateDateCell.Value.ToString(), out dateTime) == true)
+                    {
+                        statusCell.Style.BackColor = ColorTranslator.FromHtml(StatusColorDic[statusCell.Value.ToString()]);
+                    }
+                    else if ((status == "처리완료" && DateTime.TryParse(endDateCell.Value.ToString(), out dateTime) == false) ||
+                             (status == "부분완료" && DateTime.TryParse(updateDateCell.Value.ToString(), out dateTime) == false) ||
+                             (status == "완료" && DateTime.TryParse(updateDateCell.Value.ToString(), out dateTime) == false) ||
+                             (status == "업데이트" && DateTime.TryParse(verifyDateCell.Value.ToString(), out dateTime) == false))
+                    {
+                        statusCell.Style.BackColor = ColorTranslator.FromHtml(StatusColorDic["오류"]);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+            }
         }
 
         /// <summary>
-        /// Load INI
+        /// Load INI & Initialize
         /// </summary>
         private void LoadINI()
         {
@@ -404,19 +472,71 @@ namespace HullMaintenance
             this.ui_tbStdDocPath.Text = iniHelper.GetPrivateProfileString("FilePath", "StdDocPath", "");
             this.ui_tbStdSamplePath.Text = iniHelper.GetPrivateProfileString("FilePath", "StdSamplePath", "");
             this.ui_styleMgr.Theme = (MetroThemeStyle)int.Parse(iniHelper.GetPrivateProfileString("Design", "StartThemeIdx", "1"));
-            this.ui_styleMgr.Style = (MetroColorStyle)int.Parse(iniHelper.GetPrivateProfileString("Design", "StartStyleIdx", "4"));
+            this.ui_styleMgr.Style = (MetroColorStyle)int.Parse(iniHelper.GetPrivateProfileString("Design", "StartStyleIdx", "7"));
             this.ui_tbColorWorking.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "Working", ""));
             this.ui_tbColorWorkDone.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "WorkDone", ""));
             this.ui_tbColorPartialDone.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "PartialDone", ""));
             this.ui_tbColorComplete.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "Complete", ""));
             this.ui_tbColorPending.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "Pending", ""));
-            this.ui_tbColorWaiting.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "Waiting", ""));
             this.ui_tbColorError.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "Error", ""));
             this.ui_tbColorCancel.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "Cancel", ""));
             this.ui_tbColorImpossible.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "Impossible", ""));
             this.ui_tbColorD1.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "D-1", ""));
             this.ui_tbColorD3.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "D-3", ""));
             this.ui_tbColorD7.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "D-7", ""));
+
+            this.SearchColumns = iniHelper.GetPrivateProfileString("Search", "Columns", "summary_kr,document_file");
+            this.StaticSearchQuery = GetSearchQuery(this.SearchColumns);
+            this.DynamicSearchQuery = "summary_kr LIKE '%{0}%' OR document_name LIKE '%{0}%'";
+
+            //bool isRealTimeSearchText = iniHelper.GetPrivateProfileString("Search", "RealTimeSearch", "0") == "1" ? true : false;
+            //if (isRealTimeSearchText == true)
+            //{
+            //    this.ui_cbStdSearchText.TextChanged += new System.EventHandler(this.OnSeachTextChanged);
+            //    this.ui_cbSmhSearchText.TextChanged += new System.EventHandler(this.OnSeachTextChanged);
+            //}
+            //else
+            //{
+            //    this.ui_cbStdSearchText.TextChanged -= new System.EventHandler(this.OnSeachTextChanged);
+            //    this.ui_cbSmhSearchText.TextChanged -= new System.EventHandler(this.OnSeachTextChanged);
+            //}
+
+            StatusColorDic = new Dictionary<string, string>();
+            StatusColorDic.Add("진행중", this.ui_tbColorWorking.Text);
+            StatusColorDic.Add("처리완료", this.ui_tbColorWorkDone.Text);
+            StatusColorDic.Add("부분완료", this.ui_tbColorPartialDone.Text);
+            StatusColorDic.Add("완료", this.ui_tbColorComplete.Text);
+            StatusColorDic.Add("보류", this.ui_tbColorPending.Text);
+            StatusColorDic.Add("대기", this.ui_tbColorPending.Text);
+            StatusColorDic.Add("오류", this.ui_tbColorError.Text);
+            StatusColorDic.Add("취소", this.ui_tbColorCancel.Text);
+            StatusColorDic.Add("처리불가", this.ui_tbColorImpossible.Text);
+        }
+
+        /// <summary>
+        /// Create Query for Searching
+        /// </summary>
+        /// <param name="columns"></param>
+        /// <returns></returns>
+        private string GetSearchQuery(string columns)
+        {
+            StringBuilder builder = new StringBuilder();
+
+            string[] splitColumns = columns.Trim().Split(',');
+
+            for (int i = 0; i < splitColumns.Length; i++)
+            {
+                string column = splitColumns[i];
+                column = column.Replace("document_file", "document_name");
+                builder.Append(String.Format("{0} LIKE '%{1}%'", column, "{0}"));
+
+                if (i < splitColumns.Length - 1)
+                {
+                    builder.Append(" OR ");
+                }
+            }
+
+            return builder.ToString();
         }
 
         /// <summary>
@@ -555,7 +675,7 @@ namespace HullMaintenance
             if (dt.Rows.Count > 0 )
             {
                 grid.DataSource = dt.DefaultView.ToTable(false, new string[] {
-                "id",  "customer", "type", "status", "summary_kr", "receive_date", "due_date", "update_date", "document_name" }).Select().CopyToDataTable();
+                "id", "customer", "type", "status", "summary_kr", "receive_date", "due_date", "start_date", "end_date", "verification_date", "update_date", "document_name" }).Select().CopyToDataTable();
             }
 
             #region Test
