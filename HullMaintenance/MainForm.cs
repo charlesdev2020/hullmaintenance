@@ -179,6 +179,18 @@ namespace HullMaintenance
             {
 
             }
+
+            foreach (Form form in Application.OpenForms)
+            {
+                // 열려 있는 폼이 있을때
+                if (form.GetType() == typeof(DetailForm))
+                {
+                    form.Close();
+                    break;
+                }
+            }
+            DetailForm dForm = new DetailForm();
+            dForm.Show();
         }
 
         private void OnClickBtnSearch(object sender, EventArgs e)
