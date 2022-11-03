@@ -202,7 +202,10 @@ namespace HullMaintenance
 
             if (String.IsNullOrWhiteSpace(searchText) == false)
             {
-                cBox.Items.Add(searchText);
+                if (cBox.Items.Contains(searchText) == false)
+                {
+                    cBox.Items.Add(searchText);
+                }
 
                 DataTable tempDt = new DataTable();
                 MetroGrid grid = GetDataTable(cBox.Tag.ToString(), ref tempDt);
@@ -276,6 +279,10 @@ namespace HullMaintenance
                                                                                        "receive_date", "due_date", "start_date", "end_date",
                                                                                        "verification_date", "update_date", "document_name" }).Select().CopyToDataTable();
             }
+            else
+            {
+                (grid.DataSource as DataTable).Clear();
+            }
         }
 
         private void OnTabControlKeyDown(object sender, KeyEventArgs e)
@@ -316,7 +323,10 @@ namespace HullMaintenance
 
 				if (String.IsNullOrWhiteSpace(searchText) == false)
 				{
-                    cBox.Items.Add(searchText);
+                    if (cBox.Items.Contains(searchText) == false)
+                    {
+                        cBox.Items.Add(searchText);
+                    }
 
                     DataTable tempDt = new DataTable();
                     MetroGrid grid = GetDataTable(cBox.Tag.ToString(), ref tempDt);
@@ -642,14 +652,21 @@ namespace HullMaintenance
 
             tempDt = dt.Copy();
 
-            if (String.IsNullOrEmpty(customer) == false && customer.Contains("ALL") == false)
+            try
             {
-                tempDt = tempDt.Select(String.Format("customer = '{0}'", customer)).CopyToDataTable();
-            }
+                if (customer.Contains("ALL") == false)
+                {
+                    tempDt = tempDt.Select(String.Format("customer = '{0}'", customer)).CopyToDataTable();
+                }
 
-            if (String.IsNullOrEmpty(period) == false && period.Contains("ALL") == false)
+                if (String.IsNullOrEmpty(period) == false && period.Contains("ALL") == false)
+                {
+                    tempDt = tempDt.Select().Where(x => x["receive_date"].ToString().StartsWith(period)).CopyToDataTable();
+                }
+            }
+            catch (Exception ex)
             {
-                tempDt = tempDt.Select().Where(x => x["receive_date"].ToString().StartsWith(period)).CopyToDataTable();
+                tempDt.Rows.Clear();
             }
 
             return grid;
