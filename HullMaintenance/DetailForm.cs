@@ -15,9 +15,22 @@ namespace HullMaintenance
 {
     public partial class DetailForm : MetroForm
     {
+        #region Properties
+        public int Index { get; set; }
+        public string Customer { get; set; }
+        #endregion
+
+        #region Constructor
         public DetailForm()
         {
             InitializeComponent();
         }
+
+        public DetailForm(DataTable dt)
+        {
+            InitializeComponent();
+        }
+        #endregion
+
     }
 }

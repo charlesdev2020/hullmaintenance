@@ -774,6 +774,9 @@ namespace HullMaintenance
             //metroTabControl.Width / metroTabControl.TabPages.Count - 1,
             //metroTabControl.ItemSize.Height);
             ui_tabControl.SelectedIndex = 1;
+            
+            System.Version version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+            ui_lbMainVersion.Text = String.Format("version={0}", version.ToString());
         }
         #endregion
     }
