@@ -354,6 +354,45 @@ namespace HullMaintenance
                 }
 			}
 		}
+
+        private void ui_gridStd_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            MetroGrid grid = sender as MetroGrid;
+            DataGridViewRow row = grid.Rows[e.RowIndex];
+            DataGridViewCellCollection cells = grid.Rows[e.RowIndex].Cells;
+            DataTable dt;
+            int id = 0;
+            string customer = "";
+
+            if (grid.Name.ToString() == "ui_gridStd")
+            {
+                dt = this.StdDt;
+                id = Convert.ToInt32(cells["stdColId"].Value.ToString());
+                customer = cells["stdColCustomer"].Value.ToString();
+            }
+            else
+            {
+                dt = this.SmhDt;
+                id = Convert.ToInt32(cells["smhColId"].Value.ToString());
+                customer = cells["smhColCustomer"].Value.ToString();
+            }
+
+            foreach (Form form in Application.OpenForms)
+            {
+                // 열려 있는 폼이 있을때
+                if (form.GetType() == typeof(DetailForm))
+                {
+                    form.Close();
+                    break;
+                }
+            }
+
+            DetailForm view = new DetailForm(dt);
+            view.Index = Convert.ToInt32(id.ToString());
+            view.Customer = customer;
+            view.Location = this.Location;
+            view.Show();
+        }
         #endregion
 
         #region Method
@@ -775,7 +814,7 @@ namespace HullMaintenance
             //metroTabControl.ItemSize.Height);
             ui_tabControl.SelectedIndex = 1;
             
-            System.Version version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+            Version version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
             ui_lbMainVersion.Text = String.Format("version={0}", version.ToString());
         }
         #endregion
