@@ -167,32 +167,6 @@ namespace HullMaintenance
             cbox.Items.Clear();
         }
 
-        private void OnClickBtnAddItem(object sender, EventArgs e)
-        {
-            MetroButton mBtn = sender as MetroButton;
-
-            if (mBtn.Tag.ToString() == "ui_gridStd")
-            {
-
-            }
-            else
-            {
-
-            }
-
-            foreach (Form form in Application.OpenForms)
-            {
-                // 열려 있는 폼이 있을때
-                if (form.GetType() == typeof(DetailForm))
-                {
-                    form.Close();
-                    break;
-                }
-            }
-            DetailForm dForm = new DetailForm();
-            dForm.Show();
-        }
-
         private void OnClickBtnSearch(object sender, EventArgs e)
         {
             MetroButton mBtn = sender as MetroButton;
@@ -229,8 +203,87 @@ namespace HullMaintenance
                     }
                 }
 
-                (grid.DataSource as DataTable).DefaultView.RowFilter = String.Format("id IN ({0})", String.Join(",", idxList));
+                if (idxList.Count > 0)
+                {
+                    (grid.DataSource as DataTable).DefaultView.RowFilter = String.Format("id IN ({0})", String.Join(",", idxList));
+                }
+                else
+                {
+                    (grid.DataSource as DataTable).DefaultView.RowFilter = String.Format("id = -1");
+                }
             }
+        }
+
+        private void OnClickBtnAddItem(object sender, EventArgs e)
+        {
+            MetroButton mBtn = sender as MetroButton;
+            ComboBox cBox = null;
+            DataTable dt;
+            if (mBtn.Tag.ToString().ToLower().Contains("std") == true)
+            {
+                dt = this.StdDt;
+                cBox = ui_cbStdCustomer;
+            }
+            else
+            {
+                dt = this.SmhDt;
+                cBox = ui_cbSmhCustomer;
+            }
+
+            foreach (Form form in Application.OpenForms)
+            {
+                // 열려 있는 폼이 있을때
+                if (form.GetType() == typeof(DetailForm))
+                {
+                    form.Close();
+                    break;
+                }
+            }
+
+            DetailForm view = new DetailForm(dt);
+            view.Index = 0;
+            view.Customer = cBox.Text.Contains("ALL") ? "ALL" : cBox.Text;
+            view.StartPosition = FormStartPosition.CenterParent;
+            view.Show();
+        }
+
+        private void OnGridCellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            MetroGrid grid = sender as MetroGrid;
+            DataGridViewRow row = grid.Rows[e.RowIndex];
+            DataGridViewCellCollection cells = grid.Rows[e.RowIndex].Cells;
+            DataTable dt;
+            int id = 0;
+            string customer = "";
+
+            if (grid.Name.ToString().ToLower().Contains("std") == true)
+            {
+                dt = this.StdDt;
+                id = Convert.ToInt32(cells["stdColId"].Value.ToString());
+                customer = cells["stdColCustomer"].Value.ToString();
+            }
+            else
+            {
+                dt = this.SmhDt;
+                id = Convert.ToInt32(cells["smhColId"].Value.ToString());
+                customer = cells["smhColCustomer"].Value.ToString();
+            }
+
+            foreach (Form form in Application.OpenForms)
+            {
+                // 열려 있는 폼이 있을때
+                if (form.GetType() == typeof(DetailForm))
+                {
+                    form.Close();
+                    break;
+                }
+            }
+
+            DetailForm view = new DetailForm(dt);
+            view.Index = Convert.ToInt32(id.ToString());
+            view.Customer = customer.Contains("ALL") ? "ALL" : customer;
+            view.StartPosition = FormStartPosition.CenterParent;
+            view.Show();
         }
 
         private void OnSeachTextChanged(object sender, EventArgs e)
@@ -238,7 +291,7 @@ namespace HullMaintenance
             ComboBox cBox = sender as ComboBox;
             string searchText = cBox.Text;
 
-            if (cBox.Tag.ToString() == "ui_gridStd")
+            if (cBox.Tag.ToString().ToLower().Contains("std") == true)
             {
                 (ui_gridStd.DataSource as DataTable).DefaultView.RowFilter = String.Format(this.DynamicSearchQuery, searchText);
             }
@@ -350,49 +403,17 @@ namespace HullMaintenance
                         }
                     }
 
-                    (grid.DataSource as DataTable).DefaultView.RowFilter = String.Format("id IN ({0})", String.Join(",", idxList));
+                    if (idxList.Count > 0)
+                    {
+                        (grid.DataSource as DataTable).DefaultView.RowFilter = String.Format("id IN ({0})", String.Join(",", idxList));
+                    }
+                    else
+                    {
+                        (grid.DataSource as DataTable).DefaultView.RowFilter = String.Format("id = -1");
+                    }
                 }
 			}
 		}
-
-        private void ui_gridStd_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            MetroGrid grid = sender as MetroGrid;
-            DataGridViewRow row = grid.Rows[e.RowIndex];
-            DataGridViewCellCollection cells = grid.Rows[e.RowIndex].Cells;
-            DataTable dt;
-            int id = 0;
-            string customer = "";
-
-            if (grid.Name.ToString() == "ui_gridStd")
-            {
-                dt = this.StdDt;
-                id = Convert.ToInt32(cells["stdColId"].Value.ToString());
-                customer = cells["stdColCustomer"].Value.ToString();
-            }
-            else
-            {
-                dt = this.SmhDt;
-                id = Convert.ToInt32(cells["smhColId"].Value.ToString());
-                customer = cells["smhColCustomer"].Value.ToString();
-            }
-
-            foreach (Form form in Application.OpenForms)
-            {
-                // 열려 있는 폼이 있을때
-                if (form.GetType() == typeof(DetailForm))
-                {
-                    form.Close();
-                    break;
-                }
-            }
-
-            DetailForm view = new DetailForm(dt);
-            view.Index = Convert.ToInt32(id.ToString());
-            view.Customer = customer;
-            view.Location = this.Location;
-            view.Show();
-        }
         #endregion
 
         #region Method
@@ -671,7 +692,7 @@ namespace HullMaintenance
             MetroGrid grid;
             DataTable dt;
 
-            if (tag == "ui_gridStd")
+            if (tag.ToLower().Contains("std") == true)
             {
                 grid = ui_gridStd;
                 customerBox = ui_cbStdCustomer;
