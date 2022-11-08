@@ -407,7 +407,7 @@
             // 
             // ui_dtpUpdateDate
             // 
-            this.ui_dtpUpdateDate.CustomFormat = " yyyy-MM-dd (ddd)";
+            this.ui_dtpUpdateDate.CustomFormat = " yyyy-MM-dd ddd";
             this.ui_dtpUpdateDate.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ui_dtpUpdateDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.ui_dtpUpdateDate.Location = new System.Drawing.Point(103, 174);
@@ -419,7 +419,7 @@
             // 
             // ui_dtpVerificationDate
             // 
-            this.ui_dtpVerificationDate.CustomFormat = " yyyy-MM-dd (ddd)";
+            this.ui_dtpVerificationDate.CustomFormat = " yyyy-MM-dd ddd";
             this.ui_dtpVerificationDate.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ui_dtpVerificationDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.ui_dtpVerificationDate.Location = new System.Drawing.Point(103, 144);
@@ -431,7 +431,7 @@
             // 
             // ui_dtpEndDate
             // 
-            this.ui_dtpEndDate.CustomFormat = " yyyy-MM-dd (ddd)";
+            this.ui_dtpEndDate.CustomFormat = " yyyy-MM-dd ddd";
             this.ui_dtpEndDate.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ui_dtpEndDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.ui_dtpEndDate.Location = new System.Drawing.Point(103, 114);
@@ -443,7 +443,7 @@
             // 
             // ui_dtpStartDate
             // 
-            this.ui_dtpStartDate.CustomFormat = " yyyy-MM-dd (ddd)";
+            this.ui_dtpStartDate.CustomFormat = " yyyy-MM-dd ddd";
             this.ui_dtpStartDate.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ui_dtpStartDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.ui_dtpStartDate.Location = new System.Drawing.Point(103, 83);
@@ -455,7 +455,7 @@
             // 
             // ui_dtpDueDate
             // 
-            this.ui_dtpDueDate.CustomFormat = " yyyy-MM-dd (ddd)";
+            this.ui_dtpDueDate.CustomFormat = " yyyy-MM-dd ddd";
             this.ui_dtpDueDate.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ui_dtpDueDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.ui_dtpDueDate.Location = new System.Drawing.Point(103, 53);
@@ -468,7 +468,7 @@
             // ui_dtpReceiveDate
             // 
             this.ui_dtpReceiveDate.CalendarTitleBackColor = System.Drawing.Color.DeepSkyBlue;
-            this.ui_dtpReceiveDate.CustomFormat = " yyyy-MM-dd (ddd)";
+            this.ui_dtpReceiveDate.CustomFormat = " yyyy-MM-dd ddd";
             this.ui_dtpReceiveDate.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ui_dtpReceiveDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.ui_dtpReceiveDate.Location = new System.Drawing.Point(103, 22);
@@ -926,6 +926,7 @@
             this.ui_btnSave.Tag = "ui_tbSmhDocPath";
             this.ui_btnSave.Text = "저장";
             this.ui_btnSave.UseSelectable = true;
+            this.ui_btnSave.Click += new System.EventHandler(this.OnClickBtnSave);
             // 
             // ui_btnCopy
             // 
@@ -952,6 +953,7 @@
             this.ui_btnDelete.Tag = "ui_tbSmhDocPath";
             this.ui_btnDelete.Text = "삭제";
             this.ui_btnDelete.UseSelectable = true;
+            this.ui_btnDelete.Click += new System.EventHandler(this.OnClickBtnDelete);
             // 
             // ui_lbIdNumber
             // 

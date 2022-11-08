@@ -34,6 +34,8 @@ namespace HullMaintenance
         public string StaticSearchQuery { get; private set; }
         public string DynamicSearchQuery { get; private set; }
         public Dictionary<string, string> StatusColorDic { get; private set; }
+        public string ActivateTableName { get; set; }
+        public int ActivateIndex { get; set; }
 		#endregion
 
         public MainForm()
@@ -48,8 +50,8 @@ namespace HullMaintenance
 
             this.ConnString = GetDatabaseConnection();
 
-            this.StdDt = GetDataTableFromDB(stdTableName);
-            this.SmhDt = GetDataTableFromDB(smhTableName);
+            this.StdDt = DbHelper.GetDataTableFromDB(stdTableName);
+            this.SmhDt = DbHelper.GetDataTableFromDB(smhTableName);
 
             LoadGridDataTable(this.ui_gridStd, this.StdDt);
             LoadGridDataTable(this.ui_gridSmh, this.SmhDt);
@@ -58,6 +60,63 @@ namespace HullMaintenance
             LoadConditionList(this.ui_cbSmhCustomer, this.ui_cbSmhPeriod, this.SmhDt, this.Customer, this.Period);
 
             InitStyle();
+        }
+
+        private void OnChangeDataTable(object sender, EventArgs e)
+        {
+            DataTable dataTable = sender as DataTable;
+
+            if (dataTable.TableName.Contains("smart"))
+            {
+                LoadGridDataTable(this.ui_gridSmh, this.SmhDt);
+                LoadConditionList(this.ui_cbSmhCustomer, this.ui_cbSmhPeriod, this.SmhDt, this.Customer, this.Period);
+            }
+            else
+            {
+                LoadGridDataTable(this.ui_gridStd, this.StdDt);
+                LoadConditionList(this.ui_cbStdCustomer, this.ui_cbStdPeriod, this.StdDt, this.Customer, this.Period);
+            }
+        }
+
+        private void OnActivatedMainForm(object sender, EventArgs e)
+        {
+            TabPage page = ui_tabControl.SelectedTab;
+            if (String.IsNullOrWhiteSpace(page.Tag.ToString()))
+            {
+                return;
+            }
+
+            string tableName = page.Tag.ToString();
+            MetroGrid grid;
+            DataTable dt;
+            ComboBox cBox;
+
+            if (tableName.Contains("smart"))
+            {
+                grid = ui_gridSmh;
+                dt = this.SmhDt;
+                cBox = ui_cbSmhCustomer;
+            }
+            else
+            {
+                grid = ui_gridStd;
+                dt = this.StdDt;
+                cBox = ui_cbStdCustomer;
+            }
+
+            dt = DbHelper.GetDataTableFromDB(tableName);
+
+            if (dt.TableName.Contains("smart"))
+            {
+                this.SmhDt = dt;
+            }
+            else
+            {
+                this.StdDt = dt;
+            }
+
+            LoadGridDataTable(grid, dt);
+            OnConditionSelectedValueChanged(cBox, null);
         }
 
         private void OnGridDataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -244,6 +303,7 @@ namespace HullMaintenance
             view.Index = 0;
             view.Customer = cBox.Text.Contains("ALL") ? "ALL" : cBox.Text;
             view.StartPosition = FormStartPosition.CenterParent;
+            //view.FormClosed += OnClosedDetailForm;
             view.Show();
         }
 
@@ -283,8 +343,54 @@ namespace HullMaintenance
             view.Index = Convert.ToInt32(id.ToString());
             view.Customer = customer.Contains("ALL") ? "ALL" : customer;
             view.StartPosition = FormStartPosition.CenterParent;
+            //view.FormClosed += OnClosedDetailForm;
             view.Show();
         }
+
+        //private void OnClosedDetailForm(object sender, FormClosedEventArgs e)
+        //{
+        //    DetailForm view = sender as DetailForm;
+        //    string tableName = view.Dt.TableName;
+        //    MetroGrid grid;
+        //    DataTable dt;
+        //    ComboBox cBox;
+
+        //    if (tableName.Contains("smart"))
+        //    {
+        //        grid = ui_gridSmh;
+        //        dt = this.SmhDt;
+        //        cBox = ui_cbSmhCustomer;
+        //    }
+        //    else
+        //    {
+        //        grid = ui_gridStd;
+        //        dt = this.StdDt;
+        //        cBox = ui_cbStdCustomer;
+        //    }
+
+        //    foreach (TabPage page in ui_tabControl.TabPages)
+        //    {
+        //        if (page.Text.ToLower().Contains(tableName))
+        //        {
+        //            ui_tabControl.SelectedTab = page;
+        //            break;
+        //        }
+        //    }
+
+        //    dt = DbHelper.GetDataTableFromDB(view.Dt.TableName);
+
+        //    if (dt.TableName.Contains("smart"))
+        //    {
+        //        this.SmhDt = dt;
+        //    }
+        //    else
+        //    {
+        //        this.StdDt = dt;
+        //    }
+
+        //    LoadGridDataTable(grid, dt);
+        //    OnConditionSelectedValueChanged(cBox, null);
+        //}
 
         private void OnSeachTextChanged(object sender, EventArgs e)
         {
@@ -619,64 +725,9 @@ namespace HullMaintenance
         /// <returns></returns>
         private string  GetDatabaseConnection()
         {
-            string connString = String.Format(@"Data Source={0}; Initial Catalog={1}; User ID={2}; Password={3}; Persist Security Info=True;",
-                                              this.ui_tbDbServer.Text, this.ui_tbDbName.Text, this.ui_tbDbId.Text, this.ui_tbDbPw.Text);
+            string connString = DbHelper.CreateDatabaseConnection(this.ui_tbDbServer.Text, this.ui_tbDbName.Text, this.ui_tbDbId.Text, this.ui_tbDbPw.Text);
 
             return connString;
-        }
-
-        /// <summary>
-        /// Get DataTable from DB
-        /// </summary>
-        /// <param name="tableName"></param>
-        /// <returns></returns>
-        private DataTable GetDataTableFromDB(string tableName)
-        {
-            DataTable dt = new DataTable();
-            string result = "Wait...";
-            this.ui_lbDBStatus.Text = result;
-
-            string query = String.Format("SELECT * FROM {0} ORDER BY id DESC", tableName);
-
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(this.ConnString))
-                {
-                    conn.Open();
-
-                    SqlDataAdapter sda = new SqlDataAdapter();
-                    SqlCommand scm = new SqlCommand(query, conn);
-                    SqlDataReader adr = scm.ExecuteReader();
-
-                    dt.Load(adr);
-                    dt.Columns.Add("document_name");
-                    foreach (DataRow row in dt.Rows)
-                    {
-                        string file = row["document_file"].ToString();
-
-                        if (String.IsNullOrEmpty(file) == true)
-                        {
-                            continue;
-                        }
-
-                        file = file.Split(Path.DirectorySeparatorChar).Last();
-                        row["document_name"] = file;
-                    }
-                }
-                result = "OK!";
-                ui_tabControl.SelectedIndex = 0;
-            }
-            catch (Exception ex)
-            {
-                result = "Failed!";
-                ui_tabControl.SelectedIndex = 3;
-            }
-            finally
-            {
-                this.ui_lbDBStatus.Text = result;
-            }
-
-            return dt;
         }
 
         /// <summary>

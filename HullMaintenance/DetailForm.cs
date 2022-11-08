@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -257,5 +258,160 @@ namespace HullMaintenance
             }
         }
         #endregion
+
+        private void OnClickBtnDelete(object sender, EventArgs e)
+        {
+            if (this.Index == 0)
+            {
+                return;
+            }
+
+            if (MetroMessageBox.Show(this, "", "Do you want to delete?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
+            {
+                return;
+            }
+
+            using (SqlConnection conn = new SqlConnection(DbHelper.DbConnectionString))
+            {
+                conn.Open();
+
+                SqlTransaction tran = conn.BeginTransaction();
+                SqlCommand cmd = new SqlCommand();
+
+                cmd.Connection = conn;
+                cmd.Transaction = tran;
+
+                try
+                {
+                    cmd.CommandText = DbHelper.GetDeleteQuery(this.Dt.TableName, this.Index);
+                    cmd.ExecuteNonQuery();
+
+                    tran.Commit();  // Transaction Commit
+                }
+                catch (Exception ex)
+                {
+                    tran.Rollback();    // 에러 발생 시, RollBack 처리
+                    MetroMessageBox.Show(this, ex.ToString(), "Delete Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void OnClickBtnSave(object sender, EventArgs e)
+        {
+            if (this.Index == 0)
+            {
+                this.Index = InsertData();
+            }
+            else
+            {
+                UpdateData(this.Index);
+            }
+        }
+
+        private int InsertData()
+        {
+
+            return 0;
+        }
+
+        private void UpdateData(int idx)
+        {
+            using (SqlConnection conn = new SqlConnection(DbHelper.DbConnectionString))
+            {
+                conn.Open();
+
+                DateTime dateTime;
+                SqlTransaction tran = conn.BeginTransaction();
+                SqlCommand cmd = new SqlCommand();
+
+                cmd.Connection = conn;
+                cmd.Transaction = tran;
+
+                try
+                {
+                    cmd.CommandText = DbHelper.GetUpdateQuery(this.Dt.TableName, this.Index);
+                    cmd.Parameters.AddWithValue("@customer", ui_cbCustomer.Text.Trim());
+                    cmd.Parameters.AddWithValue("@site", ui_cbSite.Text.Trim());
+                    cmd.Parameters.AddWithValue("@type", ui_cbType.Text.Trim());
+                    cmd.Parameters.AddWithValue("@category1", ui_cbCategory1.Text);
+                    cmd.Parameters.AddWithValue("@category2", ui_cbCategory2.Text);
+                    cmd.Parameters.AddWithValue("@priority", ui_cbPriority.Text.Trim());
+                    cmd.Parameters.AddWithValue("@workTime", ui_tbWorkTime.Text.Trim());
+                    cmd.Parameters.AddWithValue("@worker", ui_cbWorker.Text);
+
+                    if (DateTime.TryParse(ui_dtpReceiveDate.Text, out dateTime))
+                    {
+                        cmd.Parameters.AddWithValue("@receiveDate", ui_dtpReceiveDate.Value);
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@receiveDate", DBNull.Value);
+                    }
+
+                    if (DateTime.TryParse(ui_dtpDueDate.Text, out dateTime))
+                    {
+                        cmd.Parameters.AddWithValue("@dueDate", ui_dtpDueDate.Value);
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@dueDate", DBNull.Value);
+                    }
+
+                    if (DateTime.TryParse(ui_dtpStartDate.Text, out dateTime))
+                    {
+                        cmd.Parameters.AddWithValue("@startDate", ui_dtpStartDate.Value);
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@startDate", DBNull.Value);
+                    }
+
+                    if (DateTime.TryParse(ui_dtpEndDate.Text, out dateTime))
+                    {
+                        cmd.Parameters.AddWithValue("@endDate", ui_dtpEndDate.Value);
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@endDate", DBNull.Value);
+                    }
+
+                    if (DateTime.TryParse(ui_dtpVerificationDate.Text, out dateTime))
+                    {
+                        cmd.Parameters.AddWithValue("@verificationDate", ui_dtpVerificationDate.Value);
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@verificationDate", DBNull.Value);
+                    }
+
+                    if (DateTime.TryParse(ui_dtpUpdateDate.Text, out dateTime))
+                    {
+                        cmd.Parameters.AddWithValue("@updateDate", ui_dtpUpdateDate.Value);
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@updateDate", DBNull.Value);
+                    }
+
+                    cmd.Parameters.AddWithValue("@status", ui_cbStatus.Text);
+                    cmd.Parameters.AddWithValue("@documentFile", ui_tbDocument.Text);
+                    cmd.Parameters.AddWithValue("@sampleFile", ui_tbSample.Text);
+                    cmd.Parameters.AddWithValue("@mailFile", ui_tbMail.Text);
+                    cmd.Parameters.AddWithValue("@summaryKr", ui_tbSummaryKr.Text);
+                    cmd.Parameters.AddWithValue("@summaryJp", ui_tbSummaryJp.Text);
+                    cmd.Parameters.AddWithValue("@details", ui_tbDetails.Text);
+                    cmd.Parameters.AddWithValue("@writer", Environment.UserName);
+                    cmd.Parameters.AddWithValue("@saveDate", DateTime.Now);
+                    cmd.ExecuteNonQuery();
+
+                    tran.Commit();  // Transaction Commit
+                }
+                catch (Exception ex)
+                {
+                    tran.Rollback();    // 에러 발생 시, RollBack 처리
+                    MetroMessageBox.Show(this, ex.ToString(), "Update Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
     }
 }
