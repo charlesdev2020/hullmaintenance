@@ -188,7 +188,7 @@
             this.ui_tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ui_tabControl.Location = new System.Drawing.Point(20, 30);
             this.ui_tabControl.Name = "ui_tabControl";
-            this.ui_tabControl.SelectedIndex = 0;
+            this.ui_tabControl.SelectedIndex = 1;
             this.ui_tabControl.Size = new System.Drawing.Size(1240, 718);
             this.ui_tabControl.TabIndex = 0;
             this.ui_tabControl.UseSelectable = true;
@@ -2158,7 +2158,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.WindowsDefaultLocation;
             this.StyleManager = this.ui_styleMgr;
             this.Text = "Hull Maintenance";
-            this.Activated += new System.EventHandler(this.OnActivatedMainForm);
             this.Load += new System.EventHandler(this.OnLoadMainForm);
             this.ui_tabControl.ResumeLayout(false);
             this.smhPage.ResumeLayout(false);

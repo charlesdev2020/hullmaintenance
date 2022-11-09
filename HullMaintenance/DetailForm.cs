@@ -17,9 +17,11 @@ namespace HullMaintenance
     public partial class DetailForm : MetroForm
     {
         #region Properties
+        public int RowIndex { get; set; }
         public int Index { get; set; }
         public string Customer { get; set; }
         public DataTable Dt { get; private set; }
+        private MainForm m_MainForm;
         #endregion
 
         #region Constructor
@@ -306,11 +308,12 @@ namespace HullMaintenance
             {
                 UpdateData(this.Index);
             }
+
+            this.ActivateMdiChild(this);
         }
 
         private int InsertData()
         {
-
             return 0;
         }
 

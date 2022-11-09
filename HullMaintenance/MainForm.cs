@@ -62,24 +62,9 @@ namespace HullMaintenance
             InitStyle();
         }
 
-        private void OnChangeDataTable(object sender, EventArgs e)
+        private void OnUpdateMainForm(object sender, EventArgs e)
         {
-            DataTable dataTable = sender as DataTable;
-
-            if (dataTable.TableName.Contains("smart"))
-            {
-                LoadGridDataTable(this.ui_gridSmh, this.SmhDt);
-                LoadConditionList(this.ui_cbSmhCustomer, this.ui_cbSmhPeriod, this.SmhDt, this.Customer, this.Period);
-            }
-            else
-            {
-                LoadGridDataTable(this.ui_gridStd, this.StdDt);
-                LoadConditionList(this.ui_cbStdCustomer, this.ui_cbStdPeriod, this.StdDt, this.Customer, this.Period);
-            }
-        }
-
-        private void OnActivatedMainForm(object sender, EventArgs e)
-        {
+            int focusIndex = (sender as DetailForm).RowIndex;
             TabPage page = ui_tabControl.SelectedTab;
             if (String.IsNullOrWhiteSpace(page.Tag.ToString()))
             {
@@ -117,6 +102,9 @@ namespace HullMaintenance
 
             LoadGridDataTable(grid, dt);
             OnConditionSelectedValueChanged(cBox, null);
+
+            grid.Rows[focusIndex].Selected = true;
+            grid.FirstDisplayedScrollingRowIndex = focusIndex;
         }
 
         private void OnGridDataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -303,7 +291,7 @@ namespace HullMaintenance
             view.Index = 0;
             view.Customer = cBox.Text.Contains("ALL") ? "ALL" : cBox.Text;
             view.StartPosition = FormStartPosition.CenterParent;
-            //view.FormClosed += OnClosedDetailForm;
+            view.Owner = this;
             view.Show();
         }
 
@@ -340,10 +328,11 @@ namespace HullMaintenance
             }
 
             DetailForm view = new DetailForm(dt);
+            view.RowIndex = e.RowIndex;
             view.Index = Convert.ToInt32(id.ToString());
             view.Customer = customer.Contains("ALL") ? "ALL" : customer;
             view.StartPosition = FormStartPosition.CenterParent;
-            //view.FormClosed += OnClosedDetailForm;
+            view.MdiChildActivate += OnUpdateMainForm;
             view.Show();
         }
 
