@@ -291,7 +291,6 @@ namespace HullMaintenance
             view.Index = 0;
             view.Customer = cBox.Text.Contains("ALL") ? "ALL" : cBox.Text;
             view.StartPosition = FormStartPosition.CenterParent;
-            view.Owner = this;
             view.Show();
         }
 
@@ -335,51 +334,6 @@ namespace HullMaintenance
             view.MdiChildActivate += OnUpdateMainForm;
             view.Show();
         }
-
-        //private void OnClosedDetailForm(object sender, FormClosedEventArgs e)
-        //{
-        //    DetailForm view = sender as DetailForm;
-        //    string tableName = view.Dt.TableName;
-        //    MetroGrid grid;
-        //    DataTable dt;
-        //    ComboBox cBox;
-
-        //    if (tableName.Contains("smart"))
-        //    {
-        //        grid = ui_gridSmh;
-        //        dt = this.SmhDt;
-        //        cBox = ui_cbSmhCustomer;
-        //    }
-        //    else
-        //    {
-        //        grid = ui_gridStd;
-        //        dt = this.StdDt;
-        //        cBox = ui_cbStdCustomer;
-        //    }
-
-        //    foreach (TabPage page in ui_tabControl.TabPages)
-        //    {
-        //        if (page.Text.ToLower().Contains(tableName))
-        //        {
-        //            ui_tabControl.SelectedTab = page;
-        //            break;
-        //        }
-        //    }
-
-        //    dt = DbHelper.GetDataTableFromDB(view.Dt.TableName);
-
-        //    if (dt.TableName.Contains("smart"))
-        //    {
-        //        this.SmhDt = dt;
-        //    }
-        //    else
-        //    {
-        //        this.StdDt = dt;
-        //    }
-
-        //    LoadGridDataTable(grid, dt);
-        //    OnConditionSelectedValueChanged(cBox, null);
-        //}
 
         private void OnSeachTextChanged(object sender, EventArgs e)
         {

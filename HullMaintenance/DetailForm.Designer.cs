@@ -940,6 +940,7 @@
             this.ui_btnCopy.Tag = "ui_tbSmhDocPath";
             this.ui_btnCopy.Text = "복사";
             this.ui_btnCopy.UseSelectable = true;
+            this.ui_btnCopy.Click += new System.EventHandler(this.OnClickBtnCopy);
             // 
             // ui_btnDelete
             // 

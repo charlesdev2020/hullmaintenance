@@ -21,7 +21,6 @@ namespace HullMaintenance
         public int Index { get; set; }
         public string Customer { get; set; }
         public DataTable Dt { get; private set; }
-        private MainForm m_MainForm;
         #endregion
 
         #region Constructor
@@ -37,6 +36,7 @@ namespace HullMaintenance
             this.Dt = dt;
         }
 
+        #region Event
         private void OnLoadDetailForm(object sender, EventArgs e)
         {
             LoadCustomerList(this.Dt);
@@ -57,6 +57,71 @@ namespace HullMaintenance
         {
             this.Close();
         }
+
+        private void OnClickBtnDelete(object sender, EventArgs e)
+        {
+            if (this.Index == 0)
+            {
+                return;
+            }
+
+            if (MetroMessageBox.Show(this, "", "Do you want to delete?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
+            {
+                return;
+            }
+
+            using (SqlConnection conn = new SqlConnection(DbHelper.DbConnectionString))
+            {
+                conn.Open();
+
+                SqlTransaction tran = conn.BeginTransaction();
+                SqlCommand cmd = new SqlCommand();
+
+                cmd.Connection = conn;
+                cmd.Transaction = tran;
+
+                try
+                {
+                    cmd.CommandText = DbHelper.GetDeleteQuery(this.Dt.TableName, this.Index);
+                    cmd.ExecuteNonQuery();
+
+                    tran.Commit();  // Transaction Commit
+
+                    this.ActivateMdiChild(this);
+                }
+                catch (Exception ex)
+                {
+                    tran.Rollback();    // 에러 발생 시, RollBack 처리
+                    MetroMessageBox.Show(this, ex.ToString(), "Delete Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void OnClickBtnSave(object sender, EventArgs e)
+        {
+            if (this.Index == 0)
+            {
+                this.Index = InsertData(true);
+            }
+            else
+            {
+                UpdateData(this.Index);
+            }
+
+            this.ActivateMdiChild(this);
+        }
+
+        private void OnClickBtnCopy(object sender, EventArgs e)
+        {
+            if (this.Index != 0)
+            {
+                InsertData(false);
+
+                MetroMessageBox.Show(this, "", "Data Insertion Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+        #endregion
+
         #endregion
 
         #region Method
@@ -259,24 +324,20 @@ namespace HullMaintenance
                 }
             }
         }
-        #endregion
 
-        private void OnClickBtnDelete(object sender, EventArgs e)
+        /// <summary>
+        /// Insert Data
+        /// </summary>
+        /// <param name="isNew"></param>
+        /// <returns></returns>
+        private int InsertData(bool isNew)
         {
-            if (this.Index == 0)
-            {
-                return;
-            }
-
-            if (MetroMessageBox.Show(this, "", "Do you want to delete?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
-            {
-                return;
-            }
-
+            int resultId = 0;
             using (SqlConnection conn = new SqlConnection(DbHelper.DbConnectionString))
             {
                 conn.Open();
 
+                DateTime dateTime;
                 SqlTransaction tran = conn.BeginTransaction();
                 SqlCommand cmd = new SqlCommand();
 
@@ -285,38 +346,114 @@ namespace HullMaintenance
 
                 try
                 {
-                    cmd.CommandText = DbHelper.GetDeleteQuery(this.Dt.TableName, this.Index);
-                    cmd.ExecuteNonQuery();
+                    cmd.CommandText = DbHelper.GetUpdateQuery(this.Dt.TableName, this.Index);
+                    cmd.Parameters.AddWithValue("@customer", ui_cbCustomer.Text.Trim());
+                    cmd.Parameters.AddWithValue("@site", ui_cbSite.Text.Trim());
+                    cmd.Parameters.AddWithValue("@type", ui_cbType.Text.Trim());
+                    cmd.Parameters.AddWithValue("@category1", ui_cbCategory1.Text);
+                    cmd.Parameters.AddWithValue("@category2", ui_cbCategory2.Text);
+                    cmd.Parameters.AddWithValue("@priority", ui_cbPriority.Text.Trim());
+                    cmd.Parameters.AddWithValue("@workTime", ui_tbWorkTime.Text.Trim());
+                    cmd.Parameters.AddWithValue("@worker", ui_cbWorker.Text);
+
+                    if (isNew == true)
+                    {
+                        if (DateTime.TryParse(ui_dtpReceiveDate.Text, out dateTime))
+                        {
+                            cmd.Parameters.AddWithValue("@receiveDate", ui_dtpReceiveDate.Value);
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@receiveDate", DBNull.Value);
+                        }
+
+                        if (DateTime.TryParse(ui_dtpDueDate.Text, out dateTime))
+                        {
+                            cmd.Parameters.AddWithValue("@dueDate", ui_dtpDueDate.Value);
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@dueDate", DBNull.Value);
+                        }
+
+                        if (DateTime.TryParse(ui_dtpStartDate.Text, out dateTime))
+                        {
+                            cmd.Parameters.AddWithValue("@startDate", ui_dtpStartDate.Value);
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@startDate", DBNull.Value);
+                        }
+
+                        if (DateTime.TryParse(ui_dtpEndDate.Text, out dateTime))
+                        {
+                            cmd.Parameters.AddWithValue("@endDate", ui_dtpEndDate.Value);
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@endDate", DBNull.Value);
+                        }
+
+                        if (DateTime.TryParse(ui_dtpVerificationDate.Text, out dateTime))
+                        {
+                            cmd.Parameters.AddWithValue("@verificationDate", ui_dtpVerificationDate.Value);
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@verificationDate", DBNull.Value);
+                        }
+
+                        if (DateTime.TryParse(ui_dtpUpdateDate.Text, out dateTime))
+                        {
+                            cmd.Parameters.AddWithValue("@updateDate", ui_dtpUpdateDate.Value);
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@updateDate", DBNull.Value);
+                        }
+
+                        cmd.Parameters.AddWithValue("@status", ui_cbStatus.Text);
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@receiveDate", DateTime.Now);
+                        cmd.Parameters.AddWithValue("@dueDate", DBNull.Value);
+                        cmd.Parameters.AddWithValue("@startDate", DBNull.Value);
+                        cmd.Parameters.AddWithValue("@endDate", DBNull.Value);
+                        cmd.Parameters.AddWithValue("@verificationDate", DBNull.Value);
+                        cmd.Parameters.AddWithValue("@updateDate", DBNull.Value);
+                        cmd.Parameters.AddWithValue("@dueDate", DBNull.Value);
+                        cmd.Parameters.AddWithValue("@dueDate", DBNull.Value);
+
+                        cmd.Parameters.AddWithValue("@status", "");
+                    }
+
+                    cmd.Parameters.AddWithValue("@documentFile", ui_tbDocument.Text);
+                    cmd.Parameters.AddWithValue("@sampleFile", ui_tbSample.Text);
+                    cmd.Parameters.AddWithValue("@mailFile", ui_tbMail.Text);
+                    cmd.Parameters.AddWithValue("@summaryKr", ui_tbSummaryKr.Text);
+                    cmd.Parameters.AddWithValue("@summaryJp", ui_tbSummaryJp.Text);
+                    cmd.Parameters.AddWithValue("@details", ui_tbDetails.Text);
+                    cmd.Parameters.AddWithValue("@writer", Environment.UserName);
+                    cmd.Parameters.AddWithValue("@saveDate", DateTime.Now);
+                    resultId = Convert.ToInt32(cmd.ExecuteScalar());
 
                     tran.Commit();  // Transaction Commit
                 }
                 catch (Exception ex)
                 {
                     tran.Rollback();    // 에러 발생 시, RollBack 처리
-                    MetroMessageBox.Show(this, ex.ToString(), "Delete Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MetroMessageBox.Show(this, ex.ToString(), "Insert Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+
+            return resultId;
         }
 
-        private void OnClickBtnSave(object sender, EventArgs e)
-        {
-            if (this.Index == 0)
-            {
-                this.Index = InsertData();
-            }
-            else
-            {
-                UpdateData(this.Index);
-            }
-
-            this.ActivateMdiChild(this);
-        }
-
-        private int InsertData()
-        {
-            return 0;
-        }
-
+        /// <summary>
+        /// Update Detail Form
+        /// </summary>
+        /// <param name="idx"></param>
         private void UpdateData(int idx)
         {
             using (SqlConnection conn = new SqlConnection(DbHelper.DbConnectionString))
@@ -416,5 +553,6 @@ namespace HullMaintenance
                 }
             }
         }
+        #endregion
     }
 }

@@ -38,6 +38,21 @@ namespace HullMaintenance
             return String.Format(@"DELETE FROM {0} WHERE id = {1};", tableName, id);
         }
 
+        public static string GetInsertQuery(string tableName)
+        {
+            string insertQuery = String.Format("INSERT INTO {0} " +
+                "(customer, site, type, category1, category2, priority, work_time, worker" +
+                ", receive_date, due_date, start_date, end_date, verification_date, update_date" +
+                ", status, document_file, sample_file, mail_file, summary_kr, summary_jp, details, writer, save_date)" +
+                " VALUES " + "" +
+                "(@customer, @site, @type, @category1, @category2, @priority, @workTime, @worker" +
+                ", @receiveDate, @dueDate, @startDate, @endDate, @verificationDate, @updateDate" +
+                ", @status, @documentFile,  @sampleFile, @mailFile, @summaryKr, @summaryJp, @details, @writer, @saveDate)" +
+                " SELECT id = @@IDENTITY;", tableName);
+
+            return insertQuery;
+        }
+
         public static string GetUpdateQuery(string tableName, int id)
         {
             string updateQuery = String.Format("UPDATE {0} SET " +
