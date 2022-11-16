@@ -117,6 +117,8 @@ namespace HullMaintenance
             {
                 InsertData(false);
 
+                this.ActivateMdiChild(this);
+
                 MetroMessageBox.Show(this, "", "Data Insertion Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
@@ -346,7 +348,7 @@ namespace HullMaintenance
 
                 try
                 {
-                    cmd.CommandText = DbHelper.GetUpdateQuery(this.Dt.TableName, this.Index);
+                    cmd.CommandText = DbHelper.GetInsertQuery(this.Dt.TableName);
                     cmd.Parameters.AddWithValue("@customer", ui_cbCustomer.Text.Trim());
                     cmd.Parameters.AddWithValue("@site", ui_cbSite.Text.Trim());
                     cmd.Parameters.AddWithValue("@type", ui_cbType.Text.Trim());
@@ -422,8 +424,6 @@ namespace HullMaintenance
                         cmd.Parameters.AddWithValue("@endDate", DBNull.Value);
                         cmd.Parameters.AddWithValue("@verificationDate", DBNull.Value);
                         cmd.Parameters.AddWithValue("@updateDate", DBNull.Value);
-                        cmd.Parameters.AddWithValue("@dueDate", DBNull.Value);
-                        cmd.Parameters.AddWithValue("@dueDate", DBNull.Value);
 
                         cmd.Parameters.AddWithValue("@status", "");
                     }

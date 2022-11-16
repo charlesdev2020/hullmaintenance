@@ -294,6 +294,21 @@ namespace HullMaintenance
             view.Show();
         }
 
+        private void OnClickBtnCellContent(object sender, DataGridViewCellEventArgs e)
+        {
+            MetroGrid grid = sender as MetroGrid;
+
+            if (grid.Columns[e.ColumnIndex] is DataGridViewLinkColumn && e.RowIndex != -1)
+            {
+                string fileName = grid.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+
+                if (String.IsNullOrEmpty(fileName) == false)
+                {
+                    int id = grid.SelectedCells[0].RowIndex;
+                }
+            }
+        }
+
         private void OnGridCellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             MetroGrid grid = sender as MetroGrid;

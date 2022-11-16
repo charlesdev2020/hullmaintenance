@@ -33,11 +33,22 @@ namespace HullMaintenance
             return DbConnectionString;
         }
 
+        /// <summary>
+        /// Create Delete Query by id
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public static string GetDeleteQuery(string tableName, int id)
         {
             return String.Format(@"DELETE FROM {0} WHERE id = {1};", tableName, id);
         }
 
+        /// <summary>
+        /// Create Insert Query
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <returns></returns>
         public static string GetInsertQuery(string tableName)
         {
             string insertQuery = String.Format("INSERT INTO {0} " +
@@ -53,6 +64,12 @@ namespace HullMaintenance
             return insertQuery;
         }
 
+        /// <summary>
+        /// Create Update Query by id
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public static string GetUpdateQuery(string tableName, int id)
         {
             string updateQuery = String.Format("UPDATE {0} SET " +
