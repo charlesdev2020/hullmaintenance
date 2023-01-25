@@ -3,7 +3,6 @@ using MetroFramework.Controls;
 using MetroFramework.Forms;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
@@ -34,451 +33,12 @@ namespace HullMaintenance
         public string StaticSearchQuery { get; private set; }
         public string DynamicSearchQuery { get; private set; }
         public Dictionary<string, string> StatusColorDic { get; private set; }
-        public string ActivateTableName { get; set; }
-        public int ActivateIndex { get; set; }
-		#endregion
+        #endregion
 
         public MainForm()
         {
             InitializeComponent();
         }
-
-        #region Event
-        private void OnLoadMainForm(object sender, EventArgs e)
-        {
-            LoadINI();
-
-            this.ConnString = GetDatabaseConnection();
-
-            this.StdDt = DbHelper.GetDataTableFromDB(stdTableName);
-            this.SmhDt = DbHelper.GetDataTableFromDB(smhTableName);
-
-            LoadGridDataTable(this.ui_gridStd, this.StdDt);
-            LoadGridDataTable(this.ui_gridSmh, this.SmhDt);
-
-            LoadConditionList(this.ui_cbStdCustomer, this.ui_cbStdPeriod, this.StdDt, this.Customer, this.Period);
-            LoadConditionList(this.ui_cbSmhCustomer, this.ui_cbSmhPeriod, this.SmhDt, this.Customer, this.Period);
-
-            InitStyle();
-        }
-
-        private void OnUpdateMainForm(object sender, EventArgs e)
-        {
-            int focusIndex = (sender as DetailForm).RowIndex;
-            TabPage page = ui_tabControl.SelectedTab;
-            if (String.IsNullOrWhiteSpace(page.Tag.ToString()))
-            {
-                return;
-            }
-
-            string tableName = page.Tag.ToString();
-            MetroGrid grid;
-            DataTable dt;
-            ComboBox cBox;
-
-            if (tableName.Contains("smart"))
-            {
-                grid = ui_gridSmh;
-                dt = this.SmhDt;
-                cBox = ui_cbSmhCustomer;
-            }
-            else
-            {
-                grid = ui_gridStd;
-                dt = this.StdDt;
-                cBox = ui_cbStdCustomer;
-            }
-
-            dt = DbHelper.GetDataTableFromDB(tableName);
-
-            if (dt.TableName.Contains("smart"))
-            {
-                this.SmhDt = dt;
-            }
-            else
-            {
-                this.StdDt = dt;
-            }
-
-            LoadGridDataTable(grid, dt);
-            OnConditionSelectedValueChanged(cBox, null);
-
-            grid.Rows[focusIndex].Selected = true;
-            grid.FirstDisplayedScrollingRowIndex = focusIndex;
-        }
-
-        private void OnGridDataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
-        {
-            MetroGrid grid = sender as MetroGrid;
-            string module = grid.Name.ToLower().Contains("std") == true ? "std" : "smh";
-
-            foreach (DataGridViewRow row in grid.Rows)
-            {
-                grid.Rows[row.Index].HeaderCell.Value = (row.Index + 1).ToString();
-
-                CheckDueDateCell(row, module);
-
-                CheckStatusCell(row, module);
-            }
-        }
-
-        private void OnClickBtnConnect(object sender, EventArgs e)
-        {
-            string result = "Wait...";
-
-            string connString = String.Format(@"Data Source={0}; Initial Catalog={1}; User ID={2}; Password={3}; Persist Security Info=True;",
-                                               this.ui_tbDbServer.Text, this.ui_tbDbName.Text, this.ui_tbDbId.Text, this.ui_tbDbPw.Text);
-
-            string query = "SELECT * FROM spis ORDER BY id DESC";
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(connString))
-                {
-                    conn.Open();
-                    SqlDataAdapter sda = new SqlDataAdapter();
-                    SqlCommand scm = new SqlCommand(query, conn);
-                    scm.CommandTimeout = 5;	// Default = 30s
-                    //SqlDataReader adr = scm.ExecuteReader();
-                }
-                result = "OK!";
-            }
-            catch (Exception ex)
-            {
-                result = "Failed!";
-            }
-            finally
-            {
-                this.ui_lbDBStatus.Text = result;
-            }
-        }
-
-        private void OnClickBtnPath(object sender, EventArgs e)
-        {
-            MetroButton mBtn = sender as MetroButton;
-
-            string tag = mBtn.Tag.ToString();
-            MetroTextBox tbPath = this.settingPage.Controls.Find(tag, true).FirstOrDefault() as MetroTextBox;
-
-            FolderBrowserDialog folderDialog = new FolderBrowserDialog();
-
-            if (tbPath != null && Directory.Exists(tbPath.Text) == true)
-            {
-                folderDialog.SelectedPath = tbPath.Text;
-            }
-
-            if (folderDialog.ShowDialog(this) == DialogResult.OK)
-            {
-                tbPath.Text = folderDialog.SelectedPath;
-            }
-        }
-
-        private void OnClickBtnPathOpen(object sender, EventArgs e)
-        {
-            MetroButton mBtn = sender as MetroButton;
-
-            string tag = mBtn.Tag.ToString();
-            MetroTextBox tbPath = this.settingPage.Controls.Find(tag, true).FirstOrDefault() as MetroTextBox;
-
-            if (tbPath != null && Directory.Exists(tbPath.Text) == true)
-            {
-                Process.Start(tbPath.Text);
-            }
-        }
-
-        private void OnClickBtnTheme(object sender, EventArgs e)
-        {
-            ui_styleMgr.Theme = ui_styleMgr.Theme == MetroThemeStyle.Light ? MetroThemeStyle.Dark : MetroThemeStyle.Light;
-        }
-
-        private void OnClickBtnStyle(object sender, EventArgs e)
-        {
-            var rnd = new Random();
-            int next = rnd.Next(0, 13);
-            ui_styleMgr.Style = (MetroColorStyle)next;
-        }
-
-        private void OnClickBtnSearchTextClear(object sender, EventArgs e)
-		{
-			Button mBtn = sender as Button;
-			string tag = mBtn.Tag.ToString();
-			ComboBox cbox = mBtn.Parent.Controls.Find(tag, true).FirstOrDefault() as ComboBox;
-			cbox.Text = "";
-		}
-
-        private void OnClickBtnSearchHistoryClear(object sender, EventArgs e)
-        {
-            MetroButton mBtn = sender as MetroButton;
-            string tag = mBtn.Tag.ToString();
-            ComboBox cbox = mBtn.Parent.Controls.Find(tag, true).FirstOrDefault() as ComboBox;
-            cbox.Text = "";
-            cbox.Items.Clear();
-        }
-
-        private void OnClickBtnSearch(object sender, EventArgs e)
-        {
-            MetroButton mBtn = sender as MetroButton;
-            string tag = mBtn.Tag.ToString();
-            ComboBox cBox = mBtn.Parent.Controls.Find(tag, true).FirstOrDefault() as ComboBox;
-            string searchText = cBox.Text;
-
-            if (String.IsNullOrWhiteSpace(searchText) == false)
-            {
-                if (cBox.Items.Contains(searchText) == false)
-                {
-                    cBox.Items.Add(searchText);
-                }
-
-                DataTable tempDt = new DataTable();
-                MetroGrid grid = GetDataTable(cBox.Tag.ToString(), ref tempDt);
-
-                List<string> idxList = new List<string>();
-
-                if (String.IsNullOrEmpty(searchText) == false)
-                {
-                    foreach (string column in this.SearchColumns.Trim().Split(','))
-                    {
-                        foreach (DataRow dr in tempDt.Rows)
-                        {
-                            if (dr[column].ToString().Contains(searchText) == true)
-                            {
-                                if (idxList.Contains(dr["id"].ToString()) == false)
-                                {
-                                    idxList.Add(dr["id"].ToString());
-                                }
-                            }
-                        }
-                    }
-                }
-
-                if (idxList.Count > 0)
-                {
-                    (grid.DataSource as DataTable).DefaultView.RowFilter = String.Format("id IN ({0})", String.Join(",", idxList));
-                }
-                else
-                {
-                    (grid.DataSource as DataTable).DefaultView.RowFilter = String.Format("id = -1");
-                }
-            }
-        }
-
-        private void OnClickBtnAddItem(object sender, EventArgs e)
-        {
-            MetroButton mBtn = sender as MetroButton;
-            ComboBox cBox = null;
-            DataTable dt;
-            if (mBtn.Tag.ToString().ToLower().Contains("std") == true)
-            {
-                dt = this.StdDt;
-                cBox = ui_cbStdCustomer;
-            }
-            else
-            {
-                dt = this.SmhDt;
-                cBox = ui_cbSmhCustomer;
-            }
-
-            foreach (Form form in Application.OpenForms)
-            {
-                // 열려 있는 폼이 있을때
-                if (form.GetType() == typeof(DetailForm))
-                {
-                    form.Close();
-                    break;
-                }
-            }
-
-            DetailForm view = new DetailForm(dt);
-            view.Index = 0;
-            view.Customer = cBox.Text.Contains("ALL") ? "ALL" : cBox.Text;
-            view.StartPosition = FormStartPosition.CenterParent;
-            view.Show();
-        }
-
-        private void OnClickBtnCellContent(object sender, DataGridViewCellEventArgs e)
-        {
-            MetroGrid grid = sender as MetroGrid;
-
-            if (grid.Columns[e.ColumnIndex] is DataGridViewLinkColumn && e.RowIndex != -1)
-            {
-                string fileName = grid.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
-
-                if (String.IsNullOrEmpty(fileName) == false)
-                {
-                    int id = grid.SelectedCells[0].RowIndex;
-                }
-            }
-        }
-
-        private void OnGridCellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            MetroGrid grid = sender as MetroGrid;
-            DataGridViewRow row = grid.Rows[e.RowIndex];
-            DataGridViewCellCollection cells = grid.Rows[e.RowIndex].Cells;
-            DataTable dt;
-            int id = 0;
-            string customer = "";
-
-            if (grid.Name.ToString().ToLower().Contains("std") == true)
-            {
-                dt = this.StdDt;
-                id = Convert.ToInt32(cells["stdColId"].Value.ToString());
-                customer = cells["stdColCustomer"].Value.ToString();
-            }
-            else
-            {
-                dt = this.SmhDt;
-                id = Convert.ToInt32(cells["smhColId"].Value.ToString());
-                customer = cells["smhColCustomer"].Value.ToString();
-            }
-
-            foreach (Form form in Application.OpenForms)
-            {
-                // 열려 있는 폼이 있을때
-                if (form.GetType() == typeof(DetailForm))
-                {
-                    form.Close();
-                    break;
-                }
-            }
-
-            DetailForm view = new DetailForm(dt);
-            view.RowIndex = e.RowIndex;
-            view.Index = Convert.ToInt32(id.ToString());
-            view.Customer = customer.Contains("ALL") ? "ALL" : customer;
-            view.StartPosition = FormStartPosition.CenterParent;
-            view.MdiChildActivate += OnUpdateMainForm;
-            view.Show();
-        }
-
-        private void OnSeachTextChanged(object sender, EventArgs e)
-        {
-            ComboBox cBox = sender as ComboBox;
-            string searchText = cBox.Text;
-
-            if (cBox.Tag.ToString().ToLower().Contains("std") == true)
-            {
-                (ui_gridStd.DataSource as DataTable).DefaultView.RowFilter = String.Format(this.DynamicSearchQuery, searchText);
-            }
-            else
-            {
-                (ui_gridSmh.DataSource as DataTable).DefaultView.RowFilter = String.Format(this.DynamicSearchQuery, searchText);
-            }
-        }
-
-        private void OnTabControlSelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void OnColorCodeTextChanged(object sender, EventArgs e)
-        {
-            MetroTextBox mtb = sender as MetroTextBox;
-
-            try
-            {
-                mtb.BackColor = ColorTranslator.FromHtml(mtb.Text);
-            }
-            catch (Exception ex) { }
-        }
-
-        private void OnConditionSelectedValueChanged(object sender, EventArgs e)
-        {
-            ComboBox cBox = sender as ComboBox;
-
-            DataTable filteredDt = new DataTable();
-            MetroGrid grid = GetDataTable(cBox.Tag.ToString(), ref filteredDt);
-
-            if (filteredDt.Rows.Count > 0)
-            {
-                filteredDt = filteredDt.Select("", "id DESC").CopyToDataTable();
-
-                grid.DataSource = filteredDt.DefaultView.ToTable(false, new string[] { "id", "customer", "type", "status", "summary_kr",
-                                                                                       "receive_date", "due_date", "start_date", "end_date",
-                                                                                       "verification_date", "update_date", "document_name" }).Select().CopyToDataTable();
-            }
-            else
-            {
-                (grid.DataSource as DataTable).Clear();
-            }
-        }
-
-        private void OnTabControlKeyDown(object sender, KeyEventArgs e)
-		{
-			if (e.Control && e.KeyCode == Keys.F)
-			{
-				if (ui_tabControl.SelectedIndex == 0)
-				{
-					if (ui_panelSmhCollapsible.Visible == false)
-					{
-						ui_panelSmhCollapsible.Visible = true;
-					}
-					else
-					{
-						ui_panelSmhCollapsible.Visible = false;
-					}
-				}
-				else if (ui_tabControl.SelectedIndex == 1)
-				{
-					if (ui_panelStdcollapsible.Visible == false)
-					{
-						ui_panelStdcollapsible.Visible = true;
-					}
-					else
-					{
-						ui_panelStdcollapsible.Visible = false;
-					}
-				}
-			}
-		}
-
-        private void OnSearchTexKeyDown(object sender, KeyEventArgs e)
-		{
-			if (e.KeyCode == Keys.Enter)
-			{
-				ComboBox cBox = sender as ComboBox;
-				string searchText = cBox.Text;
-
-				if (String.IsNullOrWhiteSpace(searchText) == false)
-				{
-                    if (cBox.Items.Contains(searchText) == false)
-                    {
-                        cBox.Items.Add(searchText);
-                    }
-
-                    DataTable tempDt = new DataTable();
-                    MetroGrid grid = GetDataTable(cBox.Tag.ToString(), ref tempDt);
-
-                    List<string> idxList = new List<string>();
-
-                    if (String.IsNullOrEmpty(searchText) == false)
-                    {
-                        foreach (string column in this.SearchColumns.Trim().Split(','))
-                        {
-                            foreach (DataRow dr in tempDt.Rows)
-                            {
-                                if (dr[column].ToString().ToLower().Contains(searchText.ToLower()) == true)
-                                {
-                                    if (idxList.Contains(dr["id"].ToString()) == false)
-                                    {
-                                        idxList.Add(dr["id"].ToString());
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    if (idxList.Count > 0)
-                    {
-                        (grid.DataSource as DataTable).DefaultView.RowFilter = String.Format("id IN ({0})", String.Join(",", idxList));
-                    }
-                    else
-                    {
-                        (grid.DataSource as DataTable).DefaultView.RowFilter = String.Format("id = -1");
-                    }
-                }
-			}
-		}
-        #endregion
 
         #region Method
         /// <summary>
@@ -681,7 +241,7 @@ namespace HullMaintenance
         /// Create DB Connection String
         /// </summary>
         /// <returns></returns>
-        private string  GetDatabaseConnection()
+        private string GetDatabaseConnection()
         {
             string connString = DbHelper.CreateDatabaseConnection(this.ui_tbDbServer.Text, this.ui_tbDbName.Text, this.ui_tbDbId.Text, this.ui_tbDbPw.Text);
 
@@ -808,7 +368,7 @@ namespace HullMaintenance
         /// </summary>
         private void LoadGridDataTable(MetroGrid grid, DataTable dt)
         {
-            if (dt.Rows.Count > 0 )
+            if (dt.Rows.Count > 0)
             {
                 grid.DataSource = dt.DefaultView.ToTable(false, new string[] { "id", "customer", "type", "status", "summary_kr",
                                                                                "receive_date", "due_date", "start_date", "end_date",
@@ -843,9 +403,542 @@ namespace HullMaintenance
             //metroTabControl.Width / metroTabControl.TabPages.Count - 1,
             //metroTabControl.ItemSize.Height);
             ui_tabControl.SelectedIndex = 1;
-            
+
             Version version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
             ui_lbMainVersion.Text = String.Format("version={0}", version.ToString());
+        }
+
+        /// <summary>
+        /// Open linked document file
+        /// </summary>
+        /// <param name="gridName"></param>
+        /// <param name="fileName"></param>
+        /// <param name="idx"></param>
+        private void OpenLinkedDocument(string gridName, string fileName, int idx)
+        {
+            if (idx == 0)
+            {
+                return;
+            }
+
+            DataTable dt;
+            string filePath = "";
+
+            if (gridName.ToLower().Contains("smh") == true)
+            {
+                dt = this.SmhDt;
+                filePath = ui_tbSmhDocPath.Text;
+            }
+            else
+            {
+                dt = this.StdDt;
+                filePath = ui_tbStdDocPath.Text;
+            }
+
+            DataRow row = dt.Select().Where(x => x["id"].ToString().Equals(idx.ToString()) == true).FirstOrDefault();
+
+            if (row == null)
+            {
+                return;
+            }
+
+            string fileFullPath = String.Format(@"{0}\{1}", filePath, row["document_file"]).ToString();
+            FileInfo fi = new FileInfo(fileFullPath);
+
+            if (fi.Exists == true)
+            {
+                Process.Start(fileFullPath);
+            }
+            else
+            {
+                MetroMessageBox.Show(this, "", "File doesn't exist", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        #endregion
+
+        #region Event
+        private void OnLoadMainForm(object sender, EventArgs e)
+        {
+            LoadINI();
+
+            this.ConnString = GetDatabaseConnection();
+
+            this.StdDt = DbHelper.GetDataTableFromDB(stdTableName);
+            this.SmhDt = DbHelper.GetDataTableFromDB(smhTableName);
+
+            LoadGridDataTable(this.ui_gridStd, this.StdDt);
+            LoadGridDataTable(this.ui_gridSmh, this.SmhDt);
+
+            LoadConditionList(this.ui_cbStdCustomer, this.ui_cbStdPeriod, this.StdDt, this.Customer, this.Period);
+            LoadConditionList(this.ui_cbSmhCustomer, this.ui_cbSmhPeriod, this.SmhDt, this.Customer, this.Period);
+
+            InitStyle();
+        }
+
+        private void OnUpdateMainForm(object sender, EventArgs e)
+        {
+            TabPage page = ui_tabControl.SelectedTab;
+            if (String.IsNullOrWhiteSpace(page.Tag.ToString()))
+            {
+                return;
+            }
+
+            string tableName = page.Tag.ToString();
+            MetroGrid grid;
+            DataTable dt;
+            ComboBox cBox;
+
+            if (tableName.Contains("smart") == true)
+            {
+                grid = ui_gridSmh;
+                dt = this.SmhDt;
+                cBox = ui_cbSmhCustomer;
+            }
+            else
+            {
+                grid = ui_gridStd;
+                dt = this.StdDt;
+                cBox = ui_cbStdCustomer;
+            }
+
+            dt = DbHelper.GetDataTableFromDB(tableName);
+
+            if (dt.TableName.Contains("smart") == true)
+            {
+                this.SmhDt = dt;
+            }
+            else
+            {
+                this.StdDt = dt;
+            }
+
+            string module = grid.Name.ToLower().Contains("std") == true ? "std" : "smh";
+
+            LoadGridDataTable(grid, dt);
+            OnConditionSelectedValueChanged(cBox, null);
+
+            DataGridViewRow row = grid.Rows.Cast<DataGridViewRow>()
+                                  .Where(r => r.Cells[String.Format("{0}ColId", module)].Value.ToString().Equals((sender as DetailForm).Index.ToString()))
+                                  .FirstOrDefault();
+
+            int focusIndex = 0;
+
+            if (row != null)
+            {
+                focusIndex = row.Index;
+            }
+
+            grid.Rows[focusIndex].Selected = true;
+            grid.FirstDisplayedScrollingRowIndex = focusIndex;
+        }
+
+        private void OnGridDataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            MetroGrid grid = sender as MetroGrid;
+            string module = grid.Name.ToLower().Contains("std") == true ? "std" : "smh";
+
+            foreach (DataGridViewRow row in grid.Rows)
+            {
+                grid.Rows[row.Index].HeaderCell.Value = (row.Index + 1).ToString();
+
+                CheckDueDateCell(row, module);
+
+                CheckStatusCell(row, module);
+            }
+        }
+
+        private void OnClickBtnConnect(object sender, EventArgs e)
+        {
+            string result = "Wait...";
+
+            string connString = String.Format(@"Data Source={0}; Initial Catalog={1}; User ID={2}; Password={3}; Persist Security Info=True;",
+                                               this.ui_tbDbServer.Text, this.ui_tbDbName.Text, this.ui_tbDbId.Text, this.ui_tbDbPw.Text);
+
+            string query = "SELECT * FROM spis ORDER BY id DESC";
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connString))
+                {
+                    conn.Open();
+                    SqlDataAdapter sda = new SqlDataAdapter();
+                    SqlCommand scm = new SqlCommand(query, conn);
+                    scm.CommandTimeout = 5;	// Default = 30s
+                    //SqlDataReader adr = scm.ExecuteReader();
+                }
+                result = "OK!";
+            }
+            catch (Exception ex)
+            {
+                result = "Failed!";
+            }
+            finally
+            {
+                this.ui_lbDBStatus.Text = result;
+            }
+        }
+
+        private void OnClickBtnPath(object sender, EventArgs e)
+        {
+            MetroButton mBtn = sender as MetroButton;
+
+            string tag = mBtn.Tag.ToString();
+            MetroTextBox tbPath = this.settingPage.Controls.Find(tag, true).FirstOrDefault() as MetroTextBox;
+
+            FolderBrowserDialog folderDialog = new FolderBrowserDialog();
+
+            if (tbPath != null && Directory.Exists(tbPath.Text) == true)
+            {
+                folderDialog.SelectedPath = tbPath.Text;
+            }
+
+            if (folderDialog.ShowDialog(this) == DialogResult.OK)
+            {
+                tbPath.Text = folderDialog.SelectedPath;
+            }
+        }
+
+        private void OnClickBtnPathOpen(object sender, EventArgs e)
+        {
+            MetroButton mBtn = sender as MetroButton;
+
+            string tag = mBtn.Tag.ToString();
+            MetroTextBox tbPath = this.settingPage.Controls.Find(tag, true).FirstOrDefault() as MetroTextBox;
+
+            if (tbPath != null && Directory.Exists(tbPath.Text) == true)
+            {
+                Process.Start(tbPath.Text);
+            }
+        }
+
+        private void OnClickBtnTheme(object sender, EventArgs e)
+        {
+            ui_styleMgr.Theme = ui_styleMgr.Theme == MetroThemeStyle.Light ? MetroThemeStyle.Dark : MetroThemeStyle.Light;
+        }
+
+        private void OnClickBtnStyle(object sender, EventArgs e)
+        {
+            var rnd = new Random();
+            int next = rnd.Next(0, 13);
+            ui_styleMgr.Style = (MetroColorStyle)next;
+        }
+
+        private void OnClickBtnSearchTextClear(object sender, EventArgs e)
+		{
+			Button mBtn = sender as Button;
+			string tag = mBtn.Tag.ToString();
+			ComboBox cbox = mBtn.Parent.Controls.Find(tag, true).FirstOrDefault() as ComboBox;
+			cbox.Text = "";
+		}
+
+        private void OnClickBtnSearchHistoryClear(object sender, EventArgs e)
+        {
+            MetroButton mBtn = sender as MetroButton;
+            string tag = mBtn.Tag.ToString();
+            ComboBox cbox = mBtn.Parent.Controls.Find(tag, true).FirstOrDefault() as ComboBox;
+            cbox.Text = "";
+            cbox.Items.Clear();
+        }
+
+        private void OnClickBtnSearch(object sender, EventArgs e)
+        {
+            MetroButton mBtn = sender as MetroButton;
+            string tag = mBtn.Tag.ToString();
+            ComboBox cBox = mBtn.Parent.Controls.Find(tag, true).FirstOrDefault() as ComboBox;
+            string searchText = cBox.Text;
+
+            if (String.IsNullOrWhiteSpace(searchText) == false)
+            {
+                if (cBox.Items.Contains(searchText) == false)
+                {
+                    cBox.Items.Add(searchText);
+                }
+
+                DataTable tempDt = new DataTable();
+                MetroGrid grid = GetDataTable(cBox.Tag.ToString(), ref tempDt);
+
+                List<string> idxList = new List<string>();
+
+                if (String.IsNullOrEmpty(searchText) == false)
+                {
+                    foreach (string column in this.SearchColumns.Trim().Split(','))
+                    {
+                        foreach (DataRow dr in tempDt.Rows)
+                        {
+                            if (dr[column].ToString().ToLower().Contains(searchText.ToLower()) == true)
+                            {
+                                if (idxList.Contains(dr["id"].ToString()) == false)
+                                {
+                                    idxList.Add(dr["id"].ToString());
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if (idxList.Count > 0)
+                {
+                    (grid.DataSource as DataTable).DefaultView.RowFilter = String.Format("id IN ({0})", String.Join(",", idxList));
+                }
+                else
+                {
+                    (grid.DataSource as DataTable).DefaultView.RowFilter = String.Format("id = -1");
+                }
+            }
+        }
+
+        private void OnClickBtnAddItem(object sender, EventArgs e)
+        {
+            MetroButton mBtn = sender as MetroButton;
+            ComboBox cBox = null;
+            DataTable dt;
+            string docPath = "";
+
+            if (mBtn.Tag.ToString().ToLower().Contains("std") == true)
+            {
+                dt = this.StdDt;
+                cBox = ui_cbStdCustomer;
+                docPath = ui_tbStdDocPath.Text;
+            }
+            else
+            {
+                dt = this.SmhDt;
+                cBox = ui_cbSmhCustomer;
+                docPath = ui_tbSmhDocPath.Text;
+            }
+
+            foreach (Form form in Application.OpenForms)
+            {
+                // 열려 있는 폼이 있을때
+                if (form.GetType() == typeof(DetailForm))
+                {
+                    form.Close();
+                    break;
+                }
+            }
+
+            DetailForm view = new DetailForm(dt);
+            view.Index = 0;
+            view.Customer = cBox.Text.Contains("ALL") ? "ALL" : cBox.Text;
+            view.DocPath = docPath;
+            view.StartPosition = FormStartPosition.CenterParent;
+            view.MdiChildActivate += OnUpdateMainForm;
+            view.Show();
+        }
+
+        private void OnClickBtnCellContent(object sender, DataGridViewCellEventArgs e)
+        {
+            MetroGrid grid = sender as MetroGrid;
+
+            if (grid.Columns[e.ColumnIndex] is DataGridViewLinkColumn && e.RowIndex != -1)
+            {
+                string fileName = grid.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+
+                if (String.IsNullOrEmpty(fileName) == false)
+                {
+                    //int rowId = grid.SelectedCells[0].RowIndex;
+                    int id = 0;
+                    if (grid.SelectedCells[1].Value != null)
+                    {
+                        id = (int)grid.SelectedCells[1].Value;
+                        OpenLinkedDocument(grid.Name.ToString(), fileName, id);
+                    }
+                }
+            }
+        }
+
+        private void OnGridCellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0)
+            {
+                return;
+            }
+
+            MetroGrid grid = sender as MetroGrid;
+            DataGridViewRow row = grid.Rows[e.RowIndex];
+            DataGridViewCellCollection cells = grid.Rows[e.RowIndex].Cells;
+            DataTable dt;
+            int id = 0;
+            string customer = "";
+            string docPath = "";
+
+            if (grid.Name.ToString().ToLower().Contains("std") == true)
+            {
+                dt = this.StdDt;
+                id = Convert.ToInt32(cells["stdColId"].Value.ToString());
+                customer = cells["stdColCustomer"].Value.ToString();
+                docPath = ui_tbStdDocPath.Text;
+            }
+            else
+            {
+                dt = this.SmhDt;
+                id = Convert.ToInt32(cells["smhColId"].Value.ToString());
+                customer = cells["smhColCustomer"].Value.ToString();
+                docPath = ui_tbSmhDocPath.Text;
+            }
+
+            foreach (Form form in Application.OpenForms)
+            {
+                // 열려 있는 폼이 있을때
+                if (form.GetType() == typeof(DetailForm))
+                {
+                    form.Close();
+                    break;
+                }
+            }
+
+            DetailForm view = new DetailForm(dt);
+            view.RowIndex = e.RowIndex;
+            view.Index = Convert.ToInt32(id.ToString());
+            view.Customer = customer.Contains("ALL") ? "ALL" : customer;
+            view.DocPath = docPath;
+            view.StartPosition = FormStartPosition.CenterParent;
+            view.MdiChildActivate += OnUpdateMainForm;
+            view.Show();
+        }
+
+        private void OnSeachTextChanged(object sender, EventArgs e)
+        {
+            ComboBox cBox = sender as ComboBox;
+            string searchText = cBox.Text;
+
+            if (cBox.Tag.ToString().ToLower().Contains("std") == true)
+            {
+                (ui_gridStd.DataSource as DataTable).DefaultView.RowFilter = String.Format(this.DynamicSearchQuery, searchText);
+            }
+            else
+            {
+                (ui_gridSmh.DataSource as DataTable).DefaultView.RowFilter = String.Format(this.DynamicSearchQuery, searchText);
+            }
+        }
+
+        private void OnTabControlSelectedIndexChanged(object sender, EventArgs e)
+        {
+            TabControl tabControl = sender as TabControl;
+            TabPage tabPage = tabControl.SelectedTab;
+
+            if (tabPage.Name.Contains("smh") == true)
+            {
+            }
+            else if (tabPage.Name.Contains("std") == true)
+            {
+            }
+        }
+
+        private void OnColorCodeTextChanged(object sender, EventArgs e)
+        {
+            MetroTextBox mtb = sender as MetroTextBox;
+
+            try
+            {
+                mtb.BackColor = ColorTranslator.FromHtml(mtb.Text);
+            }
+            catch (Exception ex) { }
+        }
+
+        private void OnConditionSelectedValueChanged(object sender, EventArgs e)
+        {
+            ComboBox cBox = sender as ComboBox;
+
+            DataTable filteredDt = new DataTable();
+            MetroGrid grid = GetDataTable(cBox.Tag.ToString(), ref filteredDt);
+
+            if (filteredDt.Rows.Count > 0)
+            {
+                filteredDt = filteredDt.Select("", "id DESC").CopyToDataTable();
+
+                grid.DataSource = filteredDt.DefaultView.ToTable(false, new string[] { "id", "customer", "type", "status", "summary_kr",
+                                                                                       "receive_date", "due_date", "start_date", "end_date",
+                                                                                       "verification_date", "update_date", "document_name" }).Select().CopyToDataTable();
+            }
+            else
+            {
+                (grid.DataSource as DataTable).Clear();
+            }
+        }
+
+        private void OnTabControlKeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.Control && e.KeyCode == Keys.F)
+			{
+				if (ui_tabControl.SelectedIndex == 0)
+				{
+					if (ui_panelSmhCollapsible.Visible == false)
+					{
+						ui_panelSmhCollapsible.Visible = true;
+					}
+					else
+					{
+						ui_panelSmhCollapsible.Visible = false;
+					}
+				}
+				else if (ui_tabControl.SelectedIndex == 1)
+				{
+					if (ui_panelStdcollapsible.Visible == false)
+					{
+						ui_panelStdcollapsible.Visible = true;
+					}
+					else
+					{
+						ui_panelStdcollapsible.Visible = false;
+					}
+				}
+			}
+		}
+
+        private void OnSearchTexKeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Enter)
+			{
+				ComboBox cBox = sender as ComboBox;
+				string searchText = cBox.Text;
+
+				if (String.IsNullOrWhiteSpace(searchText) == false)
+				{
+                    if (cBox.Items.Contains(searchText) == false)
+                    {
+                        cBox.Items.Add(searchText);
+                    }
+
+                    DataTable tempDt = new DataTable();
+                    MetroGrid grid = GetDataTable(cBox.Tag.ToString(), ref tempDt);
+
+                    List<string> idxList = new List<string>();
+
+                    if (String.IsNullOrEmpty(searchText) == false)
+                    {
+                        foreach (string column in this.SearchColumns.Trim().Split(','))
+                        {
+                            foreach (DataRow dr in tempDt.Rows)
+                            {
+                                if (dr[column].ToString().ToLower().Contains(searchText.ToLower()) == true)
+                                {
+                                    if (idxList.Contains(dr["id"].ToString()) == false)
+                                    {
+                                        idxList.Add(dr["id"].ToString());
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    if (idxList.Count > 0)
+                    {
+                        (grid.DataSource as DataTable).DefaultView.RowFilter = String.Format("id IN ({0})", String.Join(",", idxList));
+                    }
+                    else
+                    {
+                        (grid.DataSource as DataTable).DefaultView.RowFilter = String.Format("id = -1");
+                    }
+                }
+			}
+		}
+
+        private void OnMouseEnter(object sender, EventArgs e)
+        {
+            if (Application.OpenForms.Cast<object>().ToList().Any(x => x.GetType() == typeof(DetailForm)) == false)
+            {
+                this.Activate();
+            }
         }
         #endregion
     }

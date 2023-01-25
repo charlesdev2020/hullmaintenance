@@ -195,6 +195,7 @@
             this.ui_tabControl.UseSelectable = true;
             this.ui_tabControl.SelectedIndexChanged += new System.EventHandler(this.OnTabControlSelectedIndexChanged);
             this.ui_tabControl.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnTabControlKeyDown);
+            this.ui_tabControl.MouseEnter += new System.EventHandler(this.OnMouseEnter);
             // 
             // smhPage
             // 
@@ -302,6 +303,7 @@
             this.ui_gridSmh.TabIndex = 1;
             this.ui_gridSmh.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.OnGridCellDoubleClick);
             this.ui_gridSmh.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.OnGridDataBindingComplete);
+            this.ui_gridSmh.MouseEnter += new System.EventHandler(this.OnMouseEnter);
             // 
             // smhColId
             // 
@@ -695,6 +697,7 @@
             this.ui_gridStd.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.OnClickBtnCellContent);
             this.ui_gridStd.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.OnGridCellDoubleClick);
             this.ui_gridStd.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.OnGridDataBindingComplete);
+            this.ui_gridStd.MouseEnter += new System.EventHandler(this.OnMouseEnter);
             // 
             // stdColId
             // 
@@ -2211,6 +2214,7 @@
             this.StyleManager = this.ui_styleMgr;
             this.Text = "Hull Maintenance";
             this.Load += new System.EventHandler(this.OnLoadMainForm);
+            this.MouseEnter += new System.EventHandler(this.OnMouseEnter);
             this.ui_tabControl.ResumeLayout(false);
             this.smhPage.ResumeLayout(false);
             this.ui_panelSmh.ResumeLayout(false);

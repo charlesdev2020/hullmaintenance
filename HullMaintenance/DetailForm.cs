@@ -3,13 +3,11 @@ using MetroFramework.Controls;
 using MetroFramework.Forms;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace HullMaintenance
@@ -20,10 +18,10 @@ namespace HullMaintenance
         public int RowIndex { get; set; }
         public int Index { get; set; }
         public string Customer { get; set; }
+        public string DocPath { get; set; }
         public DataTable Dt { get; private set; }
         #endregion
 
-        #region Constructor
         public DetailForm()
         {
             InitializeComponent();
@@ -35,96 +33,6 @@ namespace HullMaintenance
 
             this.Dt = dt;
         }
-
-        #region Event
-        private void OnLoadDetailForm(object sender, EventArgs e)
-        {
-            LoadCustomerList(this.Dt);
-
-            GetData(this.Dt, this.Index);
-        }
-
-        private void OnCustomerSelectedValueChanged(object sender, EventArgs e)
-        {
-            ComboBox cBox = sender as ComboBox;
-
-            ControlsValueClear(cBox);
-
-            LoadComboBoxesList(this.Dt, cBox.Text);
-        }
-
-        private void OnClickBtnClose(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void OnClickBtnDelete(object sender, EventArgs e)
-        {
-            if (this.Index == 0)
-            {
-                return;
-            }
-
-            if (MetroMessageBox.Show(this, "", "Do you want to delete?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
-            {
-                return;
-            }
-
-            using (SqlConnection conn = new SqlConnection(DbHelper.DbConnectionString))
-            {
-                conn.Open();
-
-                SqlTransaction tran = conn.BeginTransaction();
-                SqlCommand cmd = new SqlCommand();
-
-                cmd.Connection = conn;
-                cmd.Transaction = tran;
-
-                try
-                {
-                    cmd.CommandText = DbHelper.GetDeleteQuery(this.Dt.TableName, this.Index);
-                    cmd.ExecuteNonQuery();
-
-                    tran.Commit();  // Transaction Commit
-
-                    this.ActivateMdiChild(this);
-                }
-                catch (Exception ex)
-                {
-                    tran.Rollback();    // 에러 발생 시, RollBack 처리
-                    MetroMessageBox.Show(this, ex.ToString(), "Delete Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
-        private void OnClickBtnSave(object sender, EventArgs e)
-        {
-            if (this.Index == 0)
-            {
-                this.Index = InsertData(true);
-            }
-            else
-            {
-                UpdateData(this.Index);
-            }
-
-            this.ActivateMdiChild(this);
-        }
-
-        private void OnClickBtnCopy(object sender, EventArgs e)
-        {
-            if (this.Index != 0)
-            {
-                InsertData(false);
-
-                this.ActivateMdiChild(this);
-
-                MetroMessageBox.Show(this, "", "Data Insertion Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
-        #endregion
-
-        #endregion
 
         #region Method
         /// <summary>
@@ -552,6 +460,184 @@ namespace HullMaintenance
                     MetroMessageBox.Show(this, ex.ToString(), "Update Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+        }
+
+        private TextBox GetTextBox(string btnName)
+        {
+            TextBox tb;
+
+            if (btnName.ToLower().Contains("document") == true)
+            {
+                tb = ui_tbDocument;
+            }
+            else if (btnName.ToLower().Contains("sample") == true)
+            {
+                tb = ui_tbSample;
+            }
+            else
+            {
+                tb = ui_tbMail;
+            }
+
+            return tb;
+        }
+        #endregion
+
+        #region Event
+        private void OnLoadDetailForm(object sender, EventArgs e)
+        {
+            LoadCustomerList(this.Dt);
+
+            GetData(this.Dt, this.Index);
+        }
+
+        private void OnCustomerSelectedValueChanged(object sender, EventArgs e)
+        {
+            ComboBox cBox = sender as ComboBox;
+
+            ControlsValueClear(cBox);
+
+            LoadComboBoxesList(this.Dt, cBox.Text);
+        }
+
+        private void OnClickBtnClose(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void OnClickBtnDelete(object sender, EventArgs e)
+        {
+            if (this.Index == 0)
+            {
+                return;
+            }
+
+            if (MetroMessageBox.Show(this, "", "Do you want to delete?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
+            {
+                return;
+            }
+
+            using (SqlConnection conn = new SqlConnection(DbHelper.DbConnectionString))
+            {
+                conn.Open();
+
+                SqlTransaction tran = conn.BeginTransaction();
+                SqlCommand cmd = new SqlCommand();
+
+                cmd.Connection = conn;
+                cmd.Transaction = tran;
+
+                try
+                {
+                    cmd.CommandText = DbHelper.GetDeleteQuery(this.Dt.TableName, this.Index);
+                    cmd.ExecuteNonQuery();
+
+                    tran.Commit();  // Transaction Commit
+
+                    this.ActivateMdiChild(this);
+                }
+                catch (Exception ex)
+                {
+                    tran.Rollback();    // 에러 발생 시, RollBack 처리
+                    MetroMessageBox.Show(this, ex.ToString(), "Delete Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    this.Close();
+                }
+            }
+        }
+
+        private void OnClickBtnSave(object sender, EventArgs e)
+        {
+            if (this.Index == 0)
+            {
+                this.Index = InsertData(true);
+            }
+            else
+            {
+                UpdateData(this.Index);
+            }
+
+            this.ActivateMdiChild(this);
+        }
+
+        private void OnClickBtnCopy(object sender, EventArgs e)
+        {
+            if (this.Index != 0)
+            {
+                InsertData(false);
+
+                this.ActivateMdiChild(this);
+
+                MetroMessageBox.Show(this, "", "Data Insertion Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void OnClickBtnExecute(object sender, EventArgs e)
+        {
+            MetroButton btn = sender as MetroButton;
+            TextBox tb = GetTextBox(btn.Name);
+
+            if (String.IsNullOrEmpty(tb.Text) == false)
+            {
+                string docFullPath = String.Format(@"{0}\{1}", this.DocPath, tb.Text);
+
+                FileInfo fi = new FileInfo(docFullPath);
+
+                if (fi.Exists == true)
+                {
+                    Process.Start(docFullPath);
+                }
+            }
+        }
+
+        private void OnClickBtnPathOpen(object sender, EventArgs e)
+        {
+            MetroButton btn = sender as MetroButton;
+            TextBox tb = GetTextBox(btn.Name);
+
+            if (String.IsNullOrEmpty(tb.Text) == false)
+            {
+                string docFullPath = String.Format(@"{0}\{1}", this.DocPath, tb.Text);
+
+                FileInfo fi = new FileInfo(docFullPath);
+
+                if (fi.Directory.Exists == true)
+                {
+                    Process.Start(fi.DirectoryName);
+                }
+            }
+        }
+
+        private void OnClickBtnSearch(object sender, EventArgs e)
+        {
+            MetroButton btn = sender as MetroButton;
+            TextBox tb = GetTextBox(btn.Name);
+
+            string docFullPath = String.Format(@"{0}\{1}", this.DocPath, tb.Text);
+
+            FileInfo fi = new FileInfo(docFullPath);
+
+            FolderBrowserDialog folderDialog = new FolderBrowserDialog();
+
+            if (fi.Directory.Exists == true)
+            {
+                folderDialog.SelectedPath = fi.DirectoryName;
+            }
+
+            if (folderDialog.ShowDialog(this) == DialogResult.OK)
+            {
+                tb.Text = folderDialog.SelectedPath;
+            }
+        }
+
+        private void OnClickBtnClear(object sender, EventArgs e)
+        {
+            MetroButton btn = sender as MetroButton;
+            TextBox tb = GetTextBox(btn.Name);
+
+            tb.Text = "";
         }
         #endregion
     }
