@@ -3,6 +3,7 @@ using MetroFramework.Controls;
 using MetroFramework.Forms;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
@@ -10,6 +11,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace HullMaintenance
@@ -454,6 +456,96 @@ namespace HullMaintenance
                 MetroMessageBox.Show(this, "", "File doesn't exist", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        /// <summary>
+        /// Excel 파일 읽기
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <param name="worksheetName"></param>
+        /// <param name="HeaderLine"></param>
+        /// <param name="ColumnStart"></param>
+        /// <returns></returns>
+        public DataTable ReadExcelToDatatble(string filePath, string worksheetName, int HeaderLine, int ColumnStart, object obj = null)
+        {
+            BackgroundWorker worker = obj as BackgroundWorker;
+            DataTable dataTable = new DataTable();
+            Microsoft.Office.Interop.Excel.Application excel;
+            Microsoft.Office.Interop.Excel.Workbook excelworkBook;
+            Microsoft.Office.Interop.Excel.Worksheet excelSheet;
+            Microsoft.Office.Interop.Excel.Range range;
+
+            try
+            {
+                // Get Application object.
+                excel = new Microsoft.Office.Interop.Excel.Application();
+                excel.Visible = false;
+                excel.DisplayAlerts = false;
+
+                // Creation a new Workbook
+                excelworkBook = excel.Workbooks.Open(filePath);
+
+                // Workk sheet
+                excelSheet = (Microsoft.Office.Interop.Excel.Worksheet)excelworkBook.Worksheets.Item[worksheetName];
+                range = excelSheet.UsedRange;
+
+                int colCount = range.Columns.Count;
+                // loop through each row and add values to our sheet
+                int rowCount = range.Rows.Count; ;
+
+                //create the header of table
+                for (int j = ColumnStart; j <= colCount; j++)
+                {
+                    dataTable.Columns.Add(Convert.ToString(range.Cells[HeaderLine, j].Value), typeof(string));
+                }
+
+                //filling the table from  excel file
+                for (int i = HeaderLine + 1; i <= rowCount; i++)
+                {
+                    DataRow dr = dataTable.NewRow();
+
+                    for (int j = ColumnStart; j <= colCount; j++)
+                    {
+                        if (j > 3 && j < 10)
+                        {
+                            string strVal = Convert.ToString(range.Cells[i, j].Value2);
+                            double doubleVal;
+
+                            if (Double.TryParse(strVal, out doubleVal) == true)
+                            {
+                                DateTime dateTime = DateTime.FromOADate(doubleVal);
+                                dr[j - ColumnStart] = dateTime.ToString("yyyy-MM-dd");
+                            }
+                        }
+                        else
+                        {
+                            dr[j - ColumnStart] = Convert.ToString(range.Cells[i, j].Value2);
+                        }
+                    }
+
+                    double percent = (double)i / (double)rowCount * 100.0;
+                    worker.ReportProgress((int)percent, String.Format("{0} / {1}", i, rowCount));
+
+                    dataTable.Rows.InsertAt(dr, dataTable.Rows.Count + 1);
+                }
+
+                //now close the workbook and make the function return the data table
+                excelworkBook.Close();
+                excel.Quit();
+
+                return dataTable;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return null;
+            }
+            finally
+            {
+                excelSheet = null;
+                range = null;
+                excelworkBook = null;
+            }
+        }
         #endregion
 
         #region Event
@@ -873,13 +965,13 @@ namespace HullMaintenance
 				}
 				else if (ui_tabControl.SelectedIndex == 1)
 				{
-					if (ui_panelStdcollapsible.Visible == false)
+					if (ui_panelStdCollapsible.Visible == false)
 					{
-						ui_panelStdcollapsible.Visible = true;
+						ui_panelStdCollapsible.Visible = true;
 					}
 					else
 					{
-						ui_panelStdcollapsible.Visible = false;
+						ui_panelStdCollapsible.Visible = false;
 					}
 				}
 			}
@@ -939,6 +1031,125 @@ namespace HullMaintenance
             {
                 this.Activate();
             }
+        }
+
+        private void OnClickLoad(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDlg = new OpenFileDialog
+            {
+                InitialDirectory = @"D:\",
+                Title = "Load File",
+                CheckFileExists = true,
+                CheckPathExists = true,
+                DefaultExt = "xlsx",
+                Filter = "Excel Files (*.xlsx;*.xls;*.csv)|*.xlsx;*.xls;*.csv",
+                FilterIndex = 1,
+                RestoreDirectory = true,
+                ReadOnlyChecked = true,
+                ShowReadOnly = true
+            };
+
+            if (openFileDlg.ShowDialog() == DialogResult.OK)
+            {
+                string filePath = openFileDlg.FileName;
+
+                ui_btnLoadExcel.Enabled = false;
+                ui_btnClearExcel.Enabled = false;
+                ui_btnImportExcel.Enabled = false;
+                ui_progressBar.Width = 0;
+                ui_progressBar.Visible = true;
+                ui_panelHelper.Cursor = Cursors.WaitCursor;
+
+                BackgroundWorker worker = new BackgroundWorker();
+                worker.DoWork += Worker_DoWork;
+                worker.RunWorkerCompleted += Worker_RunWorkerCompleted;
+                worker.ProgressChanged += Worker_ProgressChanged;
+                worker.WorkerReportsProgress = true;
+                worker.RunWorkerAsync(filePath);
+            }
+        }
+
+        private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            //Console.WriteLine(e.UserState.ToString());
+            //ui_progressBar.Value = e.ProgressPercentage;
+            ui_progressBar.Width = (int)(e.ProgressPercentage / 100.0 * ui_panelHelperCollapsible.Width);
+        }
+
+        private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            ui_btnLoadExcel.Enabled = true;
+            ui_btnClearExcel.Enabled = true;
+            ui_btnImportExcel.Enabled = true;
+            ui_panelHelper.Cursor = Cursors.Default;
+
+            MetroGrid metroGrid = e.Result as MetroGrid;
+            ui_panelHelper.Controls.Add(metroGrid);
+        }
+
+        private void Worker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            string filePath = e.Argument as string;
+
+            DataTable dt = ReadExcelToDatatble(filePath, "개발사양", 6, 2, sender);
+
+            MetroGrid excelGrid = new MetroGrid();
+            excelGrid.Name = "gridExcel";
+            excelGrid.DataSource = dt;
+            excelGrid.Dock = DockStyle.Fill;
+
+            e.Result = excelGrid;
+        }
+
+        private void OnClickClearExcel(object sender, EventArgs e)
+        {
+            ui_progressBar.Visible = false;
+            ui_panelHelper.Controls.RemoveByKey("gridExcel");
+        }
+
+        private void OnClickImport(object sender, EventArgs e)
+        {
+            MetroGrid excelGrid = null;
+            foreach (Control ctrl in ui_panelHelper.Controls.Find("gridExcel", true))
+            {
+                excelGrid = ctrl as MetroGrid;
+                break;
+            }
+
+            if (excelGrid == null)
+            {
+                return;
+            }
+
+            DataTable dt = excelGrid.DataSource as DataTable;
+
+            foreach (DataColumn col in dt.Columns)
+            {
+            }
+
+            //using (SqlConnection conn = new SqlConnection(DbHelper.DbConnectionString))
+            //{
+            //    conn.Open();
+
+            //    using (SqlBulkCopy bulkCopy = new SqlBulkCopy(conn))
+            //    {
+            //        foreach (DataColumn column in dt.Columns)
+            //        {
+            //            bulkCopy.ColumnMappings.Add(column.ColumnName, column.Caption);
+            //        }
+
+            //        bulkCopy.DestinationTableName = "smarthull";
+
+            //        try
+            //        {
+            //            bulkCopy.WriteToServer(dt);
+            //        }
+            //        catch (Exception ex)
+            //        {
+            //            Console.WriteLine(ex.Message);
+            //        }
+            //    }
+            //}
         }
         #endregion
     }
