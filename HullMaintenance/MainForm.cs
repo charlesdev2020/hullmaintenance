@@ -1121,35 +1121,155 @@ namespace HullMaintenance
                 return;
             }
 
-            DataTable dt = excelGrid.DataSource as DataTable;
+            DataTable excelDt = excelGrid.DataSource as DataTable;
+            DataTable importDt = excelDt.Copy();
 
-            foreach (DataColumn col in dt.Columns)
+            // 시작일을 기준으로 정렬
+            importDt.DefaultView.Sort = "시작 DESC";
+            importDt.AcceptChanges();
+
+            using (SqlConnection conn = new SqlConnection(DbHelper.DbConnectionString))
             {
+                conn.Open();
+
+                double val;
+                DateTime dateTime;
+                SqlTransaction tran = conn.BeginTransaction();
+                SqlCommand cmd = new SqlCommand();
+
+                cmd.Connection = conn;
+                cmd.Transaction = tran;
+
+                try
+                {
+                    cmd.CommandText = DbHelper.GetInsertQuery("smarthull");
+
+                    foreach (DataRow row in importDt.Rows)
+                    {
+                        cmd.Parameters.AddWithValue("@customer", row["현장"].ToString().Trim());
+                        cmd.Parameters.AddWithValue("@site", row["현장"].ToString().Trim());
+                        cmd.Parameters.AddWithValue("@type", row["타입"].ToString().Trim());
+                        cmd.Parameters.AddWithValue("@category1", row["종류"].ToString());
+                        cmd.Parameters.AddWithValue("@category2", row["내용"].ToString());
+                        cmd.Parameters.AddWithValue("@priority", row["우선"].ToString().Trim());
+
+                        if (Double.TryParse(row["시수(일)"].ToString(), out val) == true)
+                        {
+                            cmd.Parameters.AddWithValue("@workTime", row["시수(일)"].ToString().Trim());
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@workTime", DBNull.Value);
+                        }
+
+                        if (DateTime.TryParse(row["시작"].ToString(), out dateTime))
+                        {
+                            cmd.Parameters.AddWithValue("@startDate", row["시작"].ToString());
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@startDate", DBNull.Value);
+                        }
+
+                        if (DateTime.TryParse(row["희망납기일"].ToString(), out dateTime))
+                        {
+                            cmd.Parameters.AddWithValue("@dueDate", row["희망납기일"].ToString());
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@dueDate", DBNull.Value);
+                        }
+
+                        if (DateTime.TryParse(row["처리완료"].ToString(), out dateTime))
+                        {
+                            cmd.Parameters.AddWithValue("@endDate", row["처리완료"].ToString());
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@endDate", DBNull.Value);
+                        }
+
+                        if (DateTime.TryParse(row["검증"].ToString(), out dateTime))
+                        {
+                            cmd.Parameters.AddWithValue("@verificationDate", row["검증"].ToString());
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@verificationDate", DBNull.Value);
+                        }
+
+                        if (DateTime.TryParse(row["업데이트"].ToString(), out dateTime))
+                        {
+                            cmd.Parameters.AddWithValue("@updateDate", row["업데이트"].ToString());
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@updateDate", DBNull.Value);
+                        }
+
+                        if (String.IsNullOrEmpty(row["참고 문서"].ToString()) == false)
+                        {
+                            cmd.Parameters.AddWithValue("@documentFile", row["참고 문서"].ToString());
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@documentFile", DBNull.Value);
+                        }
+
+                        if (String.IsNullOrEmpty(row["답변"].ToString()) == false)
+                        {
+                            cmd.Parameters.AddWithValue("@mailFile", row["답변"].ToString());
+                        }
+                        else if (String.IsNullOrEmpty(row["메일"].ToString()) == false)
+                        {
+                            cmd.Parameters.AddWithValue("@mailFile", row["메일"].ToString());
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@mailFile", DBNull.Value);
+                        }
+
+                        string details = row["비고"].ToString();
+                        string[] splitSeperator = new string[] { "- " };
+                        if (String.IsNullOrEmpty(details) == false && details.Split(splitSeperator, StringSplitOptions.None).Count() > 0)
+                        {
+                            string title = details.Split(splitSeperator, StringSplitOptions.None)[0];
+                            details = details.Replace(title, "");
+
+                            cmd.Parameters.AddWithValue("@summaryKr", title.TrimEnd(' '));
+                            cmd.Parameters.AddWithValue("@details", details);
+                        }
+                        else if (String.IsNullOrEmpty(details) == false)
+                        {
+                            cmd.Parameters.AddWithValue("@summaryKr", row["비고"].ToString());
+                            cmd.Parameters.AddWithValue("@details", DBNull.Value);
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@summaryKr", DBNull.Value);
+                            cmd.Parameters.AddWithValue("@details", DBNull.Value);
+                        }
+
+                        cmd.Parameters.AddWithValue("@worker", row["담당자"].ToString().Trim());
+                        cmd.Parameters.AddWithValue("@status", row["상태"].ToString());
+                        cmd.Parameters.AddWithValue("@receiveDate", DBNull.Value);
+                        cmd.Parameters.AddWithValue("@sampleFile", DBNull.Value);
+                        cmd.Parameters.AddWithValue("@summaryJp", DBNull.Value);
+                        cmd.Parameters.AddWithValue("@writer", Environment.UserName);
+                        cmd.Parameters.AddWithValue("@saveDate", DateTime.Now);
+
+                        cmd.ExecuteNonQuery();
+                        cmd.Parameters.Clear();
+                    }
+
+                    tran.Commit();  // Transaction Commit
+                }
+                catch (Exception ex)
+                {
+                    tran.Rollback();    // 에러 발생 시, RollBack 처리
+                    MetroMessageBox.Show(this, ex.ToString(), "Insert Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
-
-            //using (SqlConnection conn = new SqlConnection(DbHelper.DbConnectionString))
-            //{
-            //    conn.Open();
-
-            //    using (SqlBulkCopy bulkCopy = new SqlBulkCopy(conn))
-            //    {
-            //        foreach (DataColumn column in dt.Columns)
-            //        {
-            //            bulkCopy.ColumnMappings.Add(column.ColumnName, column.Caption);
-            //        }
-
-            //        bulkCopy.DestinationTableName = "smarthull";
-
-            //        try
-            //        {
-            //            bulkCopy.WriteToServer(dt);
-            //        }
-            //        catch (Exception ex)
-            //        {
-            //            Console.WriteLine(ex.Message);
-            //        }
-            //    }
-            //}
         }
         #endregion
     }
