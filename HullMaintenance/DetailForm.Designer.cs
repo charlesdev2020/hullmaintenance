@@ -105,7 +105,7 @@
             this.ui_lbMainTitle.FontWeight = MetroFramework.MetroLabelWeight.Regular;
             this.ui_lbMainTitle.ForeColor = System.Drawing.Color.Gray;
             this.ui_lbMainTitle.Location = new System.Drawing.Point(23, 15);
-            this.ui_lbMainTitle.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.ui_lbMainTitle.Margin = new System.Windows.Forms.Padding(5);
             this.ui_lbMainTitle.Name = "ui_lbMainTitle";
             this.ui_lbMainTitle.Size = new System.Drawing.Size(85, 20);
             this.ui_lbMainTitle.TabIndex = 0;
@@ -118,9 +118,9 @@
             // 
             this.ui_gbSummaryKr.Controls.Add(this.ui_tbSummaryKr);
             this.ui_gbSummaryKr.Location = new System.Drawing.Point(23, 45);
-            this.ui_gbSummaryKr.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.ui_gbSummaryKr.Margin = new System.Windows.Forms.Padding(5);
             this.ui_gbSummaryKr.Name = "ui_gbSummaryKr";
-            this.ui_gbSummaryKr.Padding = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.ui_gbSummaryKr.Padding = new System.Windows.Forms.Padding(5);
             this.ui_gbSummaryKr.Size = new System.Drawing.Size(562, 146);
             this.ui_gbSummaryKr.TabIndex = 1;
             this.ui_gbSummaryKr.TabStop = false;
@@ -179,9 +179,9 @@
             this.ui_gbInfo1.Controls.Add(this.ui_cbType);
             this.ui_gbInfo1.Controls.Add(this.ui_lbType);
             this.ui_gbInfo1.Location = new System.Drawing.Point(595, 45);
-            this.ui_gbInfo1.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.ui_gbInfo1.Margin = new System.Windows.Forms.Padding(5);
             this.ui_gbInfo1.Name = "ui_gbInfo1";
-            this.ui_gbInfo1.Padding = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.ui_gbInfo1.Padding = new System.Windows.Forms.Padding(5);
             this.ui_gbInfo1.Size = new System.Drawing.Size(331, 300);
             this.ui_gbInfo1.TabIndex = 3;
             this.ui_gbInfo1.TabStop = false;
@@ -198,7 +198,7 @@
             // ui_lbWorkTime
             // 
             this.ui_lbWorkTime.Location = new System.Drawing.Point(187, 218);
-            this.ui_lbWorkTime.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.ui_lbWorkTime.Margin = new System.Windows.Forms.Padding(5);
             this.ui_lbWorkTime.Name = "ui_lbWorkTime";
             this.ui_lbWorkTime.Size = new System.Drawing.Size(50, 25);
             this.ui_lbWorkTime.TabIndex = 27;
@@ -215,7 +215,7 @@
             this.ui_cbSite.IntegralHeight = false;
             this.ui_cbSite.ItemHeight = 20;
             this.ui_cbSite.Location = new System.Drawing.Point(89, 66);
-            this.ui_cbSite.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.ui_cbSite.Margin = new System.Windows.Forms.Padding(5);
             this.ui_cbSite.Name = "ui_cbSite";
             this.ui_cbSite.Size = new System.Drawing.Size(233, 28);
             this.ui_cbSite.TabIndex = 3;
@@ -223,7 +223,7 @@
             // ui_lbSite
             // 
             this.ui_lbSite.Location = new System.Drawing.Point(10, 66);
-            this.ui_lbSite.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.ui_lbSite.Margin = new System.Windows.Forms.Padding(5);
             this.ui_lbSite.Name = "ui_lbSite";
             this.ui_lbSite.Size = new System.Drawing.Size(69, 25);
             this.ui_lbSite.TabIndex = 25;
@@ -240,7 +240,7 @@
             this.ui_cbCustomer.IntegralHeight = false;
             this.ui_cbCustomer.ItemHeight = 20;
             this.ui_cbCustomer.Location = new System.Drawing.Point(89, 28);
-            this.ui_cbCustomer.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.ui_cbCustomer.Margin = new System.Windows.Forms.Padding(5);
             this.ui_cbCustomer.Name = "ui_cbCustomer";
             this.ui_cbCustomer.Size = new System.Drawing.Size(233, 28);
             this.ui_cbCustomer.TabIndex = 2;
@@ -250,7 +250,7 @@
             // ui_lbCustomer
             // 
             this.ui_lbCustomer.Location = new System.Drawing.Point(10, 28);
-            this.ui_lbCustomer.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.ui_lbCustomer.Margin = new System.Windows.Forms.Padding(5);
             this.ui_lbCustomer.Name = "ui_lbCustomer";
             this.ui_lbCustomer.Size = new System.Drawing.Size(69, 25);
             this.ui_lbCustomer.TabIndex = 23;
@@ -267,7 +267,7 @@
             this.ui_cbWorker.IntegralHeight = false;
             this.ui_cbWorker.ItemHeight = 20;
             this.ui_cbWorker.Location = new System.Drawing.Point(89, 256);
-            this.ui_cbWorker.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.ui_cbWorker.Margin = new System.Windows.Forms.Padding(5);
             this.ui_cbWorker.Name = "ui_cbWorker";
             this.ui_cbWorker.Size = new System.Drawing.Size(233, 28);
             this.ui_cbWorker.TabIndex = 9;
@@ -282,7 +282,7 @@
             this.ui_cbPriority.IntegralHeight = false;
             this.ui_cbPriority.ItemHeight = 20;
             this.ui_cbPriority.Location = new System.Drawing.Point(89, 218);
-            this.ui_cbPriority.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.ui_cbPriority.Margin = new System.Windows.Forms.Padding(5);
             this.ui_cbPriority.Name = "ui_cbPriority";
             this.ui_cbPriority.Size = new System.Drawing.Size(89, 28);
             this.ui_cbPriority.TabIndex = 7;
@@ -297,7 +297,7 @@
             this.ui_cbCategory2.IntegralHeight = false;
             this.ui_cbCategory2.ItemHeight = 20;
             this.ui_cbCategory2.Location = new System.Drawing.Point(89, 180);
-            this.ui_cbCategory2.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.ui_cbCategory2.Margin = new System.Windows.Forms.Padding(5);
             this.ui_cbCategory2.Name = "ui_cbCategory2";
             this.ui_cbCategory2.Size = new System.Drawing.Size(233, 28);
             this.ui_cbCategory2.TabIndex = 6;
@@ -312,7 +312,7 @@
             this.ui_cbCategory1.IntegralHeight = false;
             this.ui_cbCategory1.ItemHeight = 20;
             this.ui_cbCategory1.Location = new System.Drawing.Point(89, 142);
-            this.ui_cbCategory1.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.ui_cbCategory1.Margin = new System.Windows.Forms.Padding(5);
             this.ui_cbCategory1.Name = "ui_cbCategory1";
             this.ui_cbCategory1.Size = new System.Drawing.Size(233, 28);
             this.ui_cbCategory1.TabIndex = 5;
@@ -320,7 +320,7 @@
             // ui_lbWorker
             // 
             this.ui_lbWorker.Location = new System.Drawing.Point(10, 256);
-            this.ui_lbWorker.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.ui_lbWorker.Margin = new System.Windows.Forms.Padding(5);
             this.ui_lbWorker.Name = "ui_lbWorker";
             this.ui_lbWorker.Size = new System.Drawing.Size(69, 25);
             this.ui_lbWorker.TabIndex = 17;
@@ -330,7 +330,7 @@
             // ui_lbPriority
             // 
             this.ui_lbPriority.Location = new System.Drawing.Point(10, 218);
-            this.ui_lbPriority.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.ui_lbPriority.Margin = new System.Windows.Forms.Padding(5);
             this.ui_lbPriority.Name = "ui_lbPriority";
             this.ui_lbPriority.Size = new System.Drawing.Size(69, 25);
             this.ui_lbPriority.TabIndex = 16;
@@ -340,7 +340,7 @@
             // ui_lbCategory2
             // 
             this.ui_lbCategory2.Location = new System.Drawing.Point(10, 180);
-            this.ui_lbCategory2.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.ui_lbCategory2.Margin = new System.Windows.Forms.Padding(5);
             this.ui_lbCategory2.Name = "ui_lbCategory2";
             this.ui_lbCategory2.Size = new System.Drawing.Size(69, 25);
             this.ui_lbCategory2.TabIndex = 15;
@@ -350,7 +350,7 @@
             // ui_lbCategory1
             // 
             this.ui_lbCategory1.Location = new System.Drawing.Point(10, 142);
-            this.ui_lbCategory1.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.ui_lbCategory1.Margin = new System.Windows.Forms.Padding(5);
             this.ui_lbCategory1.Name = "ui_lbCategory1";
             this.ui_lbCategory1.Size = new System.Drawing.Size(69, 25);
             this.ui_lbCategory1.TabIndex = 14;
@@ -367,7 +367,7 @@
             this.ui_cbType.IntegralHeight = false;
             this.ui_cbType.ItemHeight = 20;
             this.ui_cbType.Location = new System.Drawing.Point(89, 104);
-            this.ui_cbType.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.ui_cbType.Margin = new System.Windows.Forms.Padding(5);
             this.ui_cbType.Name = "ui_cbType";
             this.ui_cbType.Size = new System.Drawing.Size(233, 28);
             this.ui_cbType.TabIndex = 4;
@@ -375,7 +375,7 @@
             // ui_lbType
             // 
             this.ui_lbType.Location = new System.Drawing.Point(10, 104);
-            this.ui_lbType.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.ui_lbType.Margin = new System.Windows.Forms.Padding(5);
             this.ui_lbType.Name = "ui_lbType";
             this.ui_lbType.Size = new System.Drawing.Size(69, 25);
             this.ui_lbType.TabIndex = 12;
@@ -399,9 +399,9 @@
             this.ui_gbInfo2.Controls.Add(this.ui_lbDueDate);
             this.ui_gbInfo2.Controls.Add(this.ui_lbReceiveDate);
             this.ui_gbInfo2.Location = new System.Drawing.Point(937, 45);
-            this.ui_gbInfo2.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.ui_gbInfo2.Margin = new System.Windows.Forms.Padding(5);
             this.ui_gbInfo2.Name = "ui_gbInfo2";
-            this.ui_gbInfo2.Padding = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.ui_gbInfo2.Padding = new System.Windows.Forms.Padding(5);
             this.ui_gbInfo2.Size = new System.Drawing.Size(320, 300);
             this.ui_gbInfo2.TabIndex = 4;
             this.ui_gbInfo2.TabStop = false;
@@ -417,6 +417,7 @@
             this.ui_dtpUpdateDate.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.ui_dtpUpdateDate.Size = new System.Drawing.Size(196, 28);
             this.ui_dtpUpdateDate.TabIndex = 16;
+            this.ui_dtpUpdateDate.ValueChanged += new System.EventHandler(this.OnDateTimeValueChanged);
             // 
             // ui_dtpVerificationDate
             // 
@@ -429,6 +430,7 @@
             this.ui_dtpVerificationDate.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.ui_dtpVerificationDate.Size = new System.Drawing.Size(196, 28);
             this.ui_dtpVerificationDate.TabIndex = 14;
+            this.ui_dtpVerificationDate.ValueChanged += new System.EventHandler(this.OnDateTimeValueChanged);
             // 
             // ui_dtpEndDate
             // 
@@ -441,6 +443,7 @@
             this.ui_dtpEndDate.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.ui_dtpEndDate.Size = new System.Drawing.Size(196, 28);
             this.ui_dtpEndDate.TabIndex = 13;
+            this.ui_dtpEndDate.ValueChanged += new System.EventHandler(this.OnDateTimeValueChanged);
             // 
             // ui_dtpStartDate
             // 
@@ -453,6 +456,7 @@
             this.ui_dtpStartDate.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.ui_dtpStartDate.Size = new System.Drawing.Size(196, 28);
             this.ui_dtpStartDate.TabIndex = 12;
+            this.ui_dtpStartDate.ValueChanged += new System.EventHandler(this.OnDateTimeValueChanged);
             // 
             // ui_dtpDueDate
             // 
@@ -465,6 +469,7 @@
             this.ui_dtpDueDate.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.ui_dtpDueDate.Size = new System.Drawing.Size(196, 28);
             this.ui_dtpDueDate.TabIndex = 11;
+            this.ui_dtpDueDate.ValueChanged += new System.EventHandler(this.OnDateTimeValueChanged);
             // 
             // ui_dtpReceiveDate
             // 
@@ -478,6 +483,7 @@
             this.ui_dtpReceiveDate.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.ui_dtpReceiveDate.Size = new System.Drawing.Size(196, 28);
             this.ui_dtpReceiveDate.TabIndex = 10;
+            this.ui_dtpReceiveDate.ValueChanged += new System.EventHandler(this.OnDateTimeValueChanged);
             // 
             // ui_cbStatus
             // 
@@ -489,7 +495,7 @@
             this.ui_cbStatus.IntegralHeight = false;
             this.ui_cbStatus.ItemHeight = 20;
             this.ui_cbStatus.Location = new System.Drawing.Point(118, 256);
-            this.ui_cbStatus.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.ui_cbStatus.Margin = new System.Windows.Forms.Padding(5);
             this.ui_cbStatus.Name = "ui_cbStatus";
             this.ui_cbStatus.Size = new System.Drawing.Size(196, 28);
             this.ui_cbStatus.TabIndex = 17;
@@ -497,7 +503,7 @@
             // ui_lbStatus
             // 
             this.ui_lbStatus.Location = new System.Drawing.Point(10, 256);
-            this.ui_lbStatus.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.ui_lbStatus.Margin = new System.Windows.Forms.Padding(5);
             this.ui_lbStatus.Name = "ui_lbStatus";
             this.ui_lbStatus.Size = new System.Drawing.Size(101, 25);
             this.ui_lbStatus.TabIndex = 25;
@@ -507,7 +513,7 @@
             // ui_lbUpdateDate
             // 
             this.ui_lbUpdateDate.Location = new System.Drawing.Point(10, 218);
-            this.ui_lbUpdateDate.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.ui_lbUpdateDate.Margin = new System.Windows.Forms.Padding(5);
             this.ui_lbUpdateDate.Name = "ui_lbUpdateDate";
             this.ui_lbUpdateDate.Size = new System.Drawing.Size(101, 25);
             this.ui_lbUpdateDate.TabIndex = 24;
@@ -517,7 +523,7 @@
             // ui_lbVerificationDate
             // 
             this.ui_lbVerificationDate.Location = new System.Drawing.Point(10, 180);
-            this.ui_lbVerificationDate.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.ui_lbVerificationDate.Margin = new System.Windows.Forms.Padding(5);
             this.ui_lbVerificationDate.Name = "ui_lbVerificationDate";
             this.ui_lbVerificationDate.Size = new System.Drawing.Size(101, 25);
             this.ui_lbVerificationDate.TabIndex = 23;
@@ -527,7 +533,7 @@
             // ui_lbEndDate
             // 
             this.ui_lbEndDate.Location = new System.Drawing.Point(10, 142);
-            this.ui_lbEndDate.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.ui_lbEndDate.Margin = new System.Windows.Forms.Padding(5);
             this.ui_lbEndDate.Name = "ui_lbEndDate";
             this.ui_lbEndDate.Size = new System.Drawing.Size(101, 25);
             this.ui_lbEndDate.TabIndex = 22;
@@ -537,7 +543,7 @@
             // ui_lbStartDate
             // 
             this.ui_lbStartDate.Location = new System.Drawing.Point(10, 104);
-            this.ui_lbStartDate.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.ui_lbStartDate.Margin = new System.Windows.Forms.Padding(5);
             this.ui_lbStartDate.Name = "ui_lbStartDate";
             this.ui_lbStartDate.Size = new System.Drawing.Size(101, 25);
             this.ui_lbStartDate.TabIndex = 21;
@@ -547,7 +553,7 @@
             // ui_lbDueDate
             // 
             this.ui_lbDueDate.Location = new System.Drawing.Point(10, 66);
-            this.ui_lbDueDate.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.ui_lbDueDate.Margin = new System.Windows.Forms.Padding(5);
             this.ui_lbDueDate.Name = "ui_lbDueDate";
             this.ui_lbDueDate.Size = new System.Drawing.Size(101, 25);
             this.ui_lbDueDate.TabIndex = 15;
@@ -557,7 +563,7 @@
             // ui_lbReceiveDate
             // 
             this.ui_lbReceiveDate.Location = new System.Drawing.Point(10, 28);
-            this.ui_lbReceiveDate.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.ui_lbReceiveDate.Margin = new System.Windows.Forms.Padding(5);
             this.ui_lbReceiveDate.Name = "ui_lbReceiveDate";
             this.ui_lbReceiveDate.Size = new System.Drawing.Size(101, 25);
             this.ui_lbReceiveDate.TabIndex = 13;
@@ -585,9 +591,9 @@
             this.ui_gbInfo3.Controls.Add(this.ui_btnDocumentExc);
             this.ui_gbInfo3.Controls.Add(this.ui_lbDocument);
             this.ui_gbInfo3.Location = new System.Drawing.Point(23, 356);
-            this.ui_gbInfo3.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.ui_gbInfo3.Margin = new System.Windows.Forms.Padding(5);
             this.ui_gbInfo3.Name = "ui_gbInfo3";
-            this.ui_gbInfo3.Padding = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.ui_gbInfo3.Padding = new System.Windows.Forms.Padding(5);
             this.ui_gbInfo3.Size = new System.Drawing.Size(1234, 145);
             this.ui_gbInfo3.TabIndex = 5;
             this.ui_gbInfo3.TabStop = false;
@@ -723,7 +729,7 @@
             // 
             this.ui_tbMail.Font = new System.Drawing.Font("Verdana", 11F);
             this.ui_tbMail.Location = new System.Drawing.Point(63, 102);
-            this.ui_tbMail.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.ui_tbMail.Margin = new System.Windows.Forms.Padding(5);
             this.ui_tbMail.Name = "ui_tbMail";
             this.ui_tbMail.ReadOnly = true;
             this.ui_tbMail.Size = new System.Drawing.Size(973, 30);
@@ -733,7 +739,7 @@
             // 
             this.ui_tbSample.Font = new System.Drawing.Font("Verdana", 11F);
             this.ui_tbSample.Location = new System.Drawing.Point(63, 62);
-            this.ui_tbSample.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.ui_tbSample.Margin = new System.Windows.Forms.Padding(5);
             this.ui_tbSample.Name = "ui_tbSample";
             this.ui_tbSample.ReadOnly = true;
             this.ui_tbSample.Size = new System.Drawing.Size(973, 30);
@@ -743,7 +749,7 @@
             // 
             this.ui_tbDocument.Font = new System.Drawing.Font("Verdana", 11F);
             this.ui_tbDocument.Location = new System.Drawing.Point(63, 22);
-            this.ui_tbDocument.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.ui_tbDocument.Margin = new System.Windows.Forms.Padding(5);
             this.ui_tbDocument.Name = "ui_tbDocument";
             this.ui_tbDocument.ReadOnly = true;
             this.ui_tbDocument.Size = new System.Drawing.Size(973, 30);
@@ -752,7 +758,7 @@
             // ui_lbMail
             // 
             this.ui_lbMail.Location = new System.Drawing.Point(8, 105);
-            this.ui_lbMail.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.ui_lbMail.Margin = new System.Windows.Forms.Padding(5);
             this.ui_lbMail.Name = "ui_lbMail";
             this.ui_lbMail.Size = new System.Drawing.Size(45, 25);
             this.ui_lbMail.TabIndex = 28;
@@ -762,7 +768,7 @@
             // ui_lbSample
             // 
             this.ui_lbSample.Location = new System.Drawing.Point(8, 65);
-            this.ui_lbSample.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.ui_lbSample.Margin = new System.Windows.Forms.Padding(5);
             this.ui_lbSample.Name = "ui_lbSample";
             this.ui_lbSample.Size = new System.Drawing.Size(45, 25);
             this.ui_lbSample.TabIndex = 26;
@@ -814,7 +820,7 @@
             // ui_lbDocument
             // 
             this.ui_lbDocument.Location = new System.Drawing.Point(8, 25);
-            this.ui_lbDocument.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.ui_lbDocument.Margin = new System.Windows.Forms.Padding(5);
             this.ui_lbDocument.Name = "ui_lbDocument";
             this.ui_lbDocument.Size = new System.Drawing.Size(45, 25);
             this.ui_lbDocument.TabIndex = 21;
@@ -825,9 +831,9 @@
             // 
             this.ui_gbDetails.Controls.Add(this.ui_tbDetails);
             this.ui_gbDetails.Location = new System.Drawing.Point(23, 511);
-            this.ui_gbDetails.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.ui_gbDetails.Margin = new System.Windows.Forms.Padding(5);
             this.ui_gbDetails.Name = "ui_gbDetails";
-            this.ui_gbDetails.Padding = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.ui_gbDetails.Padding = new System.Windows.Forms.Padding(5);
             this.ui_gbDetails.Size = new System.Drawing.Size(1234, 284);
             this.ui_gbDetails.TabIndex = 6;
             this.ui_gbDetails.TabStop = false;
@@ -871,9 +877,9 @@
             // 
             this.ui_gbSummaryJp.Controls.Add(this.ui_tbSummaryJp);
             this.ui_gbSummaryJp.Location = new System.Drawing.Point(23, 201);
-            this.ui_gbSummaryJp.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.ui_gbSummaryJp.Margin = new System.Windows.Forms.Padding(5);
             this.ui_gbSummaryJp.Name = "ui_gbSummaryJp";
-            this.ui_gbSummaryJp.Padding = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.ui_gbSummaryJp.Padding = new System.Windows.Forms.Padding(5);
             this.ui_gbSummaryJp.Size = new System.Drawing.Size(562, 144);
             this.ui_gbSummaryJp.TabIndex = 2;
             this.ui_gbSummaryJp.TabStop = false;
@@ -974,7 +980,7 @@
             this.ui_lbIdNumber.AutoSize = true;
             this.ui_lbIdNumber.ForeColor = System.Drawing.Color.DarkGray;
             this.ui_lbIdNumber.Location = new System.Drawing.Point(118, 15);
-            this.ui_lbIdNumber.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.ui_lbIdNumber.Margin = new System.Windows.Forms.Padding(5);
             this.ui_lbIdNumber.Name = "ui_lbIdNumber";
             this.ui_lbIdNumber.Size = new System.Drawing.Size(39, 20);
             this.ui_lbIdNumber.TabIndex = 0;

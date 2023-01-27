@@ -640,5 +640,11 @@ namespace HullMaintenance
             tb.Text = "";
         }
         #endregion
+
+        private void OnDateTimeValueChanged(object sender, EventArgs e)
+        {
+            DateTimePicker dtPicker = sender as DateTimePicker;
+            dtPicker.CustomFormat = "yyyy-MM-dd ddd";
+        }
     }
 }
