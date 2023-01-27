@@ -29,26 +29,35 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle81 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle82 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle89 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle90 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle83 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle84 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle85 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle86 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle87 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle88 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle91 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle92 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle99 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle100 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle93 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle94 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle95 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle96 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle97 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle98 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle29 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle30 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle28 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle31 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle32 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle39 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle40 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle33 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle34 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle35 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle36 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle37 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle38 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.ui_lbMainTitle1 = new MetroFramework.Controls.MetroLabel();
+            this.ui_lbMainTitle2 = new MetroFramework.Controls.MetroLabel();
+            this.ui_lbMainTitle3 = new MetroFramework.Controls.MetroLabel();
+            this.ui_lbMainVersion = new MetroFramework.Controls.MetroLabel();
+            this.ui_styleMgr = new MetroFramework.Components.MetroStyleManager(this.components);
+            this.ui_panelMain = new MetroFramework.Controls.MetroPanel();
+            this.ui_panelBottom = new MetroFramework.Controls.MetroPanel();
+            this.ui_lbBottomInfo = new MetroFramework.Controls.MetroLabel();
+            this.ui_panelTabControl = new MetroFramework.Controls.MetroPanel();
             this.ui_tabControl = new MetroFramework.Controls.MetroTabControl();
             this.smhPage = new System.Windows.Forms.TabPage();
             this.ui_panelSmh = new MetroFramework.Controls.MetroPanel();
@@ -164,12 +173,10 @@
             this.ui_btnLoadExcel = new MetroFramework.Controls.MetroButton();
             this.ui_btnClearExcel = new MetroFramework.Controls.MetroButton();
             this.ui_btnImportExcel = new MetroFramework.Controls.MetroButton();
-            this.ui_lbMainTitle1 = new MetroFramework.Controls.MetroLabel();
-            this.ui_lbMainTitle2 = new MetroFramework.Controls.MetroLabel();
-            this.ui_lbMainTitle3 = new MetroFramework.Controls.MetroLabel();
-            this.ui_lbMainVersion = new MetroFramework.Controls.MetroLabel();
-            this.ui_styleMgr = new MetroFramework.Components.MetroStyleManager(this.components);
-            this.ui_lbBottomInfo = new MetroFramework.Controls.MetroLabel();
+            ((System.ComponentModel.ISupportInitialize)(this.ui_styleMgr)).BeginInit();
+            this.ui_panelMain.SuspendLayout();
+            this.ui_panelBottom.SuspendLayout();
+            this.ui_panelTabControl.SuspendLayout();
             this.ui_tabControl.SuspendLayout();
             this.smhPage.SuspendLayout();
             this.ui_panelSmh.SuspendLayout();
@@ -190,8 +197,125 @@
             this.ui_gbDb.SuspendLayout();
             this.HelperPage.SuspendLayout();
             this.ui_panelHelperCollapsible.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ui_styleMgr)).BeginInit();
             this.SuspendLayout();
+            // 
+            // ui_lbMainTitle1
+            // 
+            this.ui_lbMainTitle1.AutoSize = true;
+            this.ui_lbMainTitle1.FontWeight = MetroFramework.MetroLabelWeight.Regular;
+            this.ui_lbMainTitle1.ForeColor = System.Drawing.Color.Gray;
+            this.ui_lbMainTitle1.Location = new System.Drawing.Point(34, 9);
+            this.ui_lbMainTitle1.Name = "ui_lbMainTitle1";
+            this.ui_lbMainTitle1.Size = new System.Drawing.Size(125, 20);
+            this.ui_lbMainTitle1.TabIndex = 1;
+            this.ui_lbMainTitle1.Text = "Hull Maintenance";
+            this.ui_lbMainTitle1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.ui_lbMainTitle1.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.ui_lbMainTitle1.UseCustomForeColor = true;
+            // 
+            // ui_lbMainTitle2
+            // 
+            this.ui_lbMainTitle2.AutoSize = true;
+            this.ui_lbMainTitle2.FontSize = MetroFramework.MetroLabelSize.Small;
+            this.ui_lbMainTitle2.ForeColor = System.Drawing.Color.DarkGray;
+            this.ui_lbMainTitle2.Location = new System.Drawing.Point(194, 14);
+            this.ui_lbMainTitle2.Name = "ui_lbMainTitle2";
+            this.ui_lbMainTitle2.Size = new System.Drawing.Size(140, 17);
+            this.ui_lbMainTitle2.TabIndex = 1;
+            this.ui_lbMainTitle2.Text = "Cadwin System Co., Ltd.";
+            this.ui_lbMainTitle2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.ui_lbMainTitle2.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.ui_lbMainTitle2.UseCustomForeColor = true;
+            // 
+            // ui_lbMainTitle3
+            // 
+            this.ui_lbMainTitle3.AutoSize = true;
+            this.ui_lbMainTitle3.ForeColor = System.Drawing.Color.DarkGray;
+            this.ui_lbMainTitle3.Location = new System.Drawing.Point(174, 9);
+            this.ui_lbMainTitle3.Name = "ui_lbMainTitle3";
+            this.ui_lbMainTitle3.Size = new System.Drawing.Size(12, 20);
+            this.ui_lbMainTitle3.TabIndex = 1;
+            this.ui_lbMainTitle3.Text = "|";
+            this.ui_lbMainTitle3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ui_lbMainTitle3.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.ui_lbMainTitle3.UseCustomForeColor = true;
+            // 
+            // ui_lbMainVersion
+            // 
+            this.ui_lbMainVersion.AutoSize = true;
+            this.ui_lbMainVersion.FontSize = MetroFramework.MetroLabelSize.Small;
+            this.ui_lbMainVersion.ForeColor = System.Drawing.Color.DarkGray;
+            this.ui_lbMainVersion.Location = new System.Drawing.Point(346, 14);
+            this.ui_lbMainVersion.Name = "ui_lbMainVersion";
+            this.ui_lbMainVersion.Size = new System.Drawing.Size(90, 17);
+            this.ui_lbMainVersion.TabIndex = 1;
+            this.ui_lbMainVersion.Text = "version=1.0.0.0";
+            this.ui_lbMainVersion.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.ui_lbMainVersion.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.ui_lbMainVersion.UseCustomForeColor = true;
+            // 
+            // ui_styleMgr
+            // 
+            this.ui_styleMgr.Owner = this;
+            // 
+            // ui_panelMain
+            // 
+            this.ui_panelMain.Controls.Add(this.ui_panelTabControl);
+            this.ui_panelMain.Controls.Add(this.ui_panelBottom);
+            this.ui_panelMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ui_panelMain.HorizontalScrollbarBarColor = true;
+            this.ui_panelMain.HorizontalScrollbarHighlightOnWheel = false;
+            this.ui_panelMain.HorizontalScrollbarSize = 10;
+            this.ui_panelMain.Location = new System.Drawing.Point(23, 38);
+            this.ui_panelMain.Name = "ui_panelMain";
+            this.ui_panelMain.Size = new System.Drawing.Size(1417, 917);
+            this.ui_panelMain.TabIndex = 3;
+            this.ui_panelMain.VerticalScrollbarBarColor = true;
+            this.ui_panelMain.VerticalScrollbarHighlightOnWheel = false;
+            this.ui_panelMain.VerticalScrollbarSize = 10;
+            // 
+            // ui_panelBottom
+            // 
+            this.ui_panelBottom.Controls.Add(this.ui_lbBottomInfo);
+            this.ui_panelBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.ui_panelBottom.HorizontalScrollbarBarColor = true;
+            this.ui_panelBottom.HorizontalScrollbarHighlightOnWheel = false;
+            this.ui_panelBottom.HorizontalScrollbarSize = 10;
+            this.ui_panelBottom.Location = new System.Drawing.Point(0, 892);
+            this.ui_panelBottom.Margin = new System.Windows.Forms.Padding(0);
+            this.ui_panelBottom.Name = "ui_panelBottom";
+            this.ui_panelBottom.Padding = new System.Windows.Forms.Padding(5, 1, 5, 1);
+            this.ui_panelBottom.Size = new System.Drawing.Size(1417, 25);
+            this.ui_panelBottom.TabIndex = 5;
+            this.ui_panelBottom.VerticalScrollbarBarColor = true;
+            this.ui_panelBottom.VerticalScrollbarHighlightOnWheel = false;
+            this.ui_panelBottom.VerticalScrollbarSize = 10;
+            // 
+            // ui_lbBottomInfo
+            // 
+            this.ui_lbBottomInfo.AutoSize = true;
+            this.ui_lbBottomInfo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ui_lbBottomInfo.FontSize = MetroFramework.MetroLabelSize.Small;
+            this.ui_lbBottomInfo.Location = new System.Drawing.Point(5, 1);
+            this.ui_lbBottomInfo.Name = "ui_lbBottomInfo";
+            this.ui_lbBottomInfo.Size = new System.Drawing.Size(12, 17);
+            this.ui_lbBottomInfo.TabIndex = 5;
+            this.ui_lbBottomInfo.Text = " ";
+            // 
+            // ui_panelTabControl
+            // 
+            this.ui_panelTabControl.Controls.Add(this.ui_tabControl);
+            this.ui_panelTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ui_panelTabControl.HorizontalScrollbarBarColor = true;
+            this.ui_panelTabControl.HorizontalScrollbarHighlightOnWheel = false;
+            this.ui_panelTabControl.HorizontalScrollbarSize = 10;
+            this.ui_panelTabControl.Location = new System.Drawing.Point(0, 0);
+            this.ui_panelTabControl.Name = "ui_panelTabControl";
+            this.ui_panelTabControl.Size = new System.Drawing.Size(1417, 892);
+            this.ui_panelTabControl.TabIndex = 6;
+            this.ui_panelTabControl.VerticalScrollbarBarColor = true;
+            this.ui_panelTabControl.VerticalScrollbarHighlightOnWheel = false;
+            this.ui_panelTabControl.VerticalScrollbarSize = 10;
             // 
             // ui_tabControl
             // 
@@ -201,12 +325,12 @@
             this.ui_tabControl.Controls.Add(this.settingPage);
             this.ui_tabControl.Controls.Add(this.HelperPage);
             this.ui_tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ui_tabControl.Location = new System.Drawing.Point(23, 38);
+            this.ui_tabControl.Location = new System.Drawing.Point(0, 0);
             this.ui_tabControl.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.ui_tabControl.Name = "ui_tabControl";
             this.ui_tabControl.SelectedIndex = 0;
-            this.ui_tabControl.Size = new System.Drawing.Size(1417, 887);
-            this.ui_tabControl.TabIndex = 0;
+            this.ui_tabControl.Size = new System.Drawing.Size(1417, 892);
+            this.ui_tabControl.TabIndex = 2;
             this.ui_tabControl.UseSelectable = true;
             this.ui_tabControl.SelectedIndexChanged += new System.EventHandler(this.OnTabControlSelectedIndexChanged);
             this.ui_tabControl.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnTabControlKeyDown);
@@ -221,7 +345,7 @@
             this.smhPage.Location = new System.Drawing.Point(4, 41);
             this.smhPage.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.smhPage.Name = "smhPage";
-            this.smhPage.Size = new System.Drawing.Size(1409, 842);
+            this.smhPage.Size = new System.Drawing.Size(1409, 847);
             this.smhPage.TabIndex = 1;
             this.smhPage.Tag = "smarthull";
             this.smhPage.Text = "SmartHull";
@@ -238,7 +362,7 @@
             this.ui_panelSmh.Margin = new System.Windows.Forms.Padding(0);
             this.ui_panelSmh.Name = "ui_panelSmh";
             this.ui_panelSmh.Padding = new System.Windows.Forms.Padding(1);
-            this.ui_panelSmh.Size = new System.Drawing.Size(1409, 782);
+            this.ui_panelSmh.Size = new System.Drawing.Size(1409, 787);
             this.ui_panelSmh.TabIndex = 1;
             this.ui_panelSmh.UseCustomBackColor = true;
             this.ui_panelSmh.VerticalScrollbarBarColor = true;
@@ -251,22 +375,22 @@
             this.ui_gridSmh.AllowUserToDeleteRows = false;
             this.ui_gridSmh.AllowUserToOrderColumns = true;
             this.ui_gridSmh.AllowUserToResizeRows = false;
-            dataGridViewCellStyle81.BackColor = System.Drawing.Color.White;
-            this.ui_gridSmh.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle81;
+            dataGridViewCellStyle21.BackColor = System.Drawing.Color.White;
+            this.ui_gridSmh.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle21;
             this.ui_gridSmh.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.ui_gridSmh.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.ui_gridSmh.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.ui_gridSmh.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this.ui_gridSmh.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle82.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle82.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(174)))), ((int)(((byte)(219)))));
-            dataGridViewCellStyle82.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            dataGridViewCellStyle82.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle82.Padding = new System.Windows.Forms.Padding(0, 3, 0, 3);
-            dataGridViewCellStyle82.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(198)))), ((int)(((byte)(247)))));
-            dataGridViewCellStyle82.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            dataGridViewCellStyle82.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.ui_gridSmh.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle82;
+            dataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle22.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(174)))), ((int)(((byte)(219)))));
+            dataGridViewCellStyle22.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            dataGridViewCellStyle22.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle22.Padding = new System.Windows.Forms.Padding(0, 3, 0, 3);
+            dataGridViewCellStyle22.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(198)))), ((int)(((byte)(247)))));
+            dataGridViewCellStyle22.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            dataGridViewCellStyle22.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.ui_gridSmh.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle22;
             this.ui_gridSmh.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.ui_gridSmh.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.smhColId,
@@ -282,15 +406,15 @@
             this.smhColUpdateDate,
             this.smhColDocumentLink,
             this.smhColDocumentPath});
-            dataGridViewCellStyle89.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle89.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle89.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            dataGridViewCellStyle89.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle89.Padding = new System.Windows.Forms.Padding(0, 0, 0, 2);
-            dataGridViewCellStyle89.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(198)))), ((int)(((byte)(247)))));
-            dataGridViewCellStyle89.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            dataGridViewCellStyle89.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.ui_gridSmh.DefaultCellStyle = dataGridViewCellStyle89;
+            dataGridViewCellStyle29.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle29.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle29.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            dataGridViewCellStyle29.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle29.Padding = new System.Windows.Forms.Padding(0, 0, 0, 2);
+            dataGridViewCellStyle29.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(198)))), ((int)(((byte)(247)))));
+            dataGridViewCellStyle29.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            dataGridViewCellStyle29.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.ui_gridSmh.DefaultCellStyle = dataGridViewCellStyle29;
             this.ui_gridSmh.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ui_gridSmh.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.ui_gridSmh.EnableHeadersVisualStyles = false;
@@ -301,20 +425,20 @@
             this.ui_gridSmh.MultiSelect = false;
             this.ui_gridSmh.Name = "ui_gridSmh";
             this.ui_gridSmh.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle90.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle90.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(174)))), ((int)(((byte)(219)))));
-            dataGridViewCellStyle90.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            dataGridViewCellStyle90.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle90.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(198)))), ((int)(((byte)(247)))));
-            dataGridViewCellStyle90.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            dataGridViewCellStyle90.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.ui_gridSmh.RowHeadersDefaultCellStyle = dataGridViewCellStyle90;
+            dataGridViewCellStyle30.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle30.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(174)))), ((int)(((byte)(219)))));
+            dataGridViewCellStyle30.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            dataGridViewCellStyle30.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle30.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(198)))), ((int)(((byte)(247)))));
+            dataGridViewCellStyle30.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            dataGridViewCellStyle30.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.ui_gridSmh.RowHeadersDefaultCellStyle = dataGridViewCellStyle30;
             this.ui_gridSmh.RowHeadersWidth = 60;
             this.ui_gridSmh.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.ui_gridSmh.RowTemplate.DividerHeight = 1;
             this.ui_gridSmh.RowTemplate.Height = 23;
             this.ui_gridSmh.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.ui_gridSmh.Size = new System.Drawing.Size(1407, 780);
+            this.ui_gridSmh.Size = new System.Drawing.Size(1407, 785);
             this.ui_gridSmh.TabIndex = 1;
             this.ui_gridSmh.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.OnClickBtnCellContent);
             this.ui_gridSmh.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.OnGridCellDoubleClick);
@@ -367,8 +491,8 @@
             // 
             this.smhColReceiveDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.smhColReceiveDate.DataPropertyName = "receive_date";
-            dataGridViewCellStyle83.Format = "yyyy-MM-dd";
-            this.smhColReceiveDate.DefaultCellStyle = dataGridViewCellStyle83;
+            dataGridViewCellStyle23.Format = "yyyy-MM-dd";
+            this.smhColReceiveDate.DefaultCellStyle = dataGridViewCellStyle23;
             this.smhColReceiveDate.DividerWidth = 1;
             this.smhColReceiveDate.HeaderText = "Receive Date";
             this.smhColReceiveDate.Name = "smhColReceiveDate";
@@ -378,8 +502,8 @@
             // 
             this.smhColDueDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.smhColDueDate.DataPropertyName = "due_date";
-            dataGridViewCellStyle84.Format = "yyyy-MM-dd";
-            this.smhColDueDate.DefaultCellStyle = dataGridViewCellStyle84;
+            dataGridViewCellStyle24.Format = "yyyy-MM-dd";
+            this.smhColDueDate.DefaultCellStyle = dataGridViewCellStyle24;
             this.smhColDueDate.DividerWidth = 1;
             this.smhColDueDate.HeaderText = "Due Date";
             this.smhColDueDate.Name = "smhColDueDate";
@@ -389,8 +513,8 @@
             // 
             this.smhColStartDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.smhColStartDate.DataPropertyName = "start_date";
-            dataGridViewCellStyle85.Format = "yyyy-MM-dd";
-            this.smhColStartDate.DefaultCellStyle = dataGridViewCellStyle85;
+            dataGridViewCellStyle25.Format = "yyyy-MM-dd";
+            this.smhColStartDate.DefaultCellStyle = dataGridViewCellStyle25;
             this.smhColStartDate.DividerWidth = 1;
             this.smhColStartDate.HeaderText = "Start Date";
             this.smhColStartDate.Name = "smhColStartDate";
@@ -400,8 +524,8 @@
             // 
             this.smhColEndDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.smhColEndDate.DataPropertyName = "end_date";
-            dataGridViewCellStyle86.Format = "yyyy-MM-dd";
-            this.smhColEndDate.DefaultCellStyle = dataGridViewCellStyle86;
+            dataGridViewCellStyle26.Format = "yyyy-MM-dd";
+            this.smhColEndDate.DefaultCellStyle = dataGridViewCellStyle26;
             this.smhColEndDate.DividerWidth = 1;
             this.smhColEndDate.HeaderText = "End Date";
             this.smhColEndDate.Name = "smhColEndDate";
@@ -411,8 +535,8 @@
             // 
             this.smhColVerificationDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.smhColVerificationDate.DataPropertyName = "verification_date";
-            dataGridViewCellStyle87.Format = "yyyy-MM-dd";
-            this.smhColVerificationDate.DefaultCellStyle = dataGridViewCellStyle87;
+            dataGridViewCellStyle27.Format = "yyyy-MM-dd";
+            this.smhColVerificationDate.DefaultCellStyle = dataGridViewCellStyle27;
             this.smhColVerificationDate.DividerWidth = 1;
             this.smhColVerificationDate.HeaderText = "Verification Date";
             this.smhColVerificationDate.Name = "smhColVerificationDate";
@@ -422,8 +546,8 @@
             // 
             this.smhColUpdateDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.smhColUpdateDate.DataPropertyName = "update_date";
-            dataGridViewCellStyle88.Format = "yyyy-MM-dd";
-            this.smhColUpdateDate.DefaultCellStyle = dataGridViewCellStyle88;
+            dataGridViewCellStyle28.Format = "yyyy-MM-dd";
+            this.smhColUpdateDate.DefaultCellStyle = dataGridViewCellStyle28;
             this.smhColUpdateDate.DividerWidth = 1;
             this.smhColUpdateDate.HeaderText = "Update Date";
             this.smhColUpdateDate.Name = "smhColUpdateDate";
@@ -623,10 +747,10 @@
             this.stdPage.Controls.Add(this.ui_panelStd);
             this.stdPage.Controls.Add(this.ui_panelStdCollapsible);
             this.stdPage.Font = new System.Drawing.Font("굴림", 9F);
-            this.stdPage.Location = new System.Drawing.Point(4, 41);
+            this.stdPage.Location = new System.Drawing.Point(4, 43);
             this.stdPage.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.stdPage.Name = "stdPage";
-            this.stdPage.Size = new System.Drawing.Size(1409, 842);
+            this.stdPage.Size = new System.Drawing.Size(1262, 670);
             this.stdPage.TabIndex = 2;
             this.stdPage.Tag = "spishull";
             this.stdPage.Text = "SpisHull";
@@ -643,7 +767,7 @@
             this.ui_panelStd.Margin = new System.Windows.Forms.Padding(0);
             this.ui_panelStd.Name = "ui_panelStd";
             this.ui_panelStd.Padding = new System.Windows.Forms.Padding(1);
-            this.ui_panelStd.Size = new System.Drawing.Size(1409, 782);
+            this.ui_panelStd.Size = new System.Drawing.Size(1262, 610);
             this.ui_panelStd.TabIndex = 1;
             this.ui_panelStd.UseCustomBackColor = true;
             this.ui_panelStd.VerticalScrollbarBarColor = true;
@@ -656,22 +780,22 @@
             this.ui_gridStd.AllowUserToDeleteRows = false;
             this.ui_gridStd.AllowUserToOrderColumns = true;
             this.ui_gridStd.AllowUserToResizeRows = false;
-            dataGridViewCellStyle91.BackColor = System.Drawing.Color.White;
-            this.ui_gridStd.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle91;
+            dataGridViewCellStyle31.BackColor = System.Drawing.Color.White;
+            this.ui_gridStd.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle31;
             this.ui_gridStd.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.ui_gridStd.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.ui_gridStd.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.ui_gridStd.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this.ui_gridStd.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle92.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle92.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(174)))), ((int)(((byte)(219)))));
-            dataGridViewCellStyle92.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            dataGridViewCellStyle92.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle92.Padding = new System.Windows.Forms.Padding(0, 3, 0, 3);
-            dataGridViewCellStyle92.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(198)))), ((int)(((byte)(247)))));
-            dataGridViewCellStyle92.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            dataGridViewCellStyle92.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.ui_gridStd.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle92;
+            dataGridViewCellStyle32.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle32.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(174)))), ((int)(((byte)(219)))));
+            dataGridViewCellStyle32.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            dataGridViewCellStyle32.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle32.Padding = new System.Windows.Forms.Padding(0, 3, 0, 3);
+            dataGridViewCellStyle32.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(198)))), ((int)(((byte)(247)))));
+            dataGridViewCellStyle32.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            dataGridViewCellStyle32.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.ui_gridStd.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle32;
             this.ui_gridStd.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.ui_gridStd.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.stdColId,
@@ -687,15 +811,15 @@
             this.stdColUpdateDate,
             this.stdColDocumentLink,
             this.stdColDocumentPath});
-            dataGridViewCellStyle99.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle99.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle99.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            dataGridViewCellStyle99.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle99.Padding = new System.Windows.Forms.Padding(0, 0, 0, 2);
-            dataGridViewCellStyle99.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(198)))), ((int)(((byte)(247)))));
-            dataGridViewCellStyle99.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            dataGridViewCellStyle99.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.ui_gridStd.DefaultCellStyle = dataGridViewCellStyle99;
+            dataGridViewCellStyle39.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle39.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle39.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            dataGridViewCellStyle39.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle39.Padding = new System.Windows.Forms.Padding(0, 0, 0, 2);
+            dataGridViewCellStyle39.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(198)))), ((int)(((byte)(247)))));
+            dataGridViewCellStyle39.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            dataGridViewCellStyle39.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.ui_gridStd.DefaultCellStyle = dataGridViewCellStyle39;
             this.ui_gridStd.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ui_gridStd.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.ui_gridStd.EnableHeadersVisualStyles = false;
@@ -706,21 +830,21 @@
             this.ui_gridStd.MultiSelect = false;
             this.ui_gridStd.Name = "ui_gridStd";
             this.ui_gridStd.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle100.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle100.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(174)))), ((int)(((byte)(219)))));
-            dataGridViewCellStyle100.Font = new System.Drawing.Font("Open Sans", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            dataGridViewCellStyle100.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle100.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(198)))), ((int)(((byte)(247)))));
-            dataGridViewCellStyle100.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            dataGridViewCellStyle100.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.ui_gridStd.RowHeadersDefaultCellStyle = dataGridViewCellStyle100;
+            dataGridViewCellStyle40.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle40.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(174)))), ((int)(((byte)(219)))));
+            dataGridViewCellStyle40.Font = new System.Drawing.Font("Open Sans", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            dataGridViewCellStyle40.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle40.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(198)))), ((int)(((byte)(247)))));
+            dataGridViewCellStyle40.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            dataGridViewCellStyle40.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.ui_gridStd.RowHeadersDefaultCellStyle = dataGridViewCellStyle40;
             this.ui_gridStd.RowHeadersWidth = 60;
             this.ui_gridStd.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.ui_gridStd.RowTemplate.DividerHeight = 1;
             this.ui_gridStd.RowTemplate.Height = 23;
             this.ui_gridStd.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.ui_gridStd.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.ui_gridStd.Size = new System.Drawing.Size(1407, 780);
+            this.ui_gridStd.Size = new System.Drawing.Size(1260, 608);
             this.ui_gridStd.TabIndex = 1;
             this.ui_gridStd.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.OnClickBtnCellContent);
             this.ui_gridStd.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.OnGridCellDoubleClick);
@@ -778,8 +902,8 @@
             // 
             this.stdColReceiveDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.stdColReceiveDate.DataPropertyName = "receive_date";
-            dataGridViewCellStyle93.Format = "yyyy-MM-dd";
-            this.stdColReceiveDate.DefaultCellStyle = dataGridViewCellStyle93;
+            dataGridViewCellStyle33.Format = "yyyy-MM-dd";
+            this.stdColReceiveDate.DefaultCellStyle = dataGridViewCellStyle33;
             this.stdColReceiveDate.DividerWidth = 1;
             this.stdColReceiveDate.HeaderText = "Receive Date";
             this.stdColReceiveDate.Name = "stdColReceiveDate";
@@ -789,9 +913,9 @@
             // 
             this.stdColDueDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.stdColDueDate.DataPropertyName = "due_date";
-            dataGridViewCellStyle94.Format = "yyyy-MM-dd";
-            dataGridViewCellStyle94.NullValue = null;
-            this.stdColDueDate.DefaultCellStyle = dataGridViewCellStyle94;
+            dataGridViewCellStyle34.Format = "yyyy-MM-dd";
+            dataGridViewCellStyle34.NullValue = null;
+            this.stdColDueDate.DefaultCellStyle = dataGridViewCellStyle34;
             this.stdColDueDate.DividerWidth = 1;
             this.stdColDueDate.FillWeight = 51.24502F;
             this.stdColDueDate.HeaderText = "Due Date";
@@ -802,8 +926,8 @@
             // 
             this.stdColStartDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.stdColStartDate.DataPropertyName = "start_date";
-            dataGridViewCellStyle95.Format = "yyyy-MM-dd";
-            this.stdColStartDate.DefaultCellStyle = dataGridViewCellStyle95;
+            dataGridViewCellStyle35.Format = "yyyy-MM-dd";
+            this.stdColStartDate.DefaultCellStyle = dataGridViewCellStyle35;
             this.stdColStartDate.DividerWidth = 1;
             this.stdColStartDate.HeaderText = "Start Date";
             this.stdColStartDate.Name = "stdColStartDate";
@@ -813,8 +937,8 @@
             // 
             this.stdColEndDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.stdColEndDate.DataPropertyName = "end_date";
-            dataGridViewCellStyle96.Format = "yyyy-MM-dd";
-            this.stdColEndDate.DefaultCellStyle = dataGridViewCellStyle96;
+            dataGridViewCellStyle36.Format = "yyyy-MM-dd";
+            this.stdColEndDate.DefaultCellStyle = dataGridViewCellStyle36;
             this.stdColEndDate.DividerWidth = 1;
             this.stdColEndDate.HeaderText = "End Date";
             this.stdColEndDate.Name = "stdColEndDate";
@@ -824,8 +948,8 @@
             // 
             this.stdColVerificationDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.stdColVerificationDate.DataPropertyName = "verification_date";
-            dataGridViewCellStyle97.Format = "yyyy-MM-dd";
-            this.stdColVerificationDate.DefaultCellStyle = dataGridViewCellStyle97;
+            dataGridViewCellStyle37.Format = "yyyy-MM-dd";
+            this.stdColVerificationDate.DefaultCellStyle = dataGridViewCellStyle37;
             this.stdColVerificationDate.DividerWidth = 1;
             this.stdColVerificationDate.HeaderText = "Verification Date";
             this.stdColVerificationDate.Name = "stdColVerificationDate";
@@ -835,8 +959,8 @@
             // 
             this.stdColUpdateDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.stdColUpdateDate.DataPropertyName = "update_date";
-            dataGridViewCellStyle98.Format = "yyyy-MM-dd";
-            this.stdColUpdateDate.DefaultCellStyle = dataGridViewCellStyle98;
+            dataGridViewCellStyle38.Format = "yyyy-MM-dd";
+            this.stdColUpdateDate.DefaultCellStyle = dataGridViewCellStyle38;
             this.stdColUpdateDate.DividerWidth = 1;
             this.stdColUpdateDate.FillWeight = 51.79351F;
             this.stdColUpdateDate.HeaderText = "Update Date";
@@ -879,7 +1003,7 @@
             this.ui_panelStdCollapsible.Location = new System.Drawing.Point(0, 0);
             this.ui_panelStdCollapsible.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.ui_panelStdCollapsible.Name = "ui_panelStdCollapsible";
-            this.ui_panelStdCollapsible.Size = new System.Drawing.Size(1409, 60);
+            this.ui_panelStdCollapsible.Size = new System.Drawing.Size(1262, 60);
             this.ui_panelStdCollapsible.TabIndex = 0;
             this.ui_panelStdCollapsible.UseCustomBackColor = true;
             this.ui_panelStdCollapsible.VerticalScrollbarBarColor = true;
@@ -894,7 +1018,7 @@
             this.ui_panelSubStd2.HorizontalScrollbarBarColor = true;
             this.ui_panelSubStd2.HorizontalScrollbarHighlightOnWheel = false;
             this.ui_panelSubStd2.HorizontalScrollbarSize = 10;
-            this.ui_panelSubStd2.Location = new System.Drawing.Point(1209, 0);
+            this.ui_panelSubStd2.Location = new System.Drawing.Point(1062, 0);
             this.ui_panelSubStd2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ui_panelSubStd2.Name = "ui_panelSubStd2";
             this.ui_panelSubStd2.Padding = new System.Windows.Forms.Padding(15, 0, 15, 0);
@@ -1043,10 +1167,10 @@
             this.settingPage.Controls.Add(this.ui_gbStd);
             this.settingPage.Controls.Add(this.ui_gbSmh);
             this.settingPage.Controls.Add(this.ui_gbDb);
-            this.settingPage.Location = new System.Drawing.Point(4, 41);
+            this.settingPage.Location = new System.Drawing.Point(4, 43);
             this.settingPage.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.settingPage.Name = "settingPage";
-            this.settingPage.Size = new System.Drawing.Size(1409, 842);
+            this.settingPage.Size = new System.Drawing.Size(1262, 670);
             this.settingPage.TabIndex = 4;
             this.settingPage.Text = "Settings";
             // 
@@ -2159,10 +2283,10 @@
             this.HelperPage.BackColor = System.Drawing.SystemColors.Window;
             this.HelperPage.Controls.Add(this.ui_panelHelper);
             this.HelperPage.Controls.Add(this.ui_panelHelperCollapsible);
-            this.HelperPage.Location = new System.Drawing.Point(4, 41);
+            this.HelperPage.Location = new System.Drawing.Point(4, 43);
             this.HelperPage.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.HelperPage.Name = "HelperPage";
-            this.HelperPage.Size = new System.Drawing.Size(1409, 842);
+            this.HelperPage.Size = new System.Drawing.Size(1262, 670);
             this.HelperPage.TabIndex = 5;
             this.HelperPage.Text = "Helper";
             // 
@@ -2177,7 +2301,7 @@
             this.ui_panelHelper.Margin = new System.Windows.Forms.Padding(0);
             this.ui_panelHelper.Name = "ui_panelHelper";
             this.ui_panelHelper.Padding = new System.Windows.Forms.Padding(1);
-            this.ui_panelHelper.Size = new System.Drawing.Size(1409, 782);
+            this.ui_panelHelper.Size = new System.Drawing.Size(1262, 610);
             this.ui_panelHelper.TabIndex = 1;
             this.ui_panelHelper.UseCustomBackColor = true;
             this.ui_panelHelper.VerticalScrollbarBarColor = true;
@@ -2198,7 +2322,7 @@
             this.ui_panelHelperCollapsible.Location = new System.Drawing.Point(0, 0);
             this.ui_panelHelperCollapsible.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.ui_panelHelperCollapsible.Name = "ui_panelHelperCollapsible";
-            this.ui_panelHelperCollapsible.Size = new System.Drawing.Size(1409, 60);
+            this.ui_panelHelperCollapsible.Size = new System.Drawing.Size(1262, 60);
             this.ui_panelHelperCollapsible.TabIndex = 0;
             this.ui_panelHelperCollapsible.UseCustomBackColor = true;
             this.ui_panelHelperCollapsible.VerticalScrollbarBarColor = true;
@@ -2261,96 +2385,31 @@
             this.ui_btnImportExcel.UseSelectable = true;
             this.ui_btnImportExcel.Click += new System.EventHandler(this.OnClickImport);
             // 
-            // ui_lbMainTitle1
-            // 
-            this.ui_lbMainTitle1.AutoSize = true;
-            this.ui_lbMainTitle1.FontWeight = MetroFramework.MetroLabelWeight.Regular;
-            this.ui_lbMainTitle1.ForeColor = System.Drawing.Color.Gray;
-            this.ui_lbMainTitle1.Location = new System.Drawing.Point(34, 9);
-            this.ui_lbMainTitle1.Name = "ui_lbMainTitle1";
-            this.ui_lbMainTitle1.Size = new System.Drawing.Size(125, 20);
-            this.ui_lbMainTitle1.TabIndex = 1;
-            this.ui_lbMainTitle1.Text = "Hull Maintenance";
-            this.ui_lbMainTitle1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.ui_lbMainTitle1.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.ui_lbMainTitle1.UseCustomForeColor = true;
-            // 
-            // ui_lbMainTitle2
-            // 
-            this.ui_lbMainTitle2.AutoSize = true;
-            this.ui_lbMainTitle2.FontSize = MetroFramework.MetroLabelSize.Small;
-            this.ui_lbMainTitle2.ForeColor = System.Drawing.Color.DarkGray;
-            this.ui_lbMainTitle2.Location = new System.Drawing.Point(194, 14);
-            this.ui_lbMainTitle2.Name = "ui_lbMainTitle2";
-            this.ui_lbMainTitle2.Size = new System.Drawing.Size(140, 17);
-            this.ui_lbMainTitle2.TabIndex = 1;
-            this.ui_lbMainTitle2.Text = "Cadwin System Co., Ltd.";
-            this.ui_lbMainTitle2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.ui_lbMainTitle2.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.ui_lbMainTitle2.UseCustomForeColor = true;
-            // 
-            // ui_lbMainTitle3
-            // 
-            this.ui_lbMainTitle3.AutoSize = true;
-            this.ui_lbMainTitle3.ForeColor = System.Drawing.Color.DarkGray;
-            this.ui_lbMainTitle3.Location = new System.Drawing.Point(174, 9);
-            this.ui_lbMainTitle3.Name = "ui_lbMainTitle3";
-            this.ui_lbMainTitle3.Size = new System.Drawing.Size(12, 20);
-            this.ui_lbMainTitle3.TabIndex = 1;
-            this.ui_lbMainTitle3.Text = "|";
-            this.ui_lbMainTitle3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.ui_lbMainTitle3.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.ui_lbMainTitle3.UseCustomForeColor = true;
-            // 
-            // ui_lbMainVersion
-            // 
-            this.ui_lbMainVersion.AutoSize = true;
-            this.ui_lbMainVersion.FontSize = MetroFramework.MetroLabelSize.Small;
-            this.ui_lbMainVersion.ForeColor = System.Drawing.Color.DarkGray;
-            this.ui_lbMainVersion.Location = new System.Drawing.Point(346, 14);
-            this.ui_lbMainVersion.Name = "ui_lbMainVersion";
-            this.ui_lbMainVersion.Size = new System.Drawing.Size(90, 17);
-            this.ui_lbMainVersion.TabIndex = 1;
-            this.ui_lbMainVersion.Text = "version=1.0.0.0";
-            this.ui_lbMainVersion.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.ui_lbMainVersion.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.ui_lbMainVersion.UseCustomForeColor = true;
-            // 
-            // ui_styleMgr
-            // 
-            this.ui_styleMgr.Owner = this;
-            // 
-            // ui_lbBottomInfo
-            // 
-            this.ui_lbBottomInfo.AutoSize = true;
-            this.ui_lbBottomInfo.FontSize = MetroFramework.MetroLabelSize.Small;
-            this.ui_lbBottomInfo.Location = new System.Drawing.Point(25, 930);
-            this.ui_lbBottomInfo.Name = "ui_lbBottomInfo";
-            this.ui_lbBottomInfo.Size = new System.Drawing.Size(12, 17);
-            this.ui_lbBottomInfo.TabIndex = 2;
-            this.ui_lbBottomInfo.Text = " ";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1463, 960);
-            this.Controls.Add(this.ui_lbBottomInfo);
             this.Controls.Add(this.ui_lbMainVersion);
             this.Controls.Add(this.ui_lbMainTitle3);
             this.Controls.Add(this.ui_lbMainTitle2);
             this.Controls.Add(this.ui_lbMainTitle1);
-            this.Controls.Add(this.ui_tabControl);
+            this.Controls.Add(this.ui_panelMain);
             this.DisplayHeader = false;
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.MinimumSize = new System.Drawing.Size(1463, 832);
             this.Name = "MainForm";
-            this.Padding = new System.Windows.Forms.Padding(23, 38, 23, 35);
+            this.Padding = new System.Windows.Forms.Padding(23, 38, 23, 5);
             this.StartPosition = System.Windows.Forms.FormStartPosition.WindowsDefaultLocation;
             this.StyleManager = this.ui_styleMgr;
             this.Text = "Hull Maintenance";
             this.Load += new System.EventHandler(this.OnLoadMainForm);
             this.MouseEnter += new System.EventHandler(this.OnMouseEnter);
+            ((System.ComponentModel.ISupportInitialize)(this.ui_styleMgr)).EndInit();
+            this.ui_panelMain.ResumeLayout(false);
+            this.ui_panelBottom.ResumeLayout(false);
+            this.ui_panelBottom.PerformLayout();
+            this.ui_panelTabControl.ResumeLayout(false);
             this.ui_tabControl.ResumeLayout(false);
             this.smhPage.ResumeLayout(false);
             this.ui_panelSmh.ResumeLayout(false);
@@ -2371,30 +2430,98 @@
             this.ui_gbDb.ResumeLayout(false);
             this.HelperPage.ResumeLayout(false);
             this.ui_panelHelperCollapsible.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.ui_styleMgr)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private MetroFramework.Controls.MetroTabControl ui_tabControl;
-        private System.Windows.Forms.TabPage smhPage;
-        private System.Windows.Forms.TabPage stdPage;
-        private System.Windows.Forms.TabPage settingPage;
-        private System.Windows.Forms.TabPage HelperPage;
         private MetroFramework.Controls.MetroLabel ui_lbMainTitle1;
         private MetroFramework.Controls.MetroLabel ui_lbMainTitle2;
         private MetroFramework.Controls.MetroLabel ui_lbMainTitle3;
         private MetroFramework.Controls.MetroLabel ui_lbMainVersion;
-        private MetroFramework.Controls.MetroPanel ui_panelSmh;
-        private MetroFramework.Controls.MetroPanel ui_panelSmhCollapsible;
-        private MetroFramework.Controls.MetroPanel ui_panelStd;
-        private MetroFramework.Controls.MetroPanel ui_panelStdCollapsible;
         private MetroFramework.Components.MetroStyleManager ui_styleMgr;
-        private MetroFramework.Controls.MetroGrid ui_gridStd;
+        private MetroFramework.Controls.MetroPanel ui_panelMain;
+        private MetroFramework.Controls.MetroPanel ui_panelTabControl;
+        private MetroFramework.Controls.MetroTabControl ui_tabControl;
+        private System.Windows.Forms.TabPage smhPage;
+        private MetroFramework.Controls.MetroPanel ui_panelSmh;
         private MetroFramework.Controls.MetroGrid ui_gridSmh;
+        private System.Windows.Forms.DataGridViewTextBoxColumn smhColId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn smhColCustomer;
+        private System.Windows.Forms.DataGridViewTextBoxColumn smhColType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn smhColStatus;
+        private System.Windows.Forms.DataGridViewTextBoxColumn smhColSummaryKr;
+        private System.Windows.Forms.DataGridViewTextBoxColumn smhColReceiveDate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn smhColDueDate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn smhColStartDate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn smhColEndDate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn smhColVerificationDate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn smhColUpdateDate;
+        private System.Windows.Forms.DataGridViewLinkColumn smhColDocumentLink;
+        private System.Windows.Forms.DataGridViewTextBoxColumn smhColDocumentPath;
+        private MetroFramework.Controls.MetroPanel ui_panelSmhCollapsible;
+        private MetroFramework.Controls.MetroPanel ui_panelSubSmh2;
+        private MetroFramework.Controls.MetroButton ui_btnSmhAddItem;
+        private MetroFramework.Controls.MetroPanel ui_panelSubSmh1;
+        private System.Windows.Forms.ComboBox ui_cbSmhPeriod;
+        private System.Windows.Forms.ComboBox ui_cbSmhCustomer;
+        private MetroFramework.Controls.MetroButton ui_btnSmhSearchHistoryClear;
+        private System.Windows.Forms.Button ui_btnSmhSearchTextClear;
+        private MetroFramework.Controls.MetroButton ui_btnSmhSearch;
+        private System.Windows.Forms.ComboBox ui_cbSmhSearchText;
+        private System.Windows.Forms.TabPage stdPage;
+        private MetroFramework.Controls.MetroPanel ui_panelStd;
+        private MetroFramework.Controls.MetroGrid ui_gridStd;
+        private System.Windows.Forms.DataGridViewTextBoxColumn stdColId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn stdColCustomer;
+        private System.Windows.Forms.DataGridViewTextBoxColumn stdColType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn stdColStatus;
+        private System.Windows.Forms.DataGridViewTextBoxColumn stdColSummaryKr;
+        private System.Windows.Forms.DataGridViewTextBoxColumn stdColReceiveDate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn stdColDueDate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn stdColStartDate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn stdColEndDate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn stdColVerificationDate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn stdColUpdateDate;
+        private System.Windows.Forms.DataGridViewLinkColumn stdColDocumentLink;
+        private System.Windows.Forms.DataGridViewTextBoxColumn stdColDocumentPath;
+        private MetroFramework.Controls.MetroPanel ui_panelStdCollapsible;
+        private MetroFramework.Controls.MetroPanel ui_panelSubStd2;
+        private MetroFramework.Controls.MetroButton ui_btnStdAddItem;
+        private MetroFramework.Controls.MetroPanel ui_panelSubStd1;
+        private System.Windows.Forms.ComboBox ui_cbStdPeriod;
+        private System.Windows.Forms.ComboBox ui_cbStdCustomer;
+        private MetroFramework.Controls.MetroButton ui_btnStdSearchHistoryClear;
+        private System.Windows.Forms.Button ui_btnStdSearchTextClear;
+        private MetroFramework.Controls.MetroButton ui_btnStdSearch;
+        private System.Windows.Forms.ComboBox ui_cbStdSearchText;
+        private System.Windows.Forms.TabPage settingPage;
+        private System.Windows.Forms.GroupBox ui_gbColorCode;
+        private MetroFramework.Controls.MetroButton ui_btnTheme;
+        private MetroFramework.Controls.MetroButton ui_btnStyle;
+        private MetroFramework.Controls.MetroTextBox ui_tbColorD7;
+        private MetroFramework.Controls.MetroLabel ui_lbColorD7;
+        private MetroFramework.Controls.MetroTextBox ui_tbColorD3;
+        private MetroFramework.Controls.MetroLabel ui_lbColorD3;
+        private MetroFramework.Controls.MetroTextBox ui_tbColorD1;
+        private MetroFramework.Controls.MetroLabel ui_lbColorD1;
+        private MetroFramework.Controls.MetroTextBox ui_tbColorError;
+        private MetroFramework.Controls.MetroTextBox ui_tbColorImpossible;
+        private MetroFramework.Controls.MetroTextBox ui_tbColorCancel;
+        private MetroFramework.Controls.MetroTextBox ui_tbColorPending;
+        private MetroFramework.Controls.MetroTextBox ui_tbColorComplete;
+        private MetroFramework.Controls.MetroTextBox ui_tbColorPartialDone;
+        private MetroFramework.Controls.MetroTextBox ui_tbColorWorkDone;
+        private MetroFramework.Controls.MetroTextBox ui_tbColorWorking;
+        private MetroFramework.Controls.MetroLabel ui_lbColorError;
+        private MetroFramework.Controls.MetroLabel ui_lbColorImpossible;
+        private MetroFramework.Controls.MetroLabel ui_lbColorCancel;
+        private MetroFramework.Controls.MetroLabel ui_lbColorPending;
+        private MetroFramework.Controls.MetroLabel ui_lbColorComplete;
+        private MetroFramework.Controls.MetroLabel ui_lbColorPartialDone;
+        private MetroFramework.Controls.MetroLabel ui_lbColorWorkDone;
+        private MetroFramework.Controls.MetroLabel ui_lbColorWorking;
         private System.Windows.Forms.GroupBox ui_gbStd;
         private MetroFramework.Controls.MetroButton ui_btnStdSamplePathOpen;
         private MetroFramework.Controls.MetroButton ui_btnStdSamplePath;
@@ -2424,82 +2551,15 @@
         private MetroFramework.Controls.MetroLabel ui_lbPassword;
         private MetroFramework.Controls.MetroLabel ui_lbLoginId;
         private MetroFramework.Controls.MetroLabel ui_lbServer;
-        private System.Windows.Forms.GroupBox ui_gbColorCode;
-        private MetroFramework.Controls.MetroLabel ui_lbColorPending;
-        private MetroFramework.Controls.MetroLabel ui_lbColorComplete;
-        private MetroFramework.Controls.MetroLabel ui_lbColorPartialDone;
-        private MetroFramework.Controls.MetroLabel ui_lbColorWorkDone;
-        private MetroFramework.Controls.MetroLabel ui_lbColorWorking;
-        private MetroFramework.Controls.MetroLabel ui_lbColorImpossible;
-        private MetroFramework.Controls.MetroLabel ui_lbColorCancel;
-        private MetroFramework.Controls.MetroLabel ui_lbColorError;
-        private MetroFramework.Controls.MetroTextBox ui_tbColorError;
-        private MetroFramework.Controls.MetroTextBox ui_tbColorImpossible;
-        private MetroFramework.Controls.MetroTextBox ui_tbColorCancel;
-        private MetroFramework.Controls.MetroTextBox ui_tbColorPending;
-        private MetroFramework.Controls.MetroTextBox ui_tbColorComplete;
-        private MetroFramework.Controls.MetroTextBox ui_tbColorPartialDone;
-        private MetroFramework.Controls.MetroTextBox ui_tbColorWorkDone;
-        private MetroFramework.Controls.MetroTextBox ui_tbColorWorking;
-        private MetroFramework.Controls.MetroTextBox ui_tbColorD7;
-        private MetroFramework.Controls.MetroLabel ui_lbColorD7;
-        private MetroFramework.Controls.MetroTextBox ui_tbColorD3;
-        private MetroFramework.Controls.MetroLabel ui_lbColorD3;
-        private MetroFramework.Controls.MetroTextBox ui_tbColorD1;
-        private MetroFramework.Controls.MetroLabel ui_lbColorD1;
-        private MetroFramework.Controls.MetroButton ui_btnTheme;
-        private MetroFramework.Controls.MetroButton ui_btnStyle;
-		private MetroFramework.Controls.MetroPanel ui_panelSubSmh2;
-		private MetroFramework.Controls.MetroButton ui_btnSmhAddItem;
-		private MetroFramework.Controls.MetroPanel ui_panelSubSmh1;
-		private MetroFramework.Controls.MetroButton ui_btnSmhSearchHistoryClear;
-		private System.Windows.Forms.Button ui_btnSmhSearchTextClear;
-		private MetroFramework.Controls.MetroButton ui_btnSmhSearch;
-		private System.Windows.Forms.ComboBox ui_cbSmhSearchText;
-		private MetroFramework.Controls.MetroPanel ui_panelSubStd2;
-		private MetroFramework.Controls.MetroButton ui_btnStdAddItem;
-		private MetroFramework.Controls.MetroPanel ui_panelSubStd1;
-		private MetroFramework.Controls.MetroButton ui_btnStdSearchHistoryClear;
-		private System.Windows.Forms.Button ui_btnStdSearchTextClear;
-		private MetroFramework.Controls.MetroButton ui_btnStdSearch;
-		private System.Windows.Forms.ComboBox ui_cbStdSearchText;
-        private System.Windows.Forms.ComboBox ui_cbStdCustomer;
-        private System.Windows.Forms.ComboBox ui_cbStdPeriod;
-        private System.Windows.Forms.ComboBox ui_cbSmhPeriod;
-        private System.Windows.Forms.ComboBox ui_cbSmhCustomer;
-        private System.Windows.Forms.DataGridViewTextBoxColumn stdColId;
-        private System.Windows.Forms.DataGridViewTextBoxColumn stdColCustomer;
-        private System.Windows.Forms.DataGridViewTextBoxColumn stdColType;
-        private System.Windows.Forms.DataGridViewTextBoxColumn stdColStatus;
-        private System.Windows.Forms.DataGridViewTextBoxColumn stdColSummaryKr;
-        private System.Windows.Forms.DataGridViewTextBoxColumn stdColReceiveDate;
-        private System.Windows.Forms.DataGridViewTextBoxColumn stdColDueDate;
-        private System.Windows.Forms.DataGridViewTextBoxColumn stdColStartDate;
-        private System.Windows.Forms.DataGridViewTextBoxColumn stdColEndDate;
-        private System.Windows.Forms.DataGridViewTextBoxColumn stdColVerificationDate;
-        private System.Windows.Forms.DataGridViewTextBoxColumn stdColUpdateDate;
-        private System.Windows.Forms.DataGridViewLinkColumn stdColDocumentLink;
-        private System.Windows.Forms.DataGridViewTextBoxColumn stdColDocumentPath;
-        private MetroFramework.Controls.MetroPanel ui_panelHelperCollapsible;
+        private System.Windows.Forms.TabPage HelperPage;
         private MetroFramework.Controls.MetroPanel ui_panelHelper;
+        private MetroFramework.Controls.MetroPanel ui_panelHelperCollapsible;
+        private MetroFramework.Controls.MetroProgressBar ui_progressBar;
         private MetroFramework.Controls.MetroButton ui_btnLoadExcel;
         private MetroFramework.Controls.MetroButton ui_btnClearExcel;
         private MetroFramework.Controls.MetroButton ui_btnImportExcel;
-        private MetroFramework.Controls.MetroProgressBar ui_progressBar;
+        private MetroFramework.Controls.MetroPanel ui_panelBottom;
         private MetroFramework.Controls.MetroLabel ui_lbBottomInfo;
-        private System.Windows.Forms.DataGridViewTextBoxColumn smhColId;
-        private System.Windows.Forms.DataGridViewTextBoxColumn smhColCustomer;
-        private System.Windows.Forms.DataGridViewTextBoxColumn smhColType;
-        private System.Windows.Forms.DataGridViewTextBoxColumn smhColStatus;
-        private System.Windows.Forms.DataGridViewTextBoxColumn smhColSummaryKr;
-        private System.Windows.Forms.DataGridViewTextBoxColumn smhColReceiveDate;
-        private System.Windows.Forms.DataGridViewTextBoxColumn smhColDueDate;
-        private System.Windows.Forms.DataGridViewTextBoxColumn smhColStartDate;
-        private System.Windows.Forms.DataGridViewTextBoxColumn smhColEndDate;
-        private System.Windows.Forms.DataGridViewTextBoxColumn smhColVerificationDate;
-        private System.Windows.Forms.DataGridViewTextBoxColumn smhColUpdateDate;
-        private System.Windows.Forms.DataGridViewLinkColumn smhColDocumentLink;
-        private System.Windows.Forms.DataGridViewTextBoxColumn smhColDocumentPath;
     }
 }
 
