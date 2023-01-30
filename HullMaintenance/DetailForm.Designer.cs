@@ -609,7 +609,7 @@
             this.ui_btnMailClear.Size = new System.Drawing.Size(40, 30);
             this.ui_btnMailClear.TabIndex = 32;
             this.ui_btnMailClear.Tag = "ui_tbSmhDocPath";
-            this.ui_btnMailClear.Text = "삭제";
+            this.ui_btnMailClear.Text = "취소";
             this.ui_btnMailClear.UseSelectable = true;
             this.ui_btnMailClear.Click += new System.EventHandler(this.OnClickBtnClear);
             // 
@@ -623,9 +623,9 @@
             this.ui_btnMailSearch.Size = new System.Drawing.Size(40, 30);
             this.ui_btnMailSearch.TabIndex = 31;
             this.ui_btnMailSearch.Tag = "ui_tbSmhDocPath";
-            this.ui_btnMailSearch.Text = "등록";
+            this.ui_btnMailSearch.Text = "실행";
             this.ui_btnMailSearch.UseSelectable = true;
-            this.ui_btnMailSearch.Click += new System.EventHandler(this.OnClickBtnSearch);
+            this.ui_btnMailSearch.Click += new System.EventHandler(this.OnClickBtnExecute);
             // 
             // ui_btnMailDirOpen
             // 
@@ -651,9 +651,9 @@
             this.ui_btnMailExc.Size = new System.Drawing.Size(40, 30);
             this.ui_btnMailExc.TabIndex = 29;
             this.ui_btnMailExc.Tag = "ui_tbSmhDocPath";
-            this.ui_btnMailExc.Text = "실행";
+            this.ui_btnMailExc.Text = "등록";
             this.ui_btnMailExc.UseSelectable = true;
-            this.ui_btnMailExc.Click += new System.EventHandler(this.OnClickBtnExecute);
+            this.ui_btnMailExc.Click += new System.EventHandler(this.OnClickBtnSearch);
             // 
             // ui_btnSampleClear
             // 
@@ -665,7 +665,7 @@
             this.ui_btnSampleClear.Size = new System.Drawing.Size(40, 30);
             this.ui_btnSampleClear.TabIndex = 27;
             this.ui_btnSampleClear.Tag = "ui_tbSmhDocPath";
-            this.ui_btnSampleClear.Text = "삭제";
+            this.ui_btnSampleClear.Text = "취소";
             this.ui_btnSampleClear.UseSelectable = true;
             this.ui_btnSampleClear.Click += new System.EventHandler(this.OnClickBtnClear);
             // 
@@ -679,9 +679,9 @@
             this.ui_btnSampleSearch.Size = new System.Drawing.Size(40, 30);
             this.ui_btnSampleSearch.TabIndex = 26;
             this.ui_btnSampleSearch.Tag = "ui_tbSmhDocPath";
-            this.ui_btnSampleSearch.Text = "등록";
+            this.ui_btnSampleSearch.Text = "실행";
             this.ui_btnSampleSearch.UseSelectable = true;
-            this.ui_btnSampleSearch.Click += new System.EventHandler(this.OnClickBtnSearch);
+            this.ui_btnSampleSearch.Click += new System.EventHandler(this.OnClickBtnExecute);
             // 
             // ui_btnSampleDirOpen
             // 
@@ -707,9 +707,9 @@
             this.ui_btnSampleExc.Size = new System.Drawing.Size(40, 30);
             this.ui_btnSampleExc.TabIndex = 24;
             this.ui_btnSampleExc.Tag = "ui_tbSmhDocPath";
-            this.ui_btnSampleExc.Text = "실행";
+            this.ui_btnSampleExc.Text = "등록";
             this.ui_btnSampleExc.UseSelectable = true;
-            this.ui_btnSampleExc.Click += new System.EventHandler(this.OnClickBtnExecute);
+            this.ui_btnSampleExc.Click += new System.EventHandler(this.OnClickBtnSearch);
             // 
             // ui_btnDocumentClear
             // 
@@ -721,7 +721,7 @@
             this.ui_btnDocumentClear.Size = new System.Drawing.Size(40, 30);
             this.ui_btnDocumentClear.TabIndex = 22;
             this.ui_btnDocumentClear.Tag = "ui_tbSmhDocPath";
-            this.ui_btnDocumentClear.Text = "삭제";
+            this.ui_btnDocumentClear.Text = "취소";
             this.ui_btnDocumentClear.UseSelectable = true;
             this.ui_btnDocumentClear.Click += new System.EventHandler(this.OnClickBtnClear);
             // 
@@ -785,9 +785,9 @@
             this.ui_btnDocumentSearch.Size = new System.Drawing.Size(40, 30);
             this.ui_btnDocumentSearch.TabIndex = 21;
             this.ui_btnDocumentSearch.Tag = "ui_tbSmhDocPath";
-            this.ui_btnDocumentSearch.Text = "등록";
+            this.ui_btnDocumentSearch.Text = "실행";
             this.ui_btnDocumentSearch.UseSelectable = true;
-            this.ui_btnDocumentSearch.Click += new System.EventHandler(this.OnClickBtnSearch);
+            this.ui_btnDocumentSearch.Click += new System.EventHandler(this.OnClickBtnExecute);
             // 
             // ui_btnDocumentDirOpen
             // 
@@ -813,9 +813,9 @@
             this.ui_btnDocumentExc.Size = new System.Drawing.Size(40, 30);
             this.ui_btnDocumentExc.TabIndex = 19;
             this.ui_btnDocumentExc.Tag = "ui_tbSmhDocPath";
-            this.ui_btnDocumentExc.Text = "실행";
+            this.ui_btnDocumentExc.Text = "등록";
             this.ui_btnDocumentExc.UseSelectable = true;
-            this.ui_btnDocumentExc.Click += new System.EventHandler(this.OnClickBtnExecute);
+            this.ui_btnDocumentExc.Click += new System.EventHandler(this.OnClickBtnSearch);
             // 
             // ui_lbDocument
             // 

@@ -268,7 +268,7 @@ namespace HullMaintenance
 
                     if (isNew == true)
                     {
-                        if (DateTime.TryParse(ui_dtpReceiveDate.Text, out dateTime))
+                        if (String.IsNullOrWhiteSpace(ui_dtpReceiveDate.Text) == false && DateTime.TryParse(ui_dtpReceiveDate.Value.ToString(), out dateTime))
                         {
                             cmd.Parameters.AddWithValue("@receiveDate", ui_dtpReceiveDate.Value);
                         }
@@ -277,7 +277,7 @@ namespace HullMaintenance
                             cmd.Parameters.AddWithValue("@receiveDate", DBNull.Value);
                         }
 
-                        if (DateTime.TryParse(ui_dtpDueDate.Text, out dateTime))
+                        if (String.IsNullOrWhiteSpace(ui_dtpDueDate.Text) == false && DateTime.TryParse(ui_dtpDueDate.Value.ToString(), out dateTime))
                         {
                             cmd.Parameters.AddWithValue("@dueDate", ui_dtpDueDate.Value);
                         }
@@ -286,7 +286,7 @@ namespace HullMaintenance
                             cmd.Parameters.AddWithValue("@dueDate", DBNull.Value);
                         }
 
-                        if (DateTime.TryParse(ui_dtpStartDate.Text, out dateTime))
+                        if (String.IsNullOrWhiteSpace(ui_dtpStartDate.Text) == false && DateTime.TryParse(ui_dtpStartDate.Value.ToString(), out dateTime))
                         {
                             cmd.Parameters.AddWithValue("@startDate", ui_dtpStartDate.Value);
                         }
@@ -295,7 +295,7 @@ namespace HullMaintenance
                             cmd.Parameters.AddWithValue("@startDate", DBNull.Value);
                         }
 
-                        if (DateTime.TryParse(ui_dtpEndDate.Text, out dateTime))
+                        if (String.IsNullOrWhiteSpace(ui_dtpEndDate.Text) == false && DateTime.TryParse(ui_dtpEndDate.Value.ToString(), out dateTime))
                         {
                             cmd.Parameters.AddWithValue("@endDate", ui_dtpEndDate.Value);
                         }
@@ -304,7 +304,7 @@ namespace HullMaintenance
                             cmd.Parameters.AddWithValue("@endDate", DBNull.Value);
                         }
 
-                        if (DateTime.TryParse(ui_dtpVerificationDate.Text, out dateTime))
+                        if (String.IsNullOrWhiteSpace(ui_dtpVerificationDate.Text) == false && DateTime.TryParse(ui_dtpVerificationDate.Value.ToString(), out dateTime))
                         {
                             cmd.Parameters.AddWithValue("@verificationDate", ui_dtpVerificationDate.Value);
                         }
@@ -313,7 +313,7 @@ namespace HullMaintenance
                             cmd.Parameters.AddWithValue("@verificationDate", DBNull.Value);
                         }
 
-                        if (DateTime.TryParse(ui_dtpUpdateDate.Text, out dateTime))
+                        if (String.IsNullOrWhiteSpace(ui_dtpUpdateDate.Text) == false && DateTime.TryParse(ui_dtpUpdateDate.Value.ToString(), out dateTime))
                         {
                             cmd.Parameters.AddWithValue("@updateDate", ui_dtpUpdateDate.Value);
                         }
@@ -387,7 +387,7 @@ namespace HullMaintenance
                     cmd.Parameters.AddWithValue("@workTime", ui_tbWorkTime.Text.Trim());
                     cmd.Parameters.AddWithValue("@worker", ui_cbWorker.Text);
 
-                    if (DateTime.TryParse(ui_dtpReceiveDate.Text, out dateTime))
+                    if (String.IsNullOrWhiteSpace(ui_dtpReceiveDate.Text) == false && DateTime.TryParse(ui_dtpReceiveDate.Value.ToString(), out dateTime))
                     {
                         cmd.Parameters.AddWithValue("@receiveDate", ui_dtpReceiveDate.Value);
                     }
@@ -396,7 +396,7 @@ namespace HullMaintenance
                         cmd.Parameters.AddWithValue("@receiveDate", DBNull.Value);
                     }
 
-                    if (DateTime.TryParse(ui_dtpDueDate.Text, out dateTime))
+                    if (String.IsNullOrWhiteSpace(ui_dtpDueDate.Text) == false && DateTime.TryParse(ui_dtpDueDate.Value.ToString(), out dateTime))
                     {
                         cmd.Parameters.AddWithValue("@dueDate", ui_dtpDueDate.Value);
                     }
@@ -405,7 +405,7 @@ namespace HullMaintenance
                         cmd.Parameters.AddWithValue("@dueDate", DBNull.Value);
                     }
 
-                    if (DateTime.TryParse(ui_dtpStartDate.Text, out dateTime))
+                    if (String.IsNullOrWhiteSpace(ui_dtpStartDate.Text) == false && DateTime.TryParse(ui_dtpStartDate.Value.ToString(), out dateTime))
                     {
                         cmd.Parameters.AddWithValue("@startDate", ui_dtpStartDate.Value);
                     }
@@ -414,7 +414,7 @@ namespace HullMaintenance
                         cmd.Parameters.AddWithValue("@startDate", DBNull.Value);
                     }
 
-                    if (DateTime.TryParse(ui_dtpEndDate.Text, out dateTime))
+                    if (String.IsNullOrWhiteSpace(ui_dtpEndDate.Text) == false && DateTime.TryParse(ui_dtpEndDate.Value.ToString(), out dateTime))
                     {
                         cmd.Parameters.AddWithValue("@endDate", ui_dtpEndDate.Value);
                     }
@@ -423,7 +423,7 @@ namespace HullMaintenance
                         cmd.Parameters.AddWithValue("@endDate", DBNull.Value);
                     }
 
-                    if (DateTime.TryParse(ui_dtpVerificationDate.Text, out dateTime))
+                    if (String.IsNullOrWhiteSpace(ui_dtpVerificationDate.Text) == false && DateTime.TryParse(ui_dtpVerificationDate.Value.ToString(), out dateTime))
                     {
                         cmd.Parameters.AddWithValue("@verificationDate", ui_dtpVerificationDate.Value);
                     }
@@ -432,7 +432,7 @@ namespace HullMaintenance
                         cmd.Parameters.AddWithValue("@verificationDate", DBNull.Value);
                     }
 
-                    if (DateTime.TryParse(ui_dtpUpdateDate.Text, out dateTime))
+                    if (String.IsNullOrWhiteSpace(ui_dtpUpdateDate.Text) == false && DateTime.TryParse(ui_dtpUpdateDate.Value.ToString(), out dateTime))
                     {
                         cmd.Parameters.AddWithValue("@updateDate", ui_dtpUpdateDate.Value);
                     }
@@ -462,6 +462,11 @@ namespace HullMaintenance
             }
         }
 
+        /// <summary>
+        /// Get the TextBox Control
+        /// </summary>
+        /// <param name="btnName"></param>
+        /// <returns></returns>
         private TextBox GetTextBox(string btnName)
         {
             TextBox tb;
@@ -488,7 +493,23 @@ namespace HullMaintenance
         {
             LoadCustomerList(this.Dt);
 
-            GetData(this.Dt, this.Index);
+            if (this.Index == 0)
+            {
+                ui_dtpDueDate.CustomFormat = " ";
+                ui_dtpDueDate.Format = DateTimePickerFormat.Custom;
+                ui_dtpStartDate.CustomFormat = " ";
+                ui_dtpStartDate.Format = DateTimePickerFormat.Custom;
+                ui_dtpEndDate.CustomFormat = " ";
+                ui_dtpEndDate.Format = DateTimePickerFormat.Custom;
+                ui_dtpVerificationDate.CustomFormat = " ";
+                ui_dtpVerificationDate.Format = DateTimePickerFormat.Custom;
+                ui_dtpUpdateDate.CustomFormat = " ";
+                ui_dtpUpdateDate.Format = DateTimePickerFormat.Custom;
+            }
+            else
+            {
+                GetData(this.Dt, this.Index);
+            }
         }
 
         private void OnCustomerSelectedValueChanged(object sender, EventArgs e)
@@ -615,20 +636,22 @@ namespace HullMaintenance
             MetroButton btn = sender as MetroButton;
             TextBox tb = GetTextBox(btn.Name);
 
-            string docFullPath = String.Format(@"{0}\{1}", this.DocPath, tb.Text);
-
-            FileInfo fi = new FileInfo(docFullPath);
-
-            FolderBrowserDialog folderDialog = new FolderBrowserDialog();
-
-            if (fi.Directory.Exists == true)
+            OpenFileDialog openFileDlg = new OpenFileDialog
             {
-                folderDialog.SelectedPath = fi.DirectoryName;
-            }
+                InitialDirectory = this.DocPath,
+                Title = "File Seach",
+                CheckFileExists = true,
+                CheckPathExists = true,
+                RestoreDirectory = true,
+                ReadOnlyChecked = true,
+                ShowReadOnly = true
+            };
 
-            if (folderDialog.ShowDialog(this) == DialogResult.OK)
+            if (openFileDlg.ShowDialog() == DialogResult.OK)
             {
-                tb.Text = folderDialog.SelectedPath;
+                string fileFullPath = openFileDlg.FileName;
+                string filePath = fileFullPath.Replace(this.DocPath, "");
+                tb.Text = filePath;
             }
         }
 
@@ -639,12 +662,13 @@ namespace HullMaintenance
 
             tb.Text = "";
         }
-        #endregion
+
 
         private void OnDateTimeValueChanged(object sender, EventArgs e)
         {
             DateTimePicker dtPicker = sender as DateTimePicker;
             dtPicker.CustomFormat = "yyyy-MM-dd ddd";
         }
+        #endregion
     }
 }

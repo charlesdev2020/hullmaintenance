@@ -55,8 +55,6 @@
             this.ui_lbMainVersion = new MetroFramework.Controls.MetroLabel();
             this.ui_styleMgr = new MetroFramework.Components.MetroStyleManager(this.components);
             this.ui_panelMain = new MetroFramework.Controls.MetroPanel();
-            this.ui_panelBottom = new MetroFramework.Controls.MetroPanel();
-            this.ui_lbBottomInfo = new MetroFramework.Controls.MetroLabel();
             this.ui_panelTabControl = new MetroFramework.Controls.MetroPanel();
             this.ui_tabControl = new MetroFramework.Controls.MetroTabControl();
             this.smhPage = new System.Windows.Forms.TabPage();
@@ -173,9 +171,10 @@
             this.ui_btnLoadExcel = new MetroFramework.Controls.MetroButton();
             this.ui_btnClearExcel = new MetroFramework.Controls.MetroButton();
             this.ui_btnImportExcel = new MetroFramework.Controls.MetroButton();
+            this.ui_panelBottom = new MetroFramework.Controls.MetroPanel();
+            this.ui_lbBottomInfo = new MetroFramework.Controls.MetroLabel();
             ((System.ComponentModel.ISupportInitialize)(this.ui_styleMgr)).BeginInit();
             this.ui_panelMain.SuspendLayout();
-            this.ui_panelBottom.SuspendLayout();
             this.ui_panelTabControl.SuspendLayout();
             this.ui_tabControl.SuspendLayout();
             this.smhPage.SuspendLayout();
@@ -197,6 +196,7 @@
             this.ui_gbDb.SuspendLayout();
             this.HelperPage.SuspendLayout();
             this.ui_panelHelperCollapsible.SuspendLayout();
+            this.ui_panelBottom.SuspendLayout();
             this.SuspendLayout();
             // 
             // ui_lbMainTitle1
@@ -273,34 +273,6 @@
             this.ui_panelMain.VerticalScrollbarBarColor = true;
             this.ui_panelMain.VerticalScrollbarHighlightOnWheel = false;
             this.ui_panelMain.VerticalScrollbarSize = 10;
-            // 
-            // ui_panelBottom
-            // 
-            this.ui_panelBottom.Controls.Add(this.ui_lbBottomInfo);
-            this.ui_panelBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.ui_panelBottom.HorizontalScrollbarBarColor = true;
-            this.ui_panelBottom.HorizontalScrollbarHighlightOnWheel = false;
-            this.ui_panelBottom.HorizontalScrollbarSize = 10;
-            this.ui_panelBottom.Location = new System.Drawing.Point(0, 892);
-            this.ui_panelBottom.Margin = new System.Windows.Forms.Padding(0);
-            this.ui_panelBottom.Name = "ui_panelBottom";
-            this.ui_panelBottom.Padding = new System.Windows.Forms.Padding(5, 1, 5, 1);
-            this.ui_panelBottom.Size = new System.Drawing.Size(1417, 25);
-            this.ui_panelBottom.TabIndex = 5;
-            this.ui_panelBottom.VerticalScrollbarBarColor = true;
-            this.ui_panelBottom.VerticalScrollbarHighlightOnWheel = false;
-            this.ui_panelBottom.VerticalScrollbarSize = 10;
-            // 
-            // ui_lbBottomInfo
-            // 
-            this.ui_lbBottomInfo.AutoSize = true;
-            this.ui_lbBottomInfo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ui_lbBottomInfo.FontSize = MetroFramework.MetroLabelSize.Small;
-            this.ui_lbBottomInfo.Location = new System.Drawing.Point(5, 1);
-            this.ui_lbBottomInfo.Name = "ui_lbBottomInfo";
-            this.ui_lbBottomInfo.Size = new System.Drawing.Size(12, 17);
-            this.ui_lbBottomInfo.TabIndex = 5;
-            this.ui_lbBottomInfo.Text = " ";
             // 
             // ui_panelTabControl
             // 
@@ -747,10 +719,10 @@
             this.stdPage.Controls.Add(this.ui_panelStd);
             this.stdPage.Controls.Add(this.ui_panelStdCollapsible);
             this.stdPage.Font = new System.Drawing.Font("굴림", 9F);
-            this.stdPage.Location = new System.Drawing.Point(4, 43);
+            this.stdPage.Location = new System.Drawing.Point(4, 41);
             this.stdPage.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.stdPage.Name = "stdPage";
-            this.stdPage.Size = new System.Drawing.Size(1262, 670);
+            this.stdPage.Size = new System.Drawing.Size(1409, 847);
             this.stdPage.TabIndex = 2;
             this.stdPage.Tag = "spishull";
             this.stdPage.Text = "SpisHull";
@@ -767,7 +739,7 @@
             this.ui_panelStd.Margin = new System.Windows.Forms.Padding(0);
             this.ui_panelStd.Name = "ui_panelStd";
             this.ui_panelStd.Padding = new System.Windows.Forms.Padding(1);
-            this.ui_panelStd.Size = new System.Drawing.Size(1262, 610);
+            this.ui_panelStd.Size = new System.Drawing.Size(1409, 787);
             this.ui_panelStd.TabIndex = 1;
             this.ui_panelStd.UseCustomBackColor = true;
             this.ui_panelStd.VerticalScrollbarBarColor = true;
@@ -844,7 +816,7 @@
             this.ui_gridStd.RowTemplate.Height = 23;
             this.ui_gridStd.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.ui_gridStd.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.ui_gridStd.Size = new System.Drawing.Size(1260, 608);
+            this.ui_gridStd.Size = new System.Drawing.Size(1407, 785);
             this.ui_gridStd.TabIndex = 1;
             this.ui_gridStd.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.OnClickBtnCellContent);
             this.ui_gridStd.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.OnGridCellDoubleClick);
@@ -1003,7 +975,7 @@
             this.ui_panelStdCollapsible.Location = new System.Drawing.Point(0, 0);
             this.ui_panelStdCollapsible.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.ui_panelStdCollapsible.Name = "ui_panelStdCollapsible";
-            this.ui_panelStdCollapsible.Size = new System.Drawing.Size(1262, 60);
+            this.ui_panelStdCollapsible.Size = new System.Drawing.Size(1409, 60);
             this.ui_panelStdCollapsible.TabIndex = 0;
             this.ui_panelStdCollapsible.UseCustomBackColor = true;
             this.ui_panelStdCollapsible.VerticalScrollbarBarColor = true;
@@ -1018,7 +990,7 @@
             this.ui_panelSubStd2.HorizontalScrollbarBarColor = true;
             this.ui_panelSubStd2.HorizontalScrollbarHighlightOnWheel = false;
             this.ui_panelSubStd2.HorizontalScrollbarSize = 10;
-            this.ui_panelSubStd2.Location = new System.Drawing.Point(1062, 0);
+            this.ui_panelSubStd2.Location = new System.Drawing.Point(1209, 0);
             this.ui_panelSubStd2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ui_panelSubStd2.Name = "ui_panelSubStd2";
             this.ui_panelSubStd2.Padding = new System.Windows.Forms.Padding(15, 0, 15, 0);
@@ -1167,10 +1139,10 @@
             this.settingPage.Controls.Add(this.ui_gbStd);
             this.settingPage.Controls.Add(this.ui_gbSmh);
             this.settingPage.Controls.Add(this.ui_gbDb);
-            this.settingPage.Location = new System.Drawing.Point(4, 43);
+            this.settingPage.Location = new System.Drawing.Point(4, 41);
             this.settingPage.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.settingPage.Name = "settingPage";
-            this.settingPage.Size = new System.Drawing.Size(1262, 670);
+            this.settingPage.Size = new System.Drawing.Size(1409, 847);
             this.settingPage.TabIndex = 4;
             this.settingPage.Text = "Settings";
             // 
@@ -2283,10 +2255,10 @@
             this.HelperPage.BackColor = System.Drawing.SystemColors.Window;
             this.HelperPage.Controls.Add(this.ui_panelHelper);
             this.HelperPage.Controls.Add(this.ui_panelHelperCollapsible);
-            this.HelperPage.Location = new System.Drawing.Point(4, 43);
+            this.HelperPage.Location = new System.Drawing.Point(4, 41);
             this.HelperPage.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.HelperPage.Name = "HelperPage";
-            this.HelperPage.Size = new System.Drawing.Size(1262, 670);
+            this.HelperPage.Size = new System.Drawing.Size(1409, 847);
             this.HelperPage.TabIndex = 5;
             this.HelperPage.Text = "Helper";
             // 
@@ -2301,7 +2273,7 @@
             this.ui_panelHelper.Margin = new System.Windows.Forms.Padding(0);
             this.ui_panelHelper.Name = "ui_panelHelper";
             this.ui_panelHelper.Padding = new System.Windows.Forms.Padding(1);
-            this.ui_panelHelper.Size = new System.Drawing.Size(1262, 610);
+            this.ui_panelHelper.Size = new System.Drawing.Size(1409, 787);
             this.ui_panelHelper.TabIndex = 1;
             this.ui_panelHelper.UseCustomBackColor = true;
             this.ui_panelHelper.VerticalScrollbarBarColor = true;
@@ -2322,7 +2294,7 @@
             this.ui_panelHelperCollapsible.Location = new System.Drawing.Point(0, 0);
             this.ui_panelHelperCollapsible.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.ui_panelHelperCollapsible.Name = "ui_panelHelperCollapsible";
-            this.ui_panelHelperCollapsible.Size = new System.Drawing.Size(1262, 60);
+            this.ui_panelHelperCollapsible.Size = new System.Drawing.Size(1409, 60);
             this.ui_panelHelperCollapsible.TabIndex = 0;
             this.ui_panelHelperCollapsible.UseCustomBackColor = true;
             this.ui_panelHelperCollapsible.VerticalScrollbarBarColor = true;
@@ -2385,6 +2357,34 @@
             this.ui_btnImportExcel.UseSelectable = true;
             this.ui_btnImportExcel.Click += new System.EventHandler(this.OnClickImport);
             // 
+            // ui_panelBottom
+            // 
+            this.ui_panelBottom.Controls.Add(this.ui_lbBottomInfo);
+            this.ui_panelBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.ui_panelBottom.HorizontalScrollbarBarColor = true;
+            this.ui_panelBottom.HorizontalScrollbarHighlightOnWheel = false;
+            this.ui_panelBottom.HorizontalScrollbarSize = 10;
+            this.ui_panelBottom.Location = new System.Drawing.Point(0, 892);
+            this.ui_panelBottom.Margin = new System.Windows.Forms.Padding(0);
+            this.ui_panelBottom.Name = "ui_panelBottom";
+            this.ui_panelBottom.Padding = new System.Windows.Forms.Padding(5, 1, 5, 1);
+            this.ui_panelBottom.Size = new System.Drawing.Size(1417, 25);
+            this.ui_panelBottom.TabIndex = 5;
+            this.ui_panelBottom.VerticalScrollbarBarColor = true;
+            this.ui_panelBottom.VerticalScrollbarHighlightOnWheel = false;
+            this.ui_panelBottom.VerticalScrollbarSize = 10;
+            // 
+            // ui_lbBottomInfo
+            // 
+            this.ui_lbBottomInfo.AutoSize = true;
+            this.ui_lbBottomInfo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ui_lbBottomInfo.FontSize = MetroFramework.MetroLabelSize.Small;
+            this.ui_lbBottomInfo.Location = new System.Drawing.Point(5, 1);
+            this.ui_lbBottomInfo.Name = "ui_lbBottomInfo";
+            this.ui_lbBottomInfo.Size = new System.Drawing.Size(12, 17);
+            this.ui_lbBottomInfo.TabIndex = 5;
+            this.ui_lbBottomInfo.Text = " ";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -2407,8 +2407,6 @@
             this.MouseEnter += new System.EventHandler(this.OnMouseEnter);
             ((System.ComponentModel.ISupportInitialize)(this.ui_styleMgr)).EndInit();
             this.ui_panelMain.ResumeLayout(false);
-            this.ui_panelBottom.ResumeLayout(false);
-            this.ui_panelBottom.PerformLayout();
             this.ui_panelTabControl.ResumeLayout(false);
             this.ui_tabControl.ResumeLayout(false);
             this.smhPage.ResumeLayout(false);
@@ -2430,6 +2428,8 @@
             this.ui_gbDb.ResumeLayout(false);
             this.HelperPage.ResumeLayout(false);
             this.ui_panelHelperCollapsible.ResumeLayout(false);
+            this.ui_panelBottom.ResumeLayout(false);
+            this.ui_panelBottom.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
