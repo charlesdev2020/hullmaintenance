@@ -650,7 +650,7 @@ namespace HullMaintenance
             if (openFileDlg.ShowDialog() == DialogResult.OK)
             {
                 string fileFullPath = openFileDlg.FileName;
-                string filePath = fileFullPath.Replace(this.DocPath, "");
+                string filePath = fileFullPath.Replace(@"this.DocPath\", "");
                 tb.Text = filePath;
             }
         }
