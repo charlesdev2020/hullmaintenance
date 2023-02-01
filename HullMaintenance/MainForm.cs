@@ -26,9 +26,9 @@ namespace HullMaintenance
         public string OptionPath { get; private set; }
         public DataTable StdDt { get; private set; }
         public DataTable SmhDt { get; private set; }
-        public DataSet DataSet { get; private set; }
-		public string stdTableName { get; private set; }
-		public string smhTableName { get; private set; }
+        public Dictionary<string, DataTable> TableDic { get; private set; }
+		public string StdTableName { get; private set; }
+		public string SmhTableName { get; private set; }
 		public string Customer { get; private set; }
         public string Period { get; private set; }
         public int ThemeIdx { get; private set; }
@@ -185,8 +185,8 @@ namespace HullMaintenance
             this.ui_tbDbId.Text = iniHelper.GetPrivateProfileString("Database", "LoginId", "");
             this.ui_tbDbPw.Text = iniHelper.GetPrivateProfileString("Database", "LoginPw", "");
             this.ui_tbDbName.Text = iniHelper.GetPrivateProfileString("Database", "DBName", "");
-            this.stdTableName = iniHelper.GetPrivateProfileString("Database", "StdTableName", "");
-            this.smhTableName = iniHelper.GetPrivateProfileString("Database", "SmhTableName", "");
+            this.StdTableName = iniHelper.GetPrivateProfileString("Database", "StdTableName", "");
+            this.SmhTableName = iniHelper.GetPrivateProfileString("Database", "SmhTableName", "");
             this.Customer = iniHelper.GetPrivateProfileString("Condition", "Customer", "ALL");
             this.Period = iniHelper.GetPrivateProfileString("Condition", "Period", "ALL");
             this.ui_tbSmhDocPath.Text = iniHelper.GetPrivateProfileString("FilePath", "SmhDocPath", "");
@@ -311,6 +311,11 @@ namespace HullMaintenance
             }
 
             return grid;
+        }
+
+        private void LoadCustomerList(DataSet ds, ComboBox cbCustmer)
+        {
+            List<string> tableNames = DbHelper.GetTableListFromDB();
         }
 
         /// <summary>
@@ -587,10 +592,14 @@ namespace HullMaintenance
         {
             LoadINI();
 
-            this.ConnString = GetDatabaseConnection();
+            GetDatabaseConnection();
 
-            this.StdDt = DbHelper.GetDataTableFromDB(stdTableName);
-            this.SmhDt = DbHelper.GetDataTableFromDB(smhTableName);
+            List<string> tableNames = DbHelper.GetTableListFromDB();
+
+            this.TableDic = DbHelper.GetDataTableDictionary();
+
+            this.SmhDt = DbHelper.GetDataTableFromDB(this.SmhTableName);
+            this.StdDt = DbHelper.GetDataTableFromDB(this.StdTableName);
 
             LoadGridDataTable(this.ui_gridStd, this.StdDt);
             LoadGridDataTable(this.ui_gridSmh, this.SmhDt);
@@ -946,11 +955,11 @@ namespace HullMaintenance
 
             if (tabPage.Name.Contains("smh") == true)
             {
-                ui_lbBottomInfo.Text = String.Format("Option Path : {0}\t{1}\tTableName : {2}", this.OptionPath, dbInfo, this.smhTableName).Replace("\t", "   ");
+                ui_lbBottomInfo.Text = String.Format("Option Path : {0}\t{1}\tTableName : {2}", this.OptionPath, dbInfo, this.SmhTableName).Replace("\t", "   ");
             }
             else if (tabPage.Name.Contains("std") == true)
             {
-                ui_lbBottomInfo.Text = String.Format("Option Path : {0}\t{1}\tTableName : {2}", this.OptionPath, dbInfo, this.stdTableName).Replace("\t", "   ");
+                ui_lbBottomInfo.Text = String.Format("Option Path : {0}\t{1}\tTableName : {2}", this.OptionPath, dbInfo, this.StdTableName).Replace("\t", "   ");
             }
             else
             {
@@ -1192,11 +1201,11 @@ namespace HullMaintenance
 
                 try
                 {
-                    cmd.CommandText = DbHelper.GetInsertQuery(this.smhTableName);
+                    cmd.CommandText = DbHelper.GetInsertQuery(this.SmhTableName);
 
                     foreach (DataRow row in sortedDt.Rows)
                     {
-                        cmd.Parameters.AddWithValue("@customer", this.Customer);
+                        cmd.Parameters.AddWithValue("@customer", String.Format("{0}{1}", char.ToUpper(this.SmhTableName[0]), this.SmhTableName.ToLower().Substring(1)));
                         cmd.Parameters.AddWithValue("@category1", row[0].ToString());   // 종류
                         cmd.Parameters.AddWithValue("@category2", row[1].ToString());   // 내용
 
@@ -1294,7 +1303,7 @@ namespace HullMaintenance
                             cmd.Parameters.AddWithValue("@documentFile", DBNull.Value);
                         }
 
-                        if (this.smhTableName.ToLower() == "imabari")
+                        if (this.SmhTableName.ToLower() == "imabari")
                         {
                             if (String.IsNullOrEmpty(row[17].ToString()) == false)    // 답변
                             {
@@ -1332,7 +1341,7 @@ namespace HullMaintenance
                 }
             }
 
-            this.SmhDt = DbHelper.GetDataTableFromDB(smhTableName);
+            this.SmhDt = DbHelper.GetDataTableFromDB(SmhTableName);
             LoadGridDataTable(this.ui_gridSmh, this.SmhDt);
             LoadConditionList(this.ui_cbSmhCustomer, this.ui_cbSmhPeriod, this.SmhDt, this.Customer, this.Period);
             AfterLoad();

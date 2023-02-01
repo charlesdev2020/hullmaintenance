@@ -149,7 +149,30 @@ namespace HullMaintenance
         }
 
         /// <summary>
-        /// DB의 Table 목록 조회
+        /// Get Dictionary DataTables
+        /// </summary>
+        /// <returns></returns>
+        public static Dictionary<string, DataTable> GetDataTableDictionary()
+        {
+            Dictionary<string, DataTable> dic = new Dictionary<string, DataTable>();
+
+            List<string> tableNames = GetTableListFromDB();
+
+            foreach (string tableName in tableNames)
+            {
+                DataTable dt = GetDataTableFromDB(tableName);
+
+                if (dic.ContainsKey(tableName) == false)
+                {
+                    dic.Add(tableName, dt);
+                }
+            }
+
+            return dic;
+        }
+
+        /// <summary>
+        /// Select Table List in DB
         /// </summary>
         /// <returns></returns>
         public static List<string> GetTableListFromDB()
