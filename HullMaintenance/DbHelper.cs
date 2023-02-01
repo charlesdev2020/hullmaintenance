@@ -122,9 +122,9 @@ namespace HullMaintenance
 
                 try
                 {
-                    SqlDataReader adr = scm.ExecuteReader();
+                    SqlDataReader sdr = scm.ExecuteReader();
 
-                    dt.Load(adr);
+                    dt.Load(sdr);
                     dt.Columns.Add("document_name");
                     foreach (DataRow row in dt.Rows)
                     {
@@ -146,6 +146,45 @@ namespace HullMaintenance
             }
 
             return dt;
+        }
+
+        /// <summary>
+        /// DB의 Table 목록 조회
+        /// </summary>
+        /// <returns></returns>
+        public static List<string> GetTableListFromDB()
+        {
+            List<string> tableList = new List<string>();
+
+            string query = String.Format("SELECT T.name AS TABLE_NAME, C.name AS COLUMN_NAME " +
+                                         "FROM sys.tables AS T " +
+                                         "INNER JOIN sys.columns AS C " +
+                                         "ON T.object_id = C.object_id " +
+                                         "WHERE C.name = 'customer'");
+
+            using (SqlConnection conn = new SqlConnection(DbConnectionString))
+            {
+                conn.Open();
+
+                SqlDataAdapter sda = new SqlDataAdapter();
+                SqlCommand scm = new SqlCommand(query, conn);
+
+                try
+                {
+                    SqlDataReader sdr = scm.ExecuteReader();
+
+                    while (sdr.Read())
+                    {
+                        tableList.Add(Convert.ToString(sdr["TABLE_NAME"]));
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+
+                return tableList;
+            }
         }
     }
 }

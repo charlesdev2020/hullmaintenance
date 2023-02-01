@@ -604,11 +604,18 @@ namespace HullMaintenance
             {
                 string docFullPath = String.Format(@"{0}\{1}", this.DocPath, tb.Text);
 
-                FileInfo fi = new FileInfo(docFullPath);
-
-                if (fi.Exists == true)
+                try
                 {
-                    Process.Start(docFullPath);
+                    FileInfo fi = new FileInfo(docFullPath);
+
+                    if (fi.Exists == true)
+                    {
+                        Process.Start(docFullPath);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MetroMessageBox.Show(this, ex.Message, "Error Opening File", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

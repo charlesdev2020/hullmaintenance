@@ -26,6 +26,7 @@ namespace HullMaintenance
         public string OptionPath { get; private set; }
         public DataTable StdDt { get; private set; }
         public DataTable SmhDt { get; private set; }
+        public DataSet DataSet { get; private set; }
 		public string stdTableName { get; private set; }
 		public string smhTableName { get; private set; }
 		public string Customer { get; private set; }
@@ -405,9 +406,9 @@ namespace HullMaintenance
         }
 
         /// <summary>
-        /// Initialize for UI Style
+        /// Initialize After Load
         /// </summary>
-        private void InitStyle()
+        private void AfterLoad()
         {
             // size of TabControl's tabs
             //metroTabControl.ItemSize = new Size(
@@ -419,6 +420,20 @@ namespace HullMaintenance
 
             string dbInfo = String.Format("Database : {0}\tServer: {1}\tLogin ID : {2}", DbHelper.DbName, DbHelper.DbServer, DbHelper.DbUserId);
             ui_lbBottomInfo.Text = String.Format("Option Path : {0}\t{1}", this.OptionPath, dbInfo).Replace("\t", "   ");
+
+            FileInfo fi = new FileInfo(String.Format(@"{0}\HullMaintenance.ini", Environment.CurrentDirectory));
+
+            if (fi.Exists)
+            {
+                fi.CopyTo(String.Format(@"{0}\HullMaintenance.ini.bak", fi.DirectoryName), true);
+            }
+
+            File.Copy(this.OptionPath, String.Format(@"{0}\HullMaintenance.ini", Environment.CurrentDirectory), true);
+#if DEBUG
+
+#else
+            ui_tabControl.Controls.RemoveByKey(stdPage.Name);
+#endif
         }
 
         /// <summary>
@@ -456,15 +471,23 @@ namespace HullMaintenance
             }
 
             string fileFullPath = String.Format(@"{0}\{1}", filePath, row["document_file"]).ToString();
-            FileInfo fi = new FileInfo(fileFullPath);
 
-            if (fi.Exists == true)
+            try
             {
-                Process.Start(fileFullPath);
+                FileInfo fi = new FileInfo(fileFullPath);
+
+                if (fi.Exists == true)
+                {
+                    Process.Start(fileFullPath);
+                }
+                else
+                {
+                    MetroMessageBox.Show(this, "", "File doesn't exist.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MetroMessageBox.Show(this, "", "File doesn't exist", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MetroMessageBox.Show(this, ex.Message, "Error Opening File", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -509,7 +532,7 @@ namespace HullMaintenance
                     dataTable.Columns.Add(Convert.ToString(range.Cells[HeaderLine, j].Value), typeof(string));
                 }
 
-                //filling the table from  excel file
+                //filling the table from excel file
                 for (int i = HeaderLine + 1; i <= rowCount; i++)
                 {
                     DataRow dr = dataTable.NewRow();
@@ -575,7 +598,7 @@ namespace HullMaintenance
             LoadConditionList(this.ui_cbStdCustomer, this.ui_cbStdPeriod, this.StdDt, this.Customer, this.Period);
             LoadConditionList(this.ui_cbSmhCustomer, this.ui_cbSmhPeriod, this.SmhDt, this.Customer, this.Period);
 
-            InitStyle();
+            AfterLoad();
         }
 
         private void OnUpdateMainForm(object sender, EventArgs e)
@@ -1142,7 +1165,7 @@ namespace HullMaintenance
 
             DataTable excelDt = excelGrid.DataSource as DataTable;
             DataTable tempDt = excelDt.Clone();
-            tempDt.Columns["시작"].DataType = typeof(DateTime);
+            tempDt.Columns[2].DataType = typeof(DateTime);
 
             foreach (DataRow dr in excelDt.Rows)
             {
@@ -1152,7 +1175,7 @@ namespace HullMaintenance
             tempDt.AcceptChanges();
 
             // 시작일을 기준으로 정렬
-            tempDt.DefaultView.Sort = "시작 ASC";
+            tempDt.DefaultView.Sort = String.Format("{0} ASC", tempDt.Columns[2]);
             DataTable sortedDt = tempDt.DefaultView.ToTable();
 
             using (SqlConnection conn = new SqlConnection(DbHelper.DbConnectionString))
@@ -1169,27 +1192,15 @@ namespace HullMaintenance
 
                 try
                 {
-                    cmd.CommandText = DbHelper.GetInsertQuery("smarthull");
+                    cmd.CommandText = DbHelper.GetInsertQuery(this.smhTableName);
 
                     foreach (DataRow row in sortedDt.Rows)
                     {
-                        cmd.Parameters.AddWithValue("@customer", row["현장"].ToString().Trim());
-                        cmd.Parameters.AddWithValue("@site", row["현장"].ToString().Trim());
-                        cmd.Parameters.AddWithValue("@type", row["타입"].ToString().Trim());
-                        cmd.Parameters.AddWithValue("@category1", row["종류"].ToString());
-                        cmd.Parameters.AddWithValue("@category2", row["내용"].ToString());
-                        cmd.Parameters.AddWithValue("@priority", row["우선"].ToString().Trim());
+                        cmd.Parameters.AddWithValue("@customer", this.Customer);
+                        cmd.Parameters.AddWithValue("@category1", row[0].ToString());   // 종류
+                        cmd.Parameters.AddWithValue("@category2", row[1].ToString());   // 내용
 
-                        if (Double.TryParse(row["시수(일)"].ToString(), out val) == true)
-                        {
-                            cmd.Parameters.AddWithValue("@workTime", row["시수(일)"].ToString().Trim());
-                        }
-                        else
-                        {
-                            cmd.Parameters.AddWithValue("@workTime", DBNull.Value);
-                        }
-
-                        if (DateTime.TryParse(row["시작"].ToString(), out dateTime))
+                        if (DateTime.TryParse(row[2].ToString(), out dateTime)) // 시작 또는 접수
                         {
                             cmd.Parameters.AddWithValue("@startDate", dateTime);
                             cmd.Parameters.AddWithValue("@receiveDate", dateTime);
@@ -1200,16 +1211,7 @@ namespace HullMaintenance
                             cmd.Parameters.AddWithValue("@receiveDate", DBNull.Value);
                         }
 
-                        if (DateTime.TryParse(row["희망납기일"].ToString(), out dateTime))
-                        {
-                            cmd.Parameters.AddWithValue("@dueDate", dateTime);
-                        }
-                        else
-                        {
-                            cmd.Parameters.AddWithValue("@dueDate", DBNull.Value);
-                        }
-
-                        if (DateTime.TryParse(row["처리완료"].ToString(), out dateTime))
+                        if (DateTime.TryParse(row[4].ToString(), out dateTime)) // 완료 또는 처리완료
                         {
                             cmd.Parameters.AddWithValue("@endDate", dateTime);
                         }
@@ -1218,7 +1220,7 @@ namespace HullMaintenance
                             cmd.Parameters.AddWithValue("@endDate", DBNull.Value);
                         }
 
-                        if (DateTime.TryParse(row["검증"].ToString(), out dateTime))
+                        if (DateTime.TryParse(row[5].ToString(), out dateTime)) // 검증
                         {
                             cmd.Parameters.AddWithValue("@verificationDate", dateTime);
                         }
@@ -1227,7 +1229,7 @@ namespace HullMaintenance
                             cmd.Parameters.AddWithValue("@verificationDate", DBNull.Value);
                         }
 
-                        if (DateTime.TryParse(row["업데이트"].ToString(), out dateTime))
+                        if (DateTime.TryParse(row[6].ToString(), out dateTime)) // 업데이트
                         {
                             cmd.Parameters.AddWithValue("@updateDate", dateTime);
                         }
@@ -1236,35 +1238,37 @@ namespace HullMaintenance
                             cmd.Parameters.AddWithValue("@updateDate", DBNull.Value);
                         }
 
-                        if (String.IsNullOrEmpty(row["참고 문서"].ToString()) == false)
+                        if (DateTime.TryParse(row[7].ToString(), out dateTime)) // 희망납기일
                         {
-                            cmd.Parameters.AddWithValue("@documentFile", row["참고 문서"].ToString());
+                            cmd.Parameters.AddWithValue("@dueDate", dateTime);
                         }
                         else
                         {
-                            cmd.Parameters.AddWithValue("@documentFile", DBNull.Value);
+                            cmd.Parameters.AddWithValue("@dueDate", DBNull.Value);
                         }
 
-                        if (String.IsNullOrEmpty(row["답변"].ToString()) == false)
+                        cmd.Parameters.AddWithValue("@site", row[8].ToString().Trim()); // 현장
+
+                        if (Double.TryParse(row[9].ToString(), out val) == true)    // 시수(일)
                         {
-                            cmd.Parameters.AddWithValue("@mailFile", row["답변"].ToString());
-                        }
-                        else if (String.IsNullOrEmpty(row["메일"].ToString()) == false)
-                        {
-                            cmd.Parameters.AddWithValue("@mailFile", row["메일"].ToString());
+                            cmd.Parameters.AddWithValue("@workTime", row[9].ToString().Trim());
                         }
                         else
                         {
-                            cmd.Parameters.AddWithValue("@mailFile", DBNull.Value);
+                            cmd.Parameters.AddWithValue("@workTime", DBNull.Value);
                         }
 
-                        string details = row["비고"].ToString().Replace("\n", "\r\n");
+                        cmd.Parameters.AddWithValue("@worker", row[10].ToString().Trim());  // 담당자
+                        cmd.Parameters.AddWithValue("@type", row[11].ToString().Trim());    // 타입
+                        cmd.Parameters.AddWithValue("@status", row[12].ToString()); // 상태 또는 상황
+
+                        string details = row[13].ToString().Replace("\n", "\r\n");  // 비고
 
                         string[] splitSeperator = new string[] { "\r\n" };
                         if (String.IsNullOrEmpty(details) == false && details.Split(splitSeperator, StringSplitOptions.None).Count() > 0)
                         {
                             string title = details.Split(splitSeperator, StringSplitOptions.None)[0];
-                            
+
                             cmd.Parameters.AddWithValue("@summaryKr", title.TrimEnd(' '));
                             cmd.Parameters.AddWithValue("@details", details);
                         }
@@ -1279,8 +1283,37 @@ namespace HullMaintenance
                             cmd.Parameters.AddWithValue("@details", DBNull.Value);
                         }
 
-                        cmd.Parameters.AddWithValue("@worker", row["담당자"].ToString().Trim());
-                        cmd.Parameters.AddWithValue("@status", row["상태"].ToString());
+                        cmd.Parameters.AddWithValue("@priority", row[14].ToString().Trim());    // 우선
+
+                        if (String.IsNullOrEmpty(row[15].ToString()) == false)  // 참고 문서 또는 참고문서
+                        {
+                            cmd.Parameters.AddWithValue("@documentFile", row[15].ToString());
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@documentFile", DBNull.Value);
+                        }
+
+                        if (this.smhTableName.ToLower() == "imabari")
+                        {
+                            if (String.IsNullOrEmpty(row[17].ToString()) == false)    // 답변
+                            {
+                                cmd.Parameters.AddWithValue("@mailFile", row[17].ToString());
+                            }
+                            else if (String.IsNullOrEmpty(row[16].ToString()) == false) // 메일
+                            {
+                                cmd.Parameters.AddWithValue("@mailFile", row[16].ToString());
+                            }
+                            else
+                            {
+                                cmd.Parameters.AddWithValue("@mailFile", DBNull.Value);
+                            }
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@mailFile", DBNull.Value);
+                        }
+
                         cmd.Parameters.AddWithValue("@sampleFile", DBNull.Value);
                         cmd.Parameters.AddWithValue("@summaryJp", DBNull.Value);
                         cmd.Parameters.AddWithValue("@writer", Environment.UserName);
@@ -1302,10 +1335,10 @@ namespace HullMaintenance
             this.SmhDt = DbHelper.GetDataTableFromDB(smhTableName);
             LoadGridDataTable(this.ui_gridSmh, this.SmhDt);
             LoadConditionList(this.ui_cbSmhCustomer, this.ui_cbSmhPeriod, this.SmhDt, this.Customer, this.Period);
-            InitStyle();
+            AfterLoad();
 
             MetroMessageBox.Show(this, "", "Import Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-        #endregion
+#endregion
     }
 }
