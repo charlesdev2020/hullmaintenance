@@ -130,8 +130,8 @@ namespace HullMaintenance
         private void LoadCustomerList(DataTable dt)
         {
             List<string> customerList = dt.Select().Select(x => x["customer"]).Where(x => String.IsNullOrWhiteSpace(x.ToString()) == false).Cast<string>().Distinct().ToList();
-            customerList.ForEach(x => ui_cbCustomer.Items.Add(x));
             customerList = customerList.OrderByDescending(x => x).ToList();
+            customerList.ForEach(x => ui_cbCustomer.Items.Add(x));
             ui_cbCustomer.Items.Insert(0, "");
 
             if (this.Customer.Contains("ALL") == false && String.IsNullOrWhiteSpace(this.Customer) == false)

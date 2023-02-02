@@ -152,15 +152,15 @@ namespace HullMaintenance
         /// Get Dictionary DataTables
         /// </summary>
         /// <returns></returns>
-        public static Dictionary<string, DataTable> GetDataTableDictionary()
+        public static Dictionary<string, DataTable> GetDataTableDictionary(List<string> tableNames)
         {
             Dictionary<string, DataTable> dic = new Dictionary<string, DataTable>();
-
-            List<string> tableNames = GetTableListFromDB();
 
             foreach (string tableName in tableNames)
             {
                 DataTable dt = GetDataTableFromDB(tableName);
+
+                dt.TableName = tableName;
 
                 if (dic.ContainsKey(tableName) == false)
                 {
@@ -183,7 +183,8 @@ namespace HullMaintenance
                                          "FROM sys.tables AS T " +
                                          "INNER JOIN sys.columns AS C " +
                                          "ON T.object_id = C.object_id " +
-                                         "WHERE C.name = 'customer'");
+                                         "WHERE C.name = 'customer' " +
+                                         "ORDER BY TABLE_NAME ASC;");
 
             using (SqlConnection conn = new SqlConnection(DbConnectionString))
             {

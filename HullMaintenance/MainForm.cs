@@ -26,11 +26,9 @@ namespace HullMaintenance
         public string OptionPath { get; private set; }
         public DataTable StdDt { get; private set; }
         public DataTable SmhDt { get; private set; }
-        public Dictionary<string, DataTable> TableDic { get; private set; }
+        public Dictionary<string, DataTable> DtDic { get; private set; }
 		public string StdTableName { get; private set; }
 		public string SmhTableName { get; private set; }
-		public string Customer { get; private set; }
-        public string Period { get; private set; }
         public int ThemeIdx { get; private set; }
         public int StyleIdx { get; private set; }
         public string SearchColumns { get; private set; }
@@ -187,8 +185,6 @@ namespace HullMaintenance
             this.ui_tbDbName.Text = iniHelper.GetPrivateProfileString("Database", "DBName", "");
             this.StdTableName = iniHelper.GetPrivateProfileString("Database", "StdTableName", "");
             this.SmhTableName = iniHelper.GetPrivateProfileString("Database", "SmhTableName", "");
-            this.Customer = iniHelper.GetPrivateProfileString("Condition", "Customer", "ALL");
-            this.Period = iniHelper.GetPrivateProfileString("Condition", "Period", "ALL");
             this.ui_tbSmhDocPath.Text = iniHelper.GetPrivateProfileString("FilePath", "SmhDocPath", "");
             this.ui_tbSmhSamplePath.Text = iniHelper.GetPrivateProfileString("FilePath", "SmhSamplePath", "");
             this.ui_tbStdDocPath.Text = iniHelper.GetPrivateProfileString("FilePath", "StdDocPath", "");
@@ -269,27 +265,30 @@ namespace HullMaintenance
         private MetroGrid GetDataTable(string tag, ref DataTable tempDt)
         {
             ComboBox customerBox;
-            ComboBox periodBox;
+            ComboBox subConditionBox;
             MetroGrid grid;
             DataTable dt;
+            string colName = "";
 
             if (tag.ToLower().Contains("std") == true)
             {
                 grid = ui_gridStd;
                 customerBox = ui_cbStdCustomer;
-                periodBox = ui_cbStdPeriod;
+                subConditionBox = ui_cbStdPeriod;
                 dt = this.StdDt;
+                colName = "receive_date";
             }
             else
             {
                 grid = ui_gridSmh;
                 customerBox = ui_cbSmhCustomer;
-                periodBox = ui_cbSmhPeriod;
+                subConditionBox = ui_cbSmhSite;
                 dt = this.SmhDt;
+                colName = "site";
             }
 
             string customer = customerBox.Text;
-            string period = periodBox.Text;
+            string subCondition = subConditionBox.Text;
 
             tempDt = dt.Copy();
 
@@ -300,9 +299,9 @@ namespace HullMaintenance
                     tempDt = tempDt.Select(String.Format("customer = '{0}'", customer)).CopyToDataTable();
                 }
 
-                if (String.IsNullOrEmpty(period) == false && period.Contains("ALL") == false)
+                if (String.IsNullOrEmpty(subCondition) == false && subCondition.Contains("ALL") == false)
                 {
-                    tempDt = tempDt.Select().Where(x => x["receive_date"].ToString().StartsWith(period)).CopyToDataTable();
+                    tempDt = tempDt.Select().Where(x => x[colName].ToString().StartsWith(subCondition)).CopyToDataTable();
                 }
             }
             catch (Exception ex)
@@ -313,70 +312,51 @@ namespace HullMaintenance
             return grid;
         }
 
-        private void LoadCustomerList(DataSet ds, ComboBox cbCustmer)
-        {
-            List<string> tableNames = DbHelper.GetTableListFromDB();
-        }
-
         /// <summary>
-        /// Load Customer List from DataTable
+        /// Load Customer List from DataTable - Std 전용
         /// </summary>
         /// <param name="combo"></param>
         /// <param name="dt"></param>
         /// <param name="customer"></param>
-        private void LoadConditionList(ComboBox cbCustmer, ComboBox cbPeriod, DataTable dt, string customer, string period)
+        private void LoadConditionList(ComboBox cbCustmer, DataTable dt)
         {
             if (dt.Rows.Count > 0)
             {
                 List<string> customerList = dt.Select().Select(x => x["customer"]).Cast<string>().Distinct().ToList();
-                List<string> periodList = new List<string>();
-                var dtList = dt.Select().Select(x => x["receive_date"]).ToList();
-
-                foreach (var date in dtList)
-                {
-                    if ((date as DateTime?).HasValue == false)
-                    {
-                        continue;
-                    }
-
-                    DateTime? nullDate = date as DateTime?;
-                    string strDate = nullDate.Value.Year.ToString();
-                    int year;
-                    if (int.TryParse(strDate, out year) == true && periodList.Contains(strDate) == false)
-                    {
-                        periodList.Add(strDate);
-                    }
-                }
 
                 customerList = customerList.OrderByDescending(x => x).ToList();
-                periodList = periodList.OrderByDescending(x => x).ToList();
 
                 customerList.ForEach(x => cbCustmer.Items.Add(x));
-                periodList.ForEach(x => cbPeriod.Items.Add(x));
             }
 
             cbCustmer.Items.Insert(0, "ALL Customer");
-            cbPeriod.Items.Insert(0, "ALL Period");
 
-            customer = customer.Replace("ALL", "ALL Customer");
-            period = period.Replace("ALL", "ALL Period");
+            cbCustmer.SelectedIndex = 0;
+        }
 
-            if (String.IsNullOrWhiteSpace(customer) == false && cbCustmer.Items.Contains(customer) == true)
+        /// <summary>
+        /// Load Customer List from DataTable - Smh 전용
+        /// </summary>
+        /// <param name="cbCustmer"></param>
+        /// <param name="cbPeriod"></param>
+        /// <param name="dtDic"></param>
+        /// <param name="customer"></param>
+        private void LoadCustomerList(ComboBox cbCustmer, Dictionary<string, DataTable> dtDic, string customer)
+        {
+            foreach (string tableName in dtDic.Keys)
+            {
+                cbCustmer.Items.Add(tableName);
+            }
+
+            DataTable dt = dtDic[this.SmhTableName];
+
+            if (cbCustmer.Items.Contains(customer) == true)
             {
                 cbCustmer.SelectedItem = customer;
             }
             else
             {
                 cbCustmer.SelectedIndex = 0;
-            }
-
-            if (String.IsNullOrWhiteSpace(period) == false && cbPeriod.Items.Contains(period) == true)
-            {
-                cbPeriod.SelectedItem = period;
-            }
-            else
-            {
-                cbPeriod.SelectedIndex = 0;
             }
         }
 
@@ -594,18 +574,29 @@ namespace HullMaintenance
 
             GetDatabaseConnection();
 
+            // DB 테이블 목록 가져오기
             List<string> tableNames = DbHelper.GetTableListFromDB();
+            tableNames.Remove(this.StdTableName);
 
-            this.TableDic = DbHelper.GetDataTableDictionary();
+            // 테이블 딕셔너리
+            this.DtDic = DbHelper.GetDataTableDictionary(tableNames);
 
-            this.SmhDt = DbHelper.GetDataTableFromDB(this.SmhTableName);
+            if (this.DtDic.ContainsKey(this.SmhTableName))
+            {
+                this.SmhDt = DtDic[this.SmhTableName];
+            }
+            else
+            {
+                this.SmhDt = new DataTable();
+            }
+
             this.StdDt = DbHelper.GetDataTableFromDB(this.StdTableName);
 
-            LoadGridDataTable(this.ui_gridStd, this.StdDt);
             LoadGridDataTable(this.ui_gridSmh, this.SmhDt);
+            LoadCustomerList(this.ui_cbSmhCustomer, this.DtDic, this.SmhTableName);
 
-            LoadConditionList(this.ui_cbStdCustomer, this.ui_cbStdPeriod, this.StdDt, this.Customer, this.Period);
-            LoadConditionList(this.ui_cbSmhCustomer, this.ui_cbSmhPeriod, this.SmhDt, this.Customer, this.Period);
+            LoadGridDataTable(this.ui_gridStd, this.StdDt);
+            LoadConditionList(this.ui_cbStdCustomer, this.StdDt);
 
             AfterLoad();
         }
@@ -682,6 +673,7 @@ namespace HullMaintenance
             }
         }
 
+
         private void OnClickBtnConnect(object sender, EventArgs e)
         {
             string result = "Wait...";
@@ -757,6 +749,7 @@ namespace HullMaintenance
             ui_styleMgr.Style = (MetroColorStyle)next;
         }
 
+
         private void OnClickBtnSearchTextClear(object sender, EventArgs e)
 		{
 			Button mBtn = sender as Button;
@@ -772,6 +765,69 @@ namespace HullMaintenance
             ComboBox cbox = mBtn.Parent.Controls.Find(tag, true).FirstOrDefault() as ComboBox;
             cbox.Text = "";
             cbox.Items.Clear();
+        }
+
+        private void OnSeachTextChanged(object sender, EventArgs e)
+        {
+            ComboBox cBox = sender as ComboBox;
+            string searchText = cBox.Text;
+
+            if (cBox.Tag.ToString().ToLower().Contains("std") == true)
+            {
+                (ui_gridStd.DataSource as DataTable).DefaultView.RowFilter = String.Format(this.DynamicSearchQuery, searchText);
+            }
+            else
+            {
+                (ui_gridSmh.DataSource as DataTable).DefaultView.RowFilter = String.Format(this.DynamicSearchQuery, searchText);
+            }
+        }
+
+        private void OnSearchTexKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                ComboBox cBox = sender as ComboBox;
+                string searchText = cBox.Text;
+
+                if (String.IsNullOrWhiteSpace(searchText) == false)
+                {
+                    if (cBox.Items.Contains(searchText) == false)
+                    {
+                        cBox.Items.Add(searchText);
+                    }
+
+                    DataTable tempDt = new DataTable();
+                    MetroGrid grid = GetDataTable(cBox.Tag.ToString(), ref tempDt);
+
+                    List<string> idxList = new List<string>();
+
+                    if (String.IsNullOrEmpty(searchText) == false)
+                    {
+                        foreach (string column in this.SearchColumns.Trim().Split(','))
+                        {
+                            foreach (DataRow dr in tempDt.Rows)
+                            {
+                                if (dr[column].ToString().ToLower().Contains(searchText.ToLower()) == true)
+                                {
+                                    if (idxList.Contains(dr["id"].ToString()) == false)
+                                    {
+                                        idxList.Add(dr["id"].ToString());
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    if (idxList.Count > 0)
+                    {
+                        (grid.DataSource as DataTable).DefaultView.RowFilter = String.Format("id IN ({0})", String.Join(",", idxList));
+                    }
+                    else
+                    {
+                        (grid.DataSource as DataTable).DefaultView.RowFilter = String.Format("id = -1");
+                    }
+                }
+            }
         }
 
         private void OnClickBtnSearch(object sender, EventArgs e)
@@ -821,6 +877,27 @@ namespace HullMaintenance
             }
         }
 
+        private void OnClickBtnCellContent(object sender, DataGridViewCellEventArgs e)
+        {
+            MetroGrid grid = sender as MetroGrid;
+
+            if (grid.Columns[e.ColumnIndex] is DataGridViewLinkColumn && e.RowIndex != -1)
+            {
+                string fileName = grid.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+
+                if (String.IsNullOrEmpty(fileName) == false)
+                {
+                    //int rowId = grid.SelectedCells[0].RowIndex;
+                    int id = 0;
+                    if (grid.SelectedCells[1].Value != null)
+                    {
+                        id = (int)grid.SelectedCells[1].Value;
+                        OpenLinkedDocument(grid.Name.ToString(), fileName, id);
+                    }
+                }
+            }
+        }
+
         private void OnClickBtnAddItem(object sender, EventArgs e)
         {
             MetroButton mBtn = sender as MetroButton;
@@ -860,26 +937,6 @@ namespace HullMaintenance
             view.Show();
         }
 
-        private void OnClickBtnCellContent(object sender, DataGridViewCellEventArgs e)
-        {
-            MetroGrid grid = sender as MetroGrid;
-
-            if (grid.Columns[e.ColumnIndex] is DataGridViewLinkColumn && e.RowIndex != -1)
-            {
-                string fileName = grid.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
-
-                if (String.IsNullOrEmpty(fileName) == false)
-                {
-                    //int rowId = grid.SelectedCells[0].RowIndex;
-                    int id = 0;
-                    if (grid.SelectedCells[1].Value != null)
-                    {
-                        id = (int)grid.SelectedCells[1].Value;
-                        OpenLinkedDocument(grid.Name.ToString(), fileName, id);
-                    }
-                }
-            }
-        }
 
         private void OnGridCellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -931,21 +988,6 @@ namespace HullMaintenance
             view.Show();
         }
 
-        private void OnSeachTextChanged(object sender, EventArgs e)
-        {
-            ComboBox cBox = sender as ComboBox;
-            string searchText = cBox.Text;
-
-            if (cBox.Tag.ToString().ToLower().Contains("std") == true)
-            {
-                (ui_gridStd.DataSource as DataTable).DefaultView.RowFilter = String.Format(this.DynamicSearchQuery, searchText);
-            }
-            else
-            {
-                (ui_gridSmh.DataSource as DataTable).DefaultView.RowFilter = String.Format(this.DynamicSearchQuery, searchText);
-            }
-        }
-
         private void OnTabControlSelectedIndexChanged(object sender, EventArgs e)
         {
             TabControl tabControl = sender as TabControl;
@@ -978,26 +1020,6 @@ namespace HullMaintenance
             catch (Exception ex) { }
         }
 
-        private void OnConditionSelectedValueChanged(object sender, EventArgs e)
-        {
-            ComboBox cBox = sender as ComboBox;
-
-            DataTable filteredDt = new DataTable();
-            MetroGrid grid = GetDataTable(cBox.Tag.ToString(), ref filteredDt);
-
-            if (filteredDt.Rows.Count > 0)
-            {
-                filteredDt = filteredDt.Select("", "id DESC").CopyToDataTable();
-
-                grid.DataSource = filteredDt.DefaultView.ToTable(false, new string[] { "id", "customer", "type", "status", "summary_kr",
-                                                                                       "receive_date", "due_date", "start_date", "end_date",
-                                                                                       "verification_date", "update_date", "document_name" }).Select().CopyToDataTable();
-            }
-            else if (grid.DataSource != null)
-            {
-                (grid.DataSource as DataTable).Clear();
-            }
-        }
 
         private void OnTabControlKeyDown(object sender, KeyEventArgs e)
 		{
@@ -1028,54 +1050,6 @@ namespace HullMaintenance
 			}
 		}
 
-        private void OnSearchTexKeyDown(object sender, KeyEventArgs e)
-		{
-			if (e.KeyCode == Keys.Enter)
-			{
-				ComboBox cBox = sender as ComboBox;
-				string searchText = cBox.Text;
-
-				if (String.IsNullOrWhiteSpace(searchText) == false)
-				{
-                    if (cBox.Items.Contains(searchText) == false)
-                    {
-                        cBox.Items.Add(searchText);
-                    }
-
-                    DataTable tempDt = new DataTable();
-                    MetroGrid grid = GetDataTable(cBox.Tag.ToString(), ref tempDt);
-
-                    List<string> idxList = new List<string>();
-
-                    if (String.IsNullOrEmpty(searchText) == false)
-                    {
-                        foreach (string column in this.SearchColumns.Trim().Split(','))
-                        {
-                            foreach (DataRow dr in tempDt.Rows)
-                            {
-                                if (dr[column].ToString().ToLower().Contains(searchText.ToLower()) == true)
-                                {
-                                    if (idxList.Contains(dr["id"].ToString()) == false)
-                                    {
-                                        idxList.Add(dr["id"].ToString());
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    if (idxList.Count > 0)
-                    {
-                        (grid.DataSource as DataTable).DefaultView.RowFilter = String.Format("id IN ({0})", String.Join(",", idxList));
-                    }
-                    else
-                    {
-                        (grid.DataSource as DataTable).DefaultView.RowFilter = String.Format("id = -1");
-                    }
-                }
-			}
-		}
-
         private void OnMouseEnter(object sender, EventArgs e)
         {
             if (Application.OpenForms.Cast<object>().ToList().Any(x => x.GetType() == typeof(DetailForm)) == false)
@@ -1084,7 +1058,115 @@ namespace HullMaintenance
             }
         }
 
-        private void OnClickLoad(object sender, EventArgs e)
+        private void OnCustomerSelectedValueChanged(object sender, EventArgs e)
+        {
+            DataTable filteredDt = new DataTable();
+
+            string customer = ui_cbSmhCustomer.Text;
+            this.SmhDt = this.DtDic[customer];
+            filteredDt = this.SmhDt.Copy();
+            ui_cbSmhSite.Items.Clear();
+            ui_cbSmhSite.Items.Insert(0, "ALL Site");
+
+            if (filteredDt.Rows.Count > 0)
+            {
+                List<string> siteList = filteredDt.Select().Select(x => x["site"]).Cast<string>().Distinct().ToList();
+                siteList = siteList.OrderByDescending(x => x).ToList();
+                siteList.ForEach(x => ui_cbSmhSite.Items.Add(x));
+
+                filteredDt = filteredDt.Select("", "id DESC").CopyToDataTable();
+
+                ui_gridSmh.DataSource = filteredDt.DefaultView.ToTable(false, new string[] { "id", "customer", "type", "status", "summary_kr",
+                                                                                       "receive_date", "due_date", "start_date", "end_date",
+                                                                                       "verification_date", "update_date", "document_name" }).Select().CopyToDataTable();
+            }
+            else if (ui_gridSmh.DataSource != null)
+            {
+                (ui_gridSmh.DataSource as DataTable).Clear();
+            }
+
+            ui_cbSmhSite.SelectedIndex = 0;
+        }
+
+        private void OnConditionSelectedValueChanged(object sender, EventArgs e)
+        {
+            DataTable filteredDt = new DataTable();
+
+            string customer = ui_cbStdCustomer.Text;
+            filteredDt = this.StdDt.Copy();
+
+            if (customer.Contains("ALL") == false)
+            {
+                if (filteredDt.Select(String.Format("customer = '{0}'", customer)).Count() != 0)
+                {
+                    filteredDt = filteredDt.Select(String.Format("customer = '{0}'", customer)).CopyToDataTable();
+                }
+            }
+
+            ui_cbStdPeriod.Items.Clear();
+            ui_cbStdPeriod.Items.Insert(0, "ALL Period");
+
+            if (filteredDt.Rows.Count > 0)
+            {
+                List<string> periodList = new List<string>();
+                var dtList = filteredDt.Select().Select(x => x["receive_date"]).ToList();
+
+                foreach (var date in dtList)
+                {
+                    if ((date as DateTime?).HasValue == false)
+                    {
+                        continue;
+                    }
+
+                    DateTime? nullDate = date as DateTime?;
+                    string strDate = nullDate.Value.Year.ToString();
+                    int year;
+                    if (int.TryParse(strDate, out year) == true && periodList.Contains(strDate) == false)
+                    {
+                        periodList.Add(strDate);
+                    }
+                }
+
+                periodList = periodList.OrderByDescending(x => x).ToList();
+                periodList.ForEach(x => ui_cbStdPeriod.Items.Add(x));
+
+                filteredDt = filteredDt.Select("", "id DESC").CopyToDataTable();
+
+                ui_gridStd.DataSource = filteredDt.DefaultView.ToTable(false, new string[] { "id", "customer", "type", "status", "summary_kr",
+                                                                                       "receive_date", "due_date", "start_date", "end_date",
+                                                                                       "verification_date", "update_date", "document_name" }).Select().CopyToDataTable();
+            }
+            else if (ui_gridStd.DataSource != null)
+            {
+                (ui_gridStd.DataSource as DataTable).Clear();
+            }
+
+            ui_cbStdPeriod.SelectedIndex = 0;
+        }
+
+        private void OnSubConditionSelectedValueChanged(object sender, EventArgs e)
+        {
+            ComboBox cBox = sender as ComboBox;
+
+            DataTable filteredDt = new DataTable();
+
+            MetroGrid grid = GetDataTable(cBox.Tag.ToString(), ref filteredDt);
+
+            if (filteredDt.Rows.Count > 0)
+            {
+                filteredDt = filteredDt.Select("", "id DESC").CopyToDataTable();
+
+                grid.DataSource = filteredDt.DefaultView.ToTable(false, new string[] { "id", "customer", "type", "status", "summary_kr",
+                                                                                       "receive_date", "due_date", "start_date", "end_date",
+                                                                                       "verification_date", "update_date", "document_name" }).Select().CopyToDataTable();
+            }
+            else if (grid.DataSource != null)
+            {
+                (grid.DataSource as DataTable).Clear();
+            }
+        }
+
+        private void OnClickLoadExcel(object sender, EventArgs e)
         {
             OpenFileDialog openFileDlg = new OpenFileDialog
             {
@@ -1341,13 +1423,29 @@ namespace HullMaintenance
                 }
             }
 
-            this.SmhDt = DbHelper.GetDataTableFromDB(SmhTableName);
+            List<string> tableList = DbHelper.GetTableListFromDB();
+            tableList.Remove(this.StdTableName);
+            this.DtDic = DbHelper.GetDataTableDictionary(tableList);
+
+            if (this.DtDic.ContainsKey(this.SmhTableName))
+            {
+                this.SmhDt = DtDic[this.SmhTableName];
+            }
+            else
+            {
+                this.SmhDt = new DataTable();
+            }
+
+            this.StdDt = DbHelper.GetDataTableFromDB(this.StdTableName);
+
             LoadGridDataTable(this.ui_gridSmh, this.SmhDt);
-            LoadConditionList(this.ui_cbSmhCustomer, this.ui_cbSmhPeriod, this.SmhDt, this.Customer, this.Period);
+
+            this.ui_cbSmhCustomer.SelectedText = this.SmhTableName;
+
             AfterLoad();
 
             MetroMessageBox.Show(this, "", "Import Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-#endregion
+        #endregion
     }
 }
