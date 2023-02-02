@@ -129,17 +129,32 @@ namespace HullMaintenance
         /// <param name="dt"></param>
         private void LoadCustomerList(DataTable dt)
         {
-            List<string> customerList = dt.Select().Select(x => x["customer"]).Where(x => String.IsNullOrWhiteSpace(x.ToString()) == false).Cast<string>().Distinct().ToList();
+            List<string> customerList = dt.Select().Select(x => x["customer"]).Cast<string>().Distinct().ToList();
             customerList = customerList.OrderByDescending(x => x).ToList();
             customerList.ForEach(x => ui_cbCustomer.Items.Add(x));
-            ui_cbCustomer.Items.Insert(0, "");
 
-            if (this.Customer.Contains("ALL") == false && String.IsNullOrWhiteSpace(this.Customer) == false)
+            if (this.Index == 0)
             {
-                ui_cbCustomer.SelectedText = this.Customer;
+                if (ui_cbCustomer.Items.Contains("") == true)
+                {
+                    ui_cbCustomer.Items.Remove("");
+                    ui_cbCustomer.Items.Add("");
+                    ui_cbCustomer.SelectedIndex = 0;
+                }
+                else
+                {
+                    ui_cbCustomer.SelectedIndex = 0;
+                }
 
-                LoadComboBoxesList(this.Dt, this.Customer);
+                return;
             }
+
+            if (this.Customer.Contains("ALL") == false && ui_cbCustomer.Items.Contains(this.Customer) == true)
+            {
+                ui_cbCustomer.Text = this.Customer;
+            }
+
+            LoadComboBoxesList(this.Dt, this.Customer);
         }
 
         /// <summary>
@@ -516,9 +531,12 @@ namespace HullMaintenance
         {
             ComboBox cBox = sender as ComboBox;
 
-            ControlsValueClear(cBox);
-
-            LoadComboBoxesList(this.Dt, cBox.Text);
+            if (cBox.Text.Equals(this.Customer) == false)
+            {
+                this.Customer = cBox.Text;
+                ControlsValueClear(cBox);
+                LoadComboBoxesList(this.Dt, this.Customer);
+            }
         }
 
         private void OnClickBtnClose(object sender, EventArgs e)
@@ -669,7 +687,6 @@ namespace HullMaintenance
 
             tb.Text = "";
         }
-
 
         private void OnDateTimeValueChanged(object sender, EventArgs e)
         {

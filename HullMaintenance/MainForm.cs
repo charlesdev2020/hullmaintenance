@@ -299,9 +299,16 @@ namespace HullMaintenance
                     tempDt = tempDt.Select(String.Format("customer = '{0}'", customer)).CopyToDataTable();
                 }
 
-                if (String.IsNullOrEmpty(subCondition) == false && subCondition.Contains("ALL") == false)
+                if (subCondition.Contains("ALL") == false)
                 {
-                    tempDt = tempDt.Select().Where(x => x[colName].ToString().StartsWith(subCondition)).CopyToDataTable();
+                    if (colName == "site")
+                    {
+                        tempDt = tempDt.Select().Where(x => x[colName].ToString().Equals(subCondition)).CopyToDataTable();
+                    }
+                    else if (colName == "receive_date")
+                    {
+                        tempDt = tempDt.Select().Where(x => x[colName].ToString().StartsWith(subCondition)).CopyToDataTable();
+                    }
                 }
             }
             catch (Exception ex)
@@ -575,11 +582,15 @@ namespace HullMaintenance
             GetDatabaseConnection();
 
             // DB 테이블 목록 가져오기
-            List<string> tableNames = DbHelper.GetTableListFromDB();
-            tableNames.Remove(this.StdTableName);
+            List<string> tableList = DbHelper.GetTableListFromDB();
+
+            if (tableList.Contains(this.StdTableName) == true)
+            {
+                tableList.Remove(this.StdTableName);
+            }
 
             // 테이블 딕셔너리
-            this.DtDic = DbHelper.GetDataTableDictionary(tableNames);
+            this.DtDic = DbHelper.GetDataTableDictionary(tableList);
 
             if (this.DtDic.ContainsKey(this.SmhTableName))
             {
@@ -608,40 +619,55 @@ namespace HullMaintenance
             {
                 return;
             }
-
-            string tableName = page.Tag.ToString();
             MetroGrid grid;
             DataTable dt;
-            ComboBox cBox;
+            ComboBox cbBox;
 
-            if (tableName.Contains("smart") == true)
+            if (page.Tag.ToString().Contains("smart") == true)
             {
                 grid = ui_gridSmh;
+                cbBox = ui_cbSmhCustomer;
+
+                List<string> tableList = DbHelper.GetTableListFromDB();
+
+                if (tableList.Contains(this.StdTableName) == true)
+                {
+                    tableList.Remove(this.StdTableName);
+                }
+
+                this.DtDic = DbHelper.GetDataTableDictionary(tableList);
+
+                if (this.DtDic.ContainsKey(this.SmhTableName))
+                {
+                    this.SmhDt = DtDic[this.SmhTableName];
+                }
+                else
+                {
+                    this.SmhDt = new DataTable();
+                }
+
                 dt = this.SmhDt;
-                cBox = ui_cbSmhCustomer;
             }
             else
             {
                 grid = ui_gridStd;
+                cbBox = ui_cbStdCustomer;
+                this.StdDt = DbHelper.GetDataTableFromDB(this.StdTableName);
                 dt = this.StdDt;
-                cBox = ui_cbStdCustomer;
-            }
-
-            dt = DbHelper.GetDataTableFromDB(tableName);
-
-            if (dt.TableName.Contains("smart") == true)
-            {
-                this.SmhDt = dt;
-            }
-            else
-            {
-                this.StdDt = dt;
             }
 
             string module = grid.Name.ToLower().Contains("std") == true ? "std" : "smh";
 
             LoadGridDataTable(grid, dt);
-            OnConditionSelectedValueChanged(cBox, null);
+
+            if (module == "smh")
+            {
+                OnCustomerSelectedValueChanged(cbBox, null);
+            }
+            else
+            {
+                OnConditionSelectedValueChanged(cbBox, null);
+            }
 
             DataGridViewRow row = grid.Rows.Cast<DataGridViewRow>()
                                   .Where(r => r.Cells[String.Format("{0}ColId", module)].Value.ToString().Equals((sender as DetailForm).Index.ToString()))
@@ -672,7 +698,6 @@ namespace HullMaintenance
                 CheckStatusCell(row, module);
             }
         }
-
 
         private void OnClickBtnConnect(object sender, EventArgs e)
         {
@@ -748,7 +773,6 @@ namespace HullMaintenance
             int next = rnd.Next(0, 13);
             ui_styleMgr.Style = (MetroColorStyle)next;
         }
-
 
         private void OnClickBtnSearchTextClear(object sender, EventArgs e)
 		{
@@ -937,7 +961,6 @@ namespace HullMaintenance
             view.Show();
         }
 
-
         private void OnGridCellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0)
@@ -1020,7 +1043,6 @@ namespace HullMaintenance
             catch (Exception ex) { }
         }
 
-
         private void OnTabControlKeyDown(object sender, KeyEventArgs e)
 		{
 			if (e.Control && e.KeyCode == Keys.F)
@@ -1063,8 +1085,11 @@ namespace HullMaintenance
             DataTable filteredDt = new DataTable();
 
             string customer = ui_cbSmhCustomer.Text;
+            this.SmhTableName = customer;
+
             this.SmhDt = this.DtDic[customer];
             filteredDt = this.SmhDt.Copy();
+
             ui_cbSmhSite.Items.Clear();
             ui_cbSmhSite.Items.Insert(0, "ALL Site");
 
@@ -1424,7 +1449,12 @@ namespace HullMaintenance
             }
 
             List<string> tableList = DbHelper.GetTableListFromDB();
-            tableList.Remove(this.StdTableName);
+
+            if (tableList.Contains(this.StdTableName) == true)
+            {
+                tableList.Remove(this.StdTableName);
+            }
+
             this.DtDic = DbHelper.GetDataTableDictionary(tableList);
 
             if (this.DtDic.ContainsKey(this.SmhTableName))
