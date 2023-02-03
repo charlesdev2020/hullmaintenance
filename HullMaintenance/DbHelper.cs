@@ -211,14 +211,41 @@ namespace HullMaintenance
             }
         }
 
+        public static DataTable GetCustomerDt()
+        {
+            DataTable dt = new DataTable();
+
+            string query = String.Format("SELECT * FROM customer_info");
+
+            using (SqlConnection conn = new SqlConnection(DbConnectionString))
+            {
+                conn.Open();
+
+                SqlDataAdapter sda = new SqlDataAdapter();
+                SqlCommand scm = new SqlCommand(query, conn);
+
+                try
+                {
+                    SqlDataReader sdr = scm.ExecuteReader();
+
+                    dt.Load(sdr);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+
+            return dt;
+        }
         /// <summary>
         /// Get Customer Folder Names
         /// </summary>
         /// <param name="customerList"></param>
         /// <returns></returns>
-        public static Dictionary<string, string[]> GetCustomerInfoFromDB()
+        public static Dictionary<string, DataRow> GetCustomerInfoDicFromDB()
         {
-            Dictionary<string, string[]> dic = new Dictionary<string, string[]>();
+            Dictionary<string, DataRow> dic = new Dictionary<string, DataRow>();
             DataTable dt = new DataTable();
 
             string query = String.Format("SELECT * FROM customer_info");
@@ -244,13 +271,26 @@ namespace HullMaintenance
 
             if (dt.Rows.Count > 0)
             {
-                dic = dt.AsEnumerable().ToDictionary<DataRow, string, string[]>(row => row.Field<string>("customer"), 
-                                                                                row => new string[] 
-                                                                                {
-                                                                                    row.Field<string>("customer_kr"),
-                                                                                    row.Field<string>("folder_name"),
-                                                                                    row.Field<string>("abbr")
-                                                                                });
+                foreach (DataRow row in dt.Rows)
+                {
+                    string tableName = row["table_name"].ToString();
+
+                    if (dic.ContainsKey(tableName) == false)
+                    {
+                        dic.Add(tableName, row);
+                    }
+                }
+
+                #region Test
+                //dic = dt.AsEnumerable().ToDictionary<DataRow, string, string[]>(row => row.Field<string>("table_name"), 
+                //                                                                row => new string[] 
+                //                                                                {
+                //                                                                    row.Field<string>("customer_en"),
+                //                                                                    row.Field<string>("customer_kr"),
+                //                                                                    row.Field<string>("folder_name"),
+                //                                                                    row.Field<string>("abbr")
+                //                                                                });
+                #endregion
             }
 
             return dic;

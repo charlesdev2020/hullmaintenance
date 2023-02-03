@@ -27,7 +27,7 @@ namespace HullMaintenance
         public DataTable StdDt { get; private set; }
         public DataTable SmhDt { get; private set; }
         public Dictionary<string, DataTable> DtDic { get; private set; }
-        public Dictionary<string, string[]> CustomerInfoDic { get; private set; }
+        public Dictionary<string, DataRow> CustomerInfoDic { get; private set; }
 		public string StdTableName { get; private set; }
 		public string SmhTableName { get; private set; }
         public int ThemeIdx { get; private set; }
@@ -187,9 +187,9 @@ namespace HullMaintenance
             this.StdTableName = iniHelper.GetPrivateProfileString("Database", "StdTableName", "");
             this.SmhTableName = iniHelper.GetPrivateProfileString("Database", "SmhTableName", "");
             this.ui_tbSmhDocPath.Text = iniHelper.GetPrivateProfileString("FilePath", "SmhDocPath", "");
-            this.ui_tbSmhSamplePath.Text = iniHelper.GetPrivateProfileString("FilePath", "SmhSamplePath", "");
+            this.ui_tbSmhEnvPath.Text = iniHelper.GetPrivateProfileString("FilePath", "SmhEnvPath", "");
             this.ui_tbStdDocPath.Text = iniHelper.GetPrivateProfileString("FilePath", "StdDocPath", "");
-            this.ui_tbStdSamplePath.Text = iniHelper.GetPrivateProfileString("FilePath", "StdSamplePath", "");
+            this.ui_tbStdEnvPath.Text = iniHelper.GetPrivateProfileString("FilePath", "StdEnvPath", "");
             this.ui_styleMgr.Theme = (MetroThemeStyle)int.Parse(iniHelper.GetPrivateProfileString("Design", "StartThemeIdx", "1"));
             this.ui_styleMgr.Style = (MetroColorStyle)int.Parse(iniHelper.GetPrivateProfileString("Design", "StartStyleIdx", "7"));
             this.ui_tbColorWorking.Text = String.Format("#{0}", iniHelper.GetPrivateProfileString("ColorCode", "Working", ""));
@@ -295,10 +295,7 @@ namespace HullMaintenance
 
             try
             {
-                if (customer.Contains("ALL") == false)
-                {
-                    tempDt = tempDt.Select(String.Format("customer = '{0}'", customer)).CopyToDataTable();
-                }
+                tempDt = tempDt.Select(String.Format("customer = '{0}'", customer)).CopyToDataTable();
 
                 if (subCondition.Contains("ALL") == false)
                 {
@@ -337,7 +334,7 @@ namespace HullMaintenance
                 customerList.ForEach(x => cbCustmer.Items.Add(x));
             }
 
-            cbCustmer.Items.Insert(0, "ALL Customer");
+            //cbCustmer.Items.Insert(0, "ALL Customer");
 
             cbCustmer.SelectedIndex = 0;
         }
@@ -453,7 +450,7 @@ namespace HullMaintenance
 
                 if (this.CustomerInfoDic.Keys.Contains(cBox.Text) == true)
                 {
-                    filePath = String.Format(@"{0}\{1}", this.ui_tbSmhDocPath.Text, this.CustomerInfoDic[cBox.Text][1]);
+                    filePath = String.Format(@"{0}\{1}", this.ui_tbSmhDocPath.Text, this.CustomerInfoDic[cBox.Text]["folder_name"]);
                 }
                 else
                 {
@@ -469,9 +466,9 @@ namespace HullMaintenance
 
                 foreach (string key in this.CustomerInfoDic.Keys)
                 {
-                    if (this.CustomerInfoDic[key][0] == customer)
+                    if (this.CustomerInfoDic[key]["customer_kr"].ToString() == customer)
                     {
-                        filePath = String.Format(@"{0}\{1}\080_SpisHull", filePath, this.CustomerInfoDic[key][1]);
+                        filePath = String.Format(@"{0}\{1}\080_SpisHull", filePath, this.CustomerInfoDic[key]["folder_name"]);
                         break;
                     }
                 }
@@ -584,7 +581,7 @@ namespace HullMaintenance
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MetroMessageBox.Show(this, ex.Message, "There was a problem reading the excel.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
             finally
@@ -612,7 +609,7 @@ namespace HullMaintenance
             }
 
             // 테이블별 기타 정보
-            this.CustomerInfoDic = DbHelper.GetCustomerInfoFromDB();
+            this.CustomerInfoDic = DbHelper.GetCustomerInfoDicFromDB();
 
             // 테이블 딕셔너리
             this.DtDic = DbHelper.GetDataTableDictionary(tableList);
@@ -761,16 +758,45 @@ namespace HullMaintenance
             string tag = mBtn.Tag.ToString();
             MetroTextBox tbPath = this.settingPage.Controls.Find(tag, true).FirstOrDefault() as MetroTextBox;
 
-            FolderBrowserDialog folderDialog = new FolderBrowserDialog();
-
-            if (tbPath != null && Directory.Exists(tbPath.Text) == true)
+            if (tag.Contains("Doc") == true)
             {
-                folderDialog.SelectedPath = tbPath.Text;
+                FolderBrowserDialog folderDialog = new FolderBrowserDialog();
+
+                if (tbPath != null && Directory.Exists(tbPath.Text) == true)
+                {
+                    folderDialog.SelectedPath = tbPath.Text;
+                }
+
+                if (folderDialog.ShowDialog(this) == DialogResult.OK)
+                {
+                    tbPath.Text = folderDialog.SelectedPath;
+                }
             }
-
-            if (folderDialog.ShowDialog(this) == DialogResult.OK)
+            else
             {
-                tbPath.Text = folderDialog.SelectedPath;
+                string defaultPath = @"D:\";
+                if (tbPath != null && File.Exists(tbPath.Text) == true)
+                {
+                    FileInfo fi = new FileInfo(tbPath.Text);
+                    defaultPath = fi.Directory.ToString();
+                }
+
+                OpenFileDialog openFileDlg = new OpenFileDialog
+                {
+                    InitialDirectory = defaultPath,
+                    Title = "Load File",
+                    CheckFileExists = true,
+                    CheckPathExists = true,
+                    FilterIndex = 1,
+                    RestoreDirectory = true,
+                    ReadOnlyChecked = true,
+                    ShowReadOnly = true
+                };
+
+                if (openFileDlg.ShowDialog() == DialogResult.OK)
+                {
+                    tbPath.Text = openFileDlg.FileName;
+                }
             }
         }
 
@@ -781,9 +807,13 @@ namespace HullMaintenance
             string tag = mBtn.Tag.ToString();
             MetroTextBox tbPath = this.settingPage.Controls.Find(tag, true).FirstOrDefault() as MetroTextBox;
 
-            if (tbPath != null && Directory.Exists(tbPath.Text) == true)
+            try
             {
                 Process.Start(tbPath.Text);
+            }
+            catch (Exception ex)
+            {
+                MetroMessageBox.Show(this, ex.Message, "Invalid path", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -953,16 +983,18 @@ namespace HullMaintenance
             MetroButton mBtn = sender as MetroButton;
             ComboBox cBox = null;
             DataTable dt;
+            string customer = "";
             string docPath = "";
 
             if (mBtn.Tag.ToString().ToLower().Contains("smh") == true)
             {
                 dt = this.SmhDt;
-                cBox = ui_cbSmhCustomer;
+                cBox = this.ui_cbSmhCustomer;
+                customer = cBox.Text;
 
-                if (this.CustomerInfoDic.Keys.Contains(cBox.Text) == true)
+                if (this.CustomerInfoDic.Keys.Contains(customer) == true)
                 {
-                    docPath = String.Format(@"{0}\{1}", this.ui_tbSmhDocPath.Text, this.CustomerInfoDic[cBox.Text][1]);
+                    docPath = String.Format(@"{0}\{1}", this.ui_tbSmhDocPath.Text, this.CustomerInfoDic[customer]["folder_name"]);
                 }
                 else
                 {
@@ -972,14 +1004,15 @@ namespace HullMaintenance
             else
             {
                 dt = this.StdDt;
-                cBox = ui_cbStdCustomer;
-                docPath = ui_tbStdDocPath.Text;
+                cBox = this.ui_cbStdCustomer;
+                customer = cBox.Text;
+                docPath = this.ui_tbStdDocPath.Text;
 
                 foreach (string key in this.CustomerInfoDic.Keys)
                 {
-                    if (this.CustomerInfoDic[key][0] == cBox.Text)
+                    if (this.CustomerInfoDic[key]["customer_kr"].ToString() == customer)
                     {
-                        docPath = String.Format(@"{0}\{1}\080_SpisHull", docPath, this.CustomerInfoDic[key][1]);
+                        docPath = String.Format(@"{0}\{1}\080_SpisHull", docPath, this.CustomerInfoDic[key]["folder_name"]);
                         break;
                     }
                 }
@@ -997,8 +1030,9 @@ namespace HullMaintenance
 
             DetailForm view = new DetailForm(dt);
             view.Index = 0;
-            view.Customer = cBox.Text.Contains("ALL") ? "ALL" : cBox.Text;
+            view.Customer = customer;
             view.DocPath = docPath;
+            view.Dic = this.CustomerInfoDic;
             view.StartPosition = FormStartPosition.CenterParent;
             view.MdiChildActivate += OnUpdateMainForm;
             view.Show();
@@ -1028,7 +1062,7 @@ namespace HullMaintenance
 
                 if (this.CustomerInfoDic.Keys.Contains(customer) == true)
                 {
-                    docPath = String.Format(@"{0}\{1}", this.ui_tbSmhDocPath.Text, this.CustomerInfoDic[customer][1]);
+                    docPath = String.Format(@"{0}\{1}", this.ui_tbSmhDocPath.Text, this.CustomerInfoDic[customer]["folder_name"]);
                 }
                 else
                 {
@@ -1044,9 +1078,9 @@ namespace HullMaintenance
 
                 foreach (string key in this.CustomerInfoDic.Keys)
                 {
-                    if (this.CustomerInfoDic[key][0] == customer)
+                    if (this.CustomerInfoDic[key]["customer_kr"].ToString() == customer)
                     {
-                        docPath = String.Format(@"{0}\{1}\080_SpisHull", docPath, this.CustomerInfoDic[key][1]);
+                        docPath = String.Format(@"{0}\{1}\080_SpisHull", docPath, this.CustomerInfoDic[key]["folder_name"]);
                         break;
                     }
                 }
@@ -1065,8 +1099,9 @@ namespace HullMaintenance
             DetailForm view = new DetailForm(dt);
             view.RowIndex = e.RowIndex;
             view.Index = Convert.ToInt32(id.ToString());
-            view.Customer = customer.Contains("ALL") ? "ALL" : customer;
+            view.Customer = customer;
             view.DocPath = docPath;
+            view.Dic = this.CustomerInfoDic;
             view.StartPosition = FormStartPosition.CenterParent;
             view.MdiChildActivate += OnUpdateMainForm;
             view.Show();
@@ -1167,12 +1202,9 @@ namespace HullMaintenance
 
             filteredDt = this.StdDt.Copy();
 
-            if (customer.Contains("ALL") == false)
+            if (filteredDt.Select(String.Format("customer = '{0}'", customer)).Count() != 0)
             {
-                if (filteredDt.Select(String.Format("customer = '{0}'", customer)).Count() != 0)
-                {
-                    filteredDt = filteredDt.Select(String.Format("customer = '{0}'", customer)).CopyToDataTable();
-                }
+                filteredDt = filteredDt.Select(String.Format("customer = '{0}'", customer)).CopyToDataTable();
             }
 
             ui_cbStdPeriod.Items.Clear();
@@ -1301,7 +1333,7 @@ namespace HullMaintenance
 
             foreach (string key in this.CustomerInfoDic.Keys)
             {
-                if (fi.Name.Contains(this.CustomerInfoDic[key][2]) == true)
+                if (fi.Name.Contains(this.CustomerInfoDic[key]["folder_name"].ToString()) == true)
                 {
                     dt.TableName = key;
                 }
@@ -1351,7 +1383,7 @@ namespace HullMaintenance
             DataTable sortedDt = tempDt.DefaultView.ToTable();
 
             string tableName = sortedDt.TableName;
-            string customerNameKr = this.CustomerInfoDic[tableName][0];
+            string customerNameEn = this.CustomerInfoDic[tableName]["customer_en"].ToString();
 
             using (SqlConnection conn = new SqlConnection(DbHelper.DbConnectionString))
             {
@@ -1371,7 +1403,7 @@ namespace HullMaintenance
 
                     foreach (DataRow row in sortedDt.Rows)
                     {
-                        cmd.Parameters.AddWithValue("@customer", customerNameKr);
+                        cmd.Parameters.AddWithValue("@customer", customerNameEn);
                         cmd.Parameters.AddWithValue("@category1", row[0].ToString());   // 종류
                         cmd.Parameters.AddWithValue("@category2", row[1].ToString());   // 내용
 

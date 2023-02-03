@@ -136,20 +136,20 @@
             this.ui_lbColorWorkDone = new MetroFramework.Controls.MetroLabel();
             this.ui_lbColorWorking = new MetroFramework.Controls.MetroLabel();
             this.ui_gbStd = new System.Windows.Forms.GroupBox();
-            this.ui_btnStdSamplePathOpen = new MetroFramework.Controls.MetroButton();
-            this.ui_btnStdSamplePath = new MetroFramework.Controls.MetroButton();
-            this.ui_tbStdSamplePath = new MetroFramework.Controls.MetroTextBox();
-            this.ui_lbStdSampleDir = new MetroFramework.Controls.MetroLabel();
+            this.ui_btnStdEnvPathOpen = new MetroFramework.Controls.MetroButton();
+            this.ui_btnStdEnvPath = new MetroFramework.Controls.MetroButton();
+            this.ui_tbStdEnvPath = new MetroFramework.Controls.MetroTextBox();
+            this.ui_lbStdEnvDir = new MetroFramework.Controls.MetroLabel();
             this.ui_btnStdDocPathOpen = new MetroFramework.Controls.MetroButton();
             this.ui_btnStdDocPath = new MetroFramework.Controls.MetroButton();
             this.ui_tbStdDocPath = new MetroFramework.Controls.MetroTextBox();
             this.ui_lbStdDocDir = new MetroFramework.Controls.MetroLabel();
             this.ui_gbSmh = new System.Windows.Forms.GroupBox();
-            this.ui_btnSmhSamplePathOpen = new MetroFramework.Controls.MetroButton();
+            this.ui_btnSmhEnvPathOpen = new MetroFramework.Controls.MetroButton();
             this.ui_btnSmhDocPathOpen = new MetroFramework.Controls.MetroButton();
-            this.ui_btnSmhSamplePath = new MetroFramework.Controls.MetroButton();
-            this.ui_tbSmhSamplePath = new MetroFramework.Controls.MetroTextBox();
-            this.ui_lbSmhSampleDir = new MetroFramework.Controls.MetroLabel();
+            this.ui_btnSmhEnvPath = new MetroFramework.Controls.MetroButton();
+            this.ui_tbSmhEnvPath = new MetroFramework.Controls.MetroTextBox();
+            this.ui_lbSmhEnvDir = new MetroFramework.Controls.MetroLabel();
             this.ui_btnSmhDocPath = new MetroFramework.Controls.MetroButton();
             this.ui_tbSmhDocPath = new MetroFramework.Controls.MetroTextBox();
             this.ui_lbSmhDocDir = new MetroFramework.Controls.MetroLabel();
@@ -1719,10 +1719,10 @@
             // 
             // ui_gbStd
             // 
-            this.ui_gbStd.Controls.Add(this.ui_btnStdSamplePathOpen);
-            this.ui_gbStd.Controls.Add(this.ui_btnStdSamplePath);
-            this.ui_gbStd.Controls.Add(this.ui_tbStdSamplePath);
-            this.ui_gbStd.Controls.Add(this.ui_lbStdSampleDir);
+            this.ui_gbStd.Controls.Add(this.ui_btnStdEnvPathOpen);
+            this.ui_gbStd.Controls.Add(this.ui_btnStdEnvPath);
+            this.ui_gbStd.Controls.Add(this.ui_tbStdEnvPath);
+            this.ui_gbStd.Controls.Add(this.ui_lbStdEnvDir);
             this.ui_gbStd.Controls.Add(this.ui_btnStdDocPathOpen);
             this.ui_gbStd.Controls.Add(this.ui_btnStdDocPath);
             this.ui_gbStd.Controls.Add(this.ui_tbStdDocPath);
@@ -1731,87 +1731,87 @@
             this.ui_gbStd.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.ui_gbStd.Name = "ui_gbStd";
             this.ui_gbStd.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.ui_gbStd.Size = new System.Drawing.Size(994, 125);
+            this.ui_gbStd.Size = new System.Drawing.Size(950, 125);
             this.ui_gbStd.TabIndex = 3;
             this.ui_gbStd.TabStop = false;
             this.ui_gbStd.Text = "SpisHull";
             // 
-            // ui_btnStdSamplePathOpen
+            // ui_btnStdEnvPathOpen
             // 
-            this.ui_btnStdSamplePathOpen.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.ui_btnStdSamplePathOpen.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ui_btnStdSamplePathOpen.Location = new System.Drawing.Point(931, 64);
-            this.ui_btnStdSamplePathOpen.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.ui_btnStdSamplePathOpen.Name = "ui_btnStdSamplePathOpen";
-            this.ui_btnStdSamplePathOpen.Size = new System.Drawing.Size(40, 30);
-            this.ui_btnStdSamplePathOpen.TabIndex = 17;
-            this.ui_btnStdSamplePathOpen.Tag = "ui_tbStdSamplePath";
-            this.ui_btnStdSamplePathOpen.Text = "Open";
-            this.ui_btnStdSamplePathOpen.UseSelectable = true;
-            this.ui_btnStdSamplePathOpen.Click += new System.EventHandler(this.OnClickBtnPathOpen);
+            this.ui_btnStdEnvPathOpen.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.ui_btnStdEnvPathOpen.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ui_btnStdEnvPathOpen.Location = new System.Drawing.Point(890, 64);
+            this.ui_btnStdEnvPathOpen.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.ui_btnStdEnvPathOpen.Name = "ui_btnStdEnvPathOpen";
+            this.ui_btnStdEnvPathOpen.Size = new System.Drawing.Size(40, 30);
+            this.ui_btnStdEnvPathOpen.TabIndex = 17;
+            this.ui_btnStdEnvPathOpen.Tag = "ui_tbStdEnvPath";
+            this.ui_btnStdEnvPathOpen.Text = "Open";
+            this.ui_btnStdEnvPathOpen.UseSelectable = true;
+            this.ui_btnStdEnvPathOpen.Click += new System.EventHandler(this.OnClickBtnPathOpen);
             // 
-            // ui_btnStdSamplePath
+            // ui_btnStdEnvPath
             // 
-            this.ui_btnStdSamplePath.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.ui_btnStdSamplePath.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ui_btnStdSamplePath.Location = new System.Drawing.Point(885, 64);
-            this.ui_btnStdSamplePath.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.ui_btnStdSamplePath.Name = "ui_btnStdSamplePath";
-            this.ui_btnStdSamplePath.Size = new System.Drawing.Size(40, 30);
-            this.ui_btnStdSamplePath.TabIndex = 16;
-            this.ui_btnStdSamplePath.Tag = "ui_tbStdSamplePath";
-            this.ui_btnStdSamplePath.Text = "···";
-            this.ui_btnStdSamplePath.UseSelectable = true;
-            this.ui_btnStdSamplePath.Click += new System.EventHandler(this.OnClickBtnPath);
+            this.ui_btnStdEnvPath.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.ui_btnStdEnvPath.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ui_btnStdEnvPath.Location = new System.Drawing.Point(845, 64);
+            this.ui_btnStdEnvPath.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.ui_btnStdEnvPath.Name = "ui_btnStdEnvPath";
+            this.ui_btnStdEnvPath.Size = new System.Drawing.Size(40, 30);
+            this.ui_btnStdEnvPath.TabIndex = 16;
+            this.ui_btnStdEnvPath.Tag = "ui_tbStdEnvPath";
+            this.ui_btnStdEnvPath.Text = "···";
+            this.ui_btnStdEnvPath.UseSelectable = true;
+            this.ui_btnStdEnvPath.Click += new System.EventHandler(this.OnClickBtnPath);
             // 
-            // ui_tbStdSamplePath
-            // 
-            // 
+            // ui_tbStdEnvPath
             // 
             // 
-            this.ui_tbStdSamplePath.CustomButton.Image = null;
-            this.ui_tbStdSamplePath.CustomButton.Location = new System.Drawing.Point(671, 1);
-            this.ui_tbStdSamplePath.CustomButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.ui_tbStdSamplePath.CustomButton.Name = "";
-            this.ui_tbStdSamplePath.CustomButton.Size = new System.Drawing.Size(27, 27);
-            this.ui_tbStdSamplePath.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.ui_tbStdSamplePath.CustomButton.TabIndex = 1;
-            this.ui_tbStdSamplePath.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.ui_tbStdSamplePath.CustomButton.UseSelectable = true;
-            this.ui_tbStdSamplePath.CustomButton.Visible = false;
-            this.ui_tbStdSamplePath.Lines = new string[0];
-            this.ui_tbStdSamplePath.Location = new System.Drawing.Point(178, 64);
-            this.ui_tbStdSamplePath.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.ui_tbStdSamplePath.MaxLength = 32767;
-            this.ui_tbStdSamplePath.Name = "ui_tbStdSamplePath";
-            this.ui_tbStdSamplePath.PasswordChar = '\0';
-            this.ui_tbStdSamplePath.ReadOnly = true;
-            this.ui_tbStdSamplePath.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.ui_tbStdSamplePath.SelectedText = "";
-            this.ui_tbStdSamplePath.SelectionLength = 0;
-            this.ui_tbStdSamplePath.SelectionStart = 0;
-            this.ui_tbStdSamplePath.ShortcutsEnabled = true;
-            this.ui_tbStdSamplePath.Size = new System.Drawing.Size(699, 29);
-            this.ui_tbStdSamplePath.TabIndex = 15;
-            this.ui_tbStdSamplePath.UseSelectable = true;
-            this.ui_tbStdSamplePath.UseStyleColors = true;
-            this.ui_tbStdSamplePath.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.ui_tbStdSamplePath.WaterMarkFont = new System.Drawing.Font("Open Sans", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             // 
-            // ui_lbStdSampleDir
             // 
-            this.ui_lbStdSampleDir.Location = new System.Drawing.Point(13, 65);
-            this.ui_lbStdSampleDir.Name = "ui_lbStdSampleDir";
-            this.ui_lbStdSampleDir.Size = new System.Drawing.Size(160, 25);
-            this.ui_lbStdSampleDir.TabIndex = 19;
-            this.ui_lbStdSampleDir.Text = "Sample Directory :";
-            this.ui_lbStdSampleDir.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.ui_tbStdEnvPath.CustomButton.Image = null;
+            this.ui_tbStdEnvPath.CustomButton.Location = new System.Drawing.Point(671, 1);
+            this.ui_tbStdEnvPath.CustomButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.ui_tbStdEnvPath.CustomButton.Name = "";
+            this.ui_tbStdEnvPath.CustomButton.Size = new System.Drawing.Size(27, 27);
+            this.ui_tbStdEnvPath.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.ui_tbStdEnvPath.CustomButton.TabIndex = 1;
+            this.ui_tbStdEnvPath.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.ui_tbStdEnvPath.CustomButton.UseSelectable = true;
+            this.ui_tbStdEnvPath.CustomButton.Visible = false;
+            this.ui_tbStdEnvPath.Lines = new string[0];
+            this.ui_tbStdEnvPath.Location = new System.Drawing.Point(138, 64);
+            this.ui_tbStdEnvPath.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.ui_tbStdEnvPath.MaxLength = 32767;
+            this.ui_tbStdEnvPath.Name = "ui_tbStdEnvPath";
+            this.ui_tbStdEnvPath.PasswordChar = '\0';
+            this.ui_tbStdEnvPath.ReadOnly = true;
+            this.ui_tbStdEnvPath.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.ui_tbStdEnvPath.SelectedText = "";
+            this.ui_tbStdEnvPath.SelectionLength = 0;
+            this.ui_tbStdEnvPath.SelectionStart = 0;
+            this.ui_tbStdEnvPath.ShortcutsEnabled = true;
+            this.ui_tbStdEnvPath.Size = new System.Drawing.Size(699, 29);
+            this.ui_tbStdEnvPath.TabIndex = 15;
+            this.ui_tbStdEnvPath.UseSelectable = true;
+            this.ui_tbStdEnvPath.UseStyleColors = true;
+            this.ui_tbStdEnvPath.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.ui_tbStdEnvPath.WaterMarkFont = new System.Drawing.Font("Open Sans", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            // 
+            // ui_lbStdEnvDir
+            // 
+            this.ui_lbStdEnvDir.Location = new System.Drawing.Point(13, 65);
+            this.ui_lbStdEnvDir.Name = "ui_lbStdEnvDir";
+            this.ui_lbStdEnvDir.Size = new System.Drawing.Size(120, 25);
+            this.ui_lbStdEnvDir.TabIndex = 19;
+            this.ui_lbStdEnvDir.Text = "Env Path :";
+            this.ui_lbStdEnvDir.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // ui_btnStdDocPathOpen
             // 
             this.ui_btnStdDocPathOpen.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ui_btnStdDocPathOpen.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ui_btnStdDocPathOpen.Location = new System.Drawing.Point(931, 28);
+            this.ui_btnStdDocPathOpen.Location = new System.Drawing.Point(890, 28);
             this.ui_btnStdDocPathOpen.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ui_btnStdDocPathOpen.Name = "ui_btnStdDocPathOpen";
             this.ui_btnStdDocPathOpen.Size = new System.Drawing.Size(40, 30);
@@ -1825,7 +1825,7 @@
             // 
             this.ui_btnStdDocPath.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ui_btnStdDocPath.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ui_btnStdDocPath.Location = new System.Drawing.Point(885, 28);
+            this.ui_btnStdDocPath.Location = new System.Drawing.Point(845, 28);
             this.ui_btnStdDocPath.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ui_btnStdDocPath.Name = "ui_btnStdDocPath";
             this.ui_btnStdDocPath.Size = new System.Drawing.Size(40, 30);
@@ -1851,7 +1851,7 @@
             this.ui_tbStdDocPath.CustomButton.UseSelectable = true;
             this.ui_tbStdDocPath.CustomButton.Visible = false;
             this.ui_tbStdDocPath.Lines = new string[0];
-            this.ui_tbStdDocPath.Location = new System.Drawing.Point(178, 28);
+            this.ui_tbStdDocPath.Location = new System.Drawing.Point(138, 28);
             this.ui_tbStdDocPath.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.ui_tbStdDocPath.MaxLength = 32767;
             this.ui_tbStdDocPath.Name = "ui_tbStdDocPath";
@@ -1873,18 +1873,18 @@
             // 
             this.ui_lbStdDocDir.Location = new System.Drawing.Point(13, 29);
             this.ui_lbStdDocDir.Name = "ui_lbStdDocDir";
-            this.ui_lbStdDocDir.Size = new System.Drawing.Size(160, 25);
+            this.ui_lbStdDocDir.Size = new System.Drawing.Size(120, 25);
             this.ui_lbStdDocDir.TabIndex = 15;
-            this.ui_lbStdDocDir.Text = "Document Directory :";
+            this.ui_lbStdDocDir.Text = "Document Path :";
             this.ui_lbStdDocDir.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // ui_gbSmh
             // 
-            this.ui_gbSmh.Controls.Add(this.ui_btnSmhSamplePathOpen);
+            this.ui_gbSmh.Controls.Add(this.ui_btnSmhEnvPathOpen);
             this.ui_gbSmh.Controls.Add(this.ui_btnSmhDocPathOpen);
-            this.ui_gbSmh.Controls.Add(this.ui_btnSmhSamplePath);
-            this.ui_gbSmh.Controls.Add(this.ui_tbSmhSamplePath);
-            this.ui_gbSmh.Controls.Add(this.ui_lbSmhSampleDir);
+            this.ui_gbSmh.Controls.Add(this.ui_btnSmhEnvPath);
+            this.ui_gbSmh.Controls.Add(this.ui_tbSmhEnvPath);
+            this.ui_gbSmh.Controls.Add(this.ui_lbSmhEnvDir);
             this.ui_gbSmh.Controls.Add(this.ui_btnSmhDocPath);
             this.ui_gbSmh.Controls.Add(this.ui_tbSmhDocPath);
             this.ui_gbSmh.Controls.Add(this.ui_lbSmhDocDir);
@@ -1892,30 +1892,30 @@
             this.ui_gbSmh.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.ui_gbSmh.Name = "ui_gbSmh";
             this.ui_gbSmh.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.ui_gbSmh.Size = new System.Drawing.Size(994, 125);
+            this.ui_gbSmh.Size = new System.Drawing.Size(950, 125);
             this.ui_gbSmh.TabIndex = 2;
             this.ui_gbSmh.TabStop = false;
             this.ui_gbSmh.Text = "SmartHull";
             // 
-            // ui_btnSmhSamplePathOpen
+            // ui_btnSmhEnvPathOpen
             // 
-            this.ui_btnSmhSamplePathOpen.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.ui_btnSmhSamplePathOpen.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ui_btnSmhSamplePathOpen.Location = new System.Drawing.Point(931, 66);
-            this.ui_btnSmhSamplePathOpen.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.ui_btnSmhSamplePathOpen.Name = "ui_btnSmhSamplePathOpen";
-            this.ui_btnSmhSamplePathOpen.Size = new System.Drawing.Size(40, 30);
-            this.ui_btnSmhSamplePathOpen.TabIndex = 11;
-            this.ui_btnSmhSamplePathOpen.Tag = "ui_tbSmhSamplePath";
-            this.ui_btnSmhSamplePathOpen.Text = "Open";
-            this.ui_btnSmhSamplePathOpen.UseSelectable = true;
-            this.ui_btnSmhSamplePathOpen.Click += new System.EventHandler(this.OnClickBtnPathOpen);
+            this.ui_btnSmhEnvPathOpen.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.ui_btnSmhEnvPathOpen.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ui_btnSmhEnvPathOpen.Location = new System.Drawing.Point(890, 66);
+            this.ui_btnSmhEnvPathOpen.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.ui_btnSmhEnvPathOpen.Name = "ui_btnSmhEnvPathOpen";
+            this.ui_btnSmhEnvPathOpen.Size = new System.Drawing.Size(40, 30);
+            this.ui_btnSmhEnvPathOpen.TabIndex = 11;
+            this.ui_btnSmhEnvPathOpen.Tag = "ui_tbSmhEnvPath";
+            this.ui_btnSmhEnvPathOpen.Text = "Open";
+            this.ui_btnSmhEnvPathOpen.UseSelectable = true;
+            this.ui_btnSmhEnvPathOpen.Click += new System.EventHandler(this.OnClickBtnPathOpen);
             // 
             // ui_btnSmhDocPathOpen
             // 
             this.ui_btnSmhDocPathOpen.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ui_btnSmhDocPathOpen.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ui_btnSmhDocPathOpen.Location = new System.Drawing.Point(931, 30);
+            this.ui_btnSmhDocPathOpen.Location = new System.Drawing.Point(890, 30);
             this.ui_btnSmhDocPathOpen.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ui_btnSmhDocPathOpen.Name = "ui_btnSmhDocPathOpen";
             this.ui_btnSmhDocPathOpen.Size = new System.Drawing.Size(40, 30);
@@ -1925,68 +1925,68 @@
             this.ui_btnSmhDocPathOpen.UseSelectable = true;
             this.ui_btnSmhDocPathOpen.Click += new System.EventHandler(this.OnClickBtnPathOpen);
             // 
-            // ui_btnSmhSamplePath
+            // ui_btnSmhEnvPath
             // 
-            this.ui_btnSmhSamplePath.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.ui_btnSmhSamplePath.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ui_btnSmhSamplePath.Location = new System.Drawing.Point(885, 66);
-            this.ui_btnSmhSamplePath.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.ui_btnSmhSamplePath.Name = "ui_btnSmhSamplePath";
-            this.ui_btnSmhSamplePath.Size = new System.Drawing.Size(40, 30);
-            this.ui_btnSmhSamplePath.TabIndex = 10;
-            this.ui_btnSmhSamplePath.Tag = "ui_tbSmhSamplePath";
-            this.ui_btnSmhSamplePath.Text = "···";
-            this.ui_btnSmhSamplePath.UseSelectable = true;
-            this.ui_btnSmhSamplePath.Click += new System.EventHandler(this.OnClickBtnPath);
+            this.ui_btnSmhEnvPath.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.ui_btnSmhEnvPath.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ui_btnSmhEnvPath.Location = new System.Drawing.Point(845, 66);
+            this.ui_btnSmhEnvPath.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.ui_btnSmhEnvPath.Name = "ui_btnSmhEnvPath";
+            this.ui_btnSmhEnvPath.Size = new System.Drawing.Size(40, 30);
+            this.ui_btnSmhEnvPath.TabIndex = 10;
+            this.ui_btnSmhEnvPath.Tag = "ui_tbSmhEnvPath";
+            this.ui_btnSmhEnvPath.Text = "···";
+            this.ui_btnSmhEnvPath.UseSelectable = true;
+            this.ui_btnSmhEnvPath.Click += new System.EventHandler(this.OnClickBtnPath);
             // 
-            // ui_tbSmhSamplePath
-            // 
-            // 
+            // ui_tbSmhEnvPath
             // 
             // 
-            this.ui_tbSmhSamplePath.CustomButton.Image = null;
-            this.ui_tbSmhSamplePath.CustomButton.Location = new System.Drawing.Point(671, 1);
-            this.ui_tbSmhSamplePath.CustomButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.ui_tbSmhSamplePath.CustomButton.Name = "";
-            this.ui_tbSmhSamplePath.CustomButton.Size = new System.Drawing.Size(27, 27);
-            this.ui_tbSmhSamplePath.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.ui_tbSmhSamplePath.CustomButton.TabIndex = 1;
-            this.ui_tbSmhSamplePath.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.ui_tbSmhSamplePath.CustomButton.UseSelectable = true;
-            this.ui_tbSmhSamplePath.CustomButton.Visible = false;
-            this.ui_tbSmhSamplePath.Lines = new string[0];
-            this.ui_tbSmhSamplePath.Location = new System.Drawing.Point(178, 66);
-            this.ui_tbSmhSamplePath.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.ui_tbSmhSamplePath.MaxLength = 32767;
-            this.ui_tbSmhSamplePath.Name = "ui_tbSmhSamplePath";
-            this.ui_tbSmhSamplePath.PasswordChar = '\0';
-            this.ui_tbSmhSamplePath.ReadOnly = true;
-            this.ui_tbSmhSamplePath.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.ui_tbSmhSamplePath.SelectedText = "";
-            this.ui_tbSmhSamplePath.SelectionLength = 0;
-            this.ui_tbSmhSamplePath.SelectionStart = 0;
-            this.ui_tbSmhSamplePath.ShortcutsEnabled = true;
-            this.ui_tbSmhSamplePath.Size = new System.Drawing.Size(699, 29);
-            this.ui_tbSmhSamplePath.TabIndex = 9;
-            this.ui_tbSmhSamplePath.UseSelectable = true;
-            this.ui_tbSmhSamplePath.UseStyleColors = true;
-            this.ui_tbSmhSamplePath.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.ui_tbSmhSamplePath.WaterMarkFont = new System.Drawing.Font("Open Sans", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             // 
-            // ui_lbSmhSampleDir
             // 
-            this.ui_lbSmhSampleDir.Location = new System.Drawing.Point(13, 68);
-            this.ui_lbSmhSampleDir.Name = "ui_lbSmhSampleDir";
-            this.ui_lbSmhSampleDir.Size = new System.Drawing.Size(160, 25);
-            this.ui_lbSmhSampleDir.TabIndex = 12;
-            this.ui_lbSmhSampleDir.Text = "Sample Directory :";
-            this.ui_lbSmhSampleDir.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.ui_tbSmhEnvPath.CustomButton.Image = null;
+            this.ui_tbSmhEnvPath.CustomButton.Location = new System.Drawing.Point(671, 1);
+            this.ui_tbSmhEnvPath.CustomButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.ui_tbSmhEnvPath.CustomButton.Name = "";
+            this.ui_tbSmhEnvPath.CustomButton.Size = new System.Drawing.Size(27, 27);
+            this.ui_tbSmhEnvPath.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.ui_tbSmhEnvPath.CustomButton.TabIndex = 1;
+            this.ui_tbSmhEnvPath.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.ui_tbSmhEnvPath.CustomButton.UseSelectable = true;
+            this.ui_tbSmhEnvPath.CustomButton.Visible = false;
+            this.ui_tbSmhEnvPath.Lines = new string[0];
+            this.ui_tbSmhEnvPath.Location = new System.Drawing.Point(138, 66);
+            this.ui_tbSmhEnvPath.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.ui_tbSmhEnvPath.MaxLength = 32767;
+            this.ui_tbSmhEnvPath.Name = "ui_tbSmhEnvPath";
+            this.ui_tbSmhEnvPath.PasswordChar = '\0';
+            this.ui_tbSmhEnvPath.ReadOnly = true;
+            this.ui_tbSmhEnvPath.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.ui_tbSmhEnvPath.SelectedText = "";
+            this.ui_tbSmhEnvPath.SelectionLength = 0;
+            this.ui_tbSmhEnvPath.SelectionStart = 0;
+            this.ui_tbSmhEnvPath.ShortcutsEnabled = true;
+            this.ui_tbSmhEnvPath.Size = new System.Drawing.Size(699, 29);
+            this.ui_tbSmhEnvPath.TabIndex = 9;
+            this.ui_tbSmhEnvPath.UseSelectable = true;
+            this.ui_tbSmhEnvPath.UseStyleColors = true;
+            this.ui_tbSmhEnvPath.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.ui_tbSmhEnvPath.WaterMarkFont = new System.Drawing.Font("Open Sans", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            // 
+            // ui_lbSmhEnvDir
+            // 
+            this.ui_lbSmhEnvDir.Location = new System.Drawing.Point(13, 68);
+            this.ui_lbSmhEnvDir.Name = "ui_lbSmhEnvDir";
+            this.ui_lbSmhEnvDir.Size = new System.Drawing.Size(120, 25);
+            this.ui_lbSmhEnvDir.TabIndex = 12;
+            this.ui_lbSmhEnvDir.Text = "Env Path :";
+            this.ui_lbSmhEnvDir.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // ui_btnSmhDocPath
             // 
             this.ui_btnSmhDocPath.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ui_btnSmhDocPath.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ui_btnSmhDocPath.Location = new System.Drawing.Point(885, 30);
+            this.ui_btnSmhDocPath.Location = new System.Drawing.Point(845, 30);
             this.ui_btnSmhDocPath.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ui_btnSmhDocPath.Name = "ui_btnSmhDocPath";
             this.ui_btnSmhDocPath.Size = new System.Drawing.Size(40, 30);
@@ -2012,7 +2012,7 @@
             this.ui_tbSmhDocPath.CustomButton.UseSelectable = true;
             this.ui_tbSmhDocPath.CustomButton.Visible = false;
             this.ui_tbSmhDocPath.Lines = new string[0];
-            this.ui_tbSmhDocPath.Location = new System.Drawing.Point(178, 30);
+            this.ui_tbSmhDocPath.Location = new System.Drawing.Point(138, 30);
             this.ui_tbSmhDocPath.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.ui_tbSmhDocPath.MaxLength = 32767;
             this.ui_tbSmhDocPath.Name = "ui_tbSmhDocPath";
@@ -2034,9 +2034,9 @@
             // 
             this.ui_lbSmhDocDir.Location = new System.Drawing.Point(13, 31);
             this.ui_lbSmhDocDir.Name = "ui_lbSmhDocDir";
-            this.ui_lbSmhDocDir.Size = new System.Drawing.Size(160, 25);
+            this.ui_lbSmhDocDir.Size = new System.Drawing.Size(120, 25);
             this.ui_lbSmhDocDir.TabIndex = 13;
-            this.ui_lbSmhDocDir.Text = "Document Directory :";
+            this.ui_lbSmhDocDir.Text = "Document Path :";
             this.ui_lbSmhDocDir.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // ui_gbDb
@@ -2525,20 +2525,20 @@
         private MetroFramework.Controls.MetroLabel ui_lbColorWorkDone;
         private MetroFramework.Controls.MetroLabel ui_lbColorWorking;
         private System.Windows.Forms.GroupBox ui_gbStd;
-        private MetroFramework.Controls.MetroButton ui_btnStdSamplePathOpen;
-        private MetroFramework.Controls.MetroButton ui_btnStdSamplePath;
-        private MetroFramework.Controls.MetroTextBox ui_tbStdSamplePath;
-        private MetroFramework.Controls.MetroLabel ui_lbStdSampleDir;
+        private MetroFramework.Controls.MetroButton ui_btnStdEnvPathOpen;
+        private MetroFramework.Controls.MetroButton ui_btnStdEnvPath;
+        private MetroFramework.Controls.MetroTextBox ui_tbStdEnvPath;
+        private MetroFramework.Controls.MetroLabel ui_lbStdEnvDir;
         private MetroFramework.Controls.MetroButton ui_btnStdDocPathOpen;
         private MetroFramework.Controls.MetroButton ui_btnStdDocPath;
         private MetroFramework.Controls.MetroTextBox ui_tbStdDocPath;
         private MetroFramework.Controls.MetroLabel ui_lbStdDocDir;
         private System.Windows.Forms.GroupBox ui_gbSmh;
-        private MetroFramework.Controls.MetroButton ui_btnSmhSamplePathOpen;
+        private MetroFramework.Controls.MetroButton ui_btnSmhEnvPathOpen;
         private MetroFramework.Controls.MetroButton ui_btnSmhDocPathOpen;
-        private MetroFramework.Controls.MetroButton ui_btnSmhSamplePath;
-        private MetroFramework.Controls.MetroTextBox ui_tbSmhSamplePath;
-        private MetroFramework.Controls.MetroLabel ui_lbSmhSampleDir;
+        private MetroFramework.Controls.MetroButton ui_btnSmhEnvPath;
+        private MetroFramework.Controls.MetroTextBox ui_tbSmhEnvPath;
+        private MetroFramework.Controls.MetroLabel ui_lbSmhEnvDir;
         private MetroFramework.Controls.MetroButton ui_btnSmhDocPath;
         private MetroFramework.Controls.MetroTextBox ui_tbSmhDocPath;
         private MetroFramework.Controls.MetroLabel ui_lbSmhDocDir;

@@ -19,6 +19,7 @@ namespace HullMaintenance
         public int Index { get; set; }
         public string Customer { get; set; }
         public string DocPath { get; set; }
+        public Dictionary<string, DataRow> Dic { get; set; }
         public DataTable Dt { get; private set; }
         #endregion
 
@@ -133,28 +134,71 @@ namespace HullMaintenance
             customerList = customerList.OrderByDescending(x => x).ToList();
             customerList.ForEach(x => ui_cbCustomer.Items.Add(x));
 
-            if (this.Index == 0)
+            if (ui_cbCustomer.Items.Count == 1)
             {
-                if (ui_cbCustomer.Items.Contains("") == true)
+                ui_cbCustomer.SelectedIndex = 0;
+            }
+            else if (ui_cbCustomer.Items.Count > 1)
+            {
+                customerList.Where(x => x != this.Customer).ToList().ForEach(x => ui_cbCustomer.Items.Remove(x));
+
+                if (ui_cbCustomer.Items.Count > 1 && ui_cbCustomer.Items.Contains(this.Customer) == true)
                 {
-                    ui_cbCustomer.Items.Remove("");
-                    ui_cbCustomer.Items.Add("");
+                    ui_cbCustomer.Text = this.Customer;
+                    LoadComboBoxesList(this.Dt, this.Customer);
+                }
+                else if (ui_cbCustomer.Items.Count == 1)
+                {
                     ui_cbCustomer.SelectedIndex = 0;
                 }
                 else
                 {
+                    string keyName = "";
+                    foreach (string key in this.Dic.Keys)
+                    {
+                        if (key == this.Customer ||
+                            this.Dic[key]["customer_en"].ToString() == this.Customer ||
+                            this.Dic[key]["customer_kr"].ToString() == this.Customer)
+                        {
+                            ui_cbCustomer.Items.Add(this.Customer);
+                            break;
+                        }
+                    }
+
                     ui_cbCustomer.SelectedIndex = 0;
                 }
-
-                return;
             }
 
-            if (this.Customer.Contains("ALL") == false && ui_cbCustomer.Items.Contains(this.Customer) == true)
-            {
-                ui_cbCustomer.Text = this.Customer;
-            }
+            //if (this.Index == 0)
+            //{
+            //    if (ui_cbCustomer.Items.Contains("") == true)
+            //    {
+            //        ui_cbCustomer.Items.Remove("");
+            //        ui_cbCustomer.Items.Add("");
+            //    }
 
-            LoadComboBoxesList(this.Dt, this.Customer);
+            //    if (ui_cbCustomer.Items.Contains(this.Customer) == true)
+            //    {
+            //        ui_cbCustomer.SelectedItem = this.Customer;
+            //        LoadComboBoxesList(this.Dt, this.Customer);
+            //    }
+            //    else
+            //    {
+            //        ui_cbCustomer.SelectedIndex = 0;
+            //    }
+
+            //    return;
+            //}
+
+            //if (ui_cbCustomer.Items.Count > 1 && ui_cbCustomer.Items.Contains(this.Customer) == true)
+            //{
+            //    ui_cbCustomer.Text = this.Customer;
+            //    LoadComboBoxesList(this.Dt, this.Customer);
+            //}
+            //else
+            //{
+            //    ui_cbCustomer.SelectedIndex = 0;
+            //}
         }
 
         /// <summary>
@@ -531,12 +575,15 @@ namespace HullMaintenance
         {
             ComboBox cBox = sender as ComboBox;
 
-            if (cBox.Text.Equals(this.Customer) == false)
-            {
-                this.Customer = cBox.Text;
-                ControlsValueClear(cBox);
-                LoadComboBoxesList(this.Dt, this.Customer);
-            }
+            ControlsValueClear(cBox);
+            LoadComboBoxesList(this.Dt, this.ui_cbCustomer.Text);
+
+            //if (cBox.Text.Equals(this.Customer) == false)
+            //{
+            //    this.Customer = cBox.Text;
+            //    ControlsValueClear(cBox);
+            //    LoadComboBoxesList(this.Dt, this.Customer);
+            //}
         }
 
         private void OnClickBtnClose(object sender, EventArgs e)
@@ -679,7 +726,7 @@ namespace HullMaintenance
             if (openFileDlg.ShowDialog() == DialogResult.OK)
             {
                 string fileFullPath = openFileDlg.FileName;
-                string filePath = fileFullPath.Replace(@"this.DocPath\", "");
+                string filePath = fileFullPath.Replace(this.DocPath, "");
                 tb.Text = filePath;
             }
         }
