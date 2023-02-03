@@ -27,6 +27,7 @@ namespace HullMaintenance
         public DataTable StdDt { get; private set; }
         public DataTable SmhDt { get; private set; }
         public Dictionary<string, DataTable> DtDic { get; private set; }
+        public Dictionary<string, string[]> CustomerInfoDic { get; private set; }
 		public string StdTableName { get; private set; }
 		public string SmhTableName { get; private set; }
         public int ThemeIdx { get; private set; }
@@ -434,7 +435,7 @@ namespace HullMaintenance
         /// <param name="gridName"></param>
         /// <param name="fileName"></param>
         /// <param name="idx"></param>
-        private void OpenLinkedDocument(string gridName, string fileName, int idx)
+        private void OpenLinkedDocument(string gridName, string fileName, int idx, string customer)
         {
             if (idx == 0)
             {
@@ -442,17 +443,38 @@ namespace HullMaintenance
             }
 
             DataTable dt;
+            ComboBox cBox;
             string filePath = "";
 
             if (gridName.ToLower().Contains("smh") == true)
             {
                 dt = this.SmhDt;
-                filePath = ui_tbSmhDocPath.Text;
+                cBox = this.ui_cbSmhCustomer;
+
+                if (this.CustomerInfoDic.Keys.Contains(cBox.Text) == true)
+                {
+                    filePath = String.Format(@"{0}\{1}", this.ui_tbSmhDocPath.Text, this.CustomerInfoDic[cBox.Text][1]);
+                }
+                else
+                {
+                    filePath = this.ui_tbSmhDocPath.Text;
+                }
             }
             else
             {
                 dt = this.StdDt;
+                cBox = this.ui_cbStdCustomer;
+
                 filePath = ui_tbStdDocPath.Text;
+
+                foreach (string key in this.CustomerInfoDic.Keys)
+                {
+                    if (this.CustomerInfoDic[key][0] == customer)
+                    {
+                        filePath = String.Format(@"{0}\{1}\080_SpisHull", filePath, this.CustomerInfoDic[key][1]);
+                        break;
+                    }
+                }
             }
 
             DataRow row = dt.Select().Where(x => x["id"].ToString().Equals(idx.ToString()) == true).FirstOrDefault();
@@ -588,6 +610,9 @@ namespace HullMaintenance
             {
                 tableList.Remove(this.StdTableName);
             }
+
+            // 테이블별 기타 정보
+            this.CustomerInfoDic = DbHelper.GetCustomerInfoFromDB();
 
             // 테이블 딕셔너리
             this.DtDic = DbHelper.GetDataTableDictionary(tableList);
@@ -908,6 +933,7 @@ namespace HullMaintenance
             if (grid.Columns[e.ColumnIndex] is DataGridViewLinkColumn && e.RowIndex != -1)
             {
                 string fileName = grid.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                string customer = grid.Rows[e.RowIndex].Cells[2].Value.ToString();
 
                 if (String.IsNullOrEmpty(fileName) == false)
                 {
@@ -916,7 +942,7 @@ namespace HullMaintenance
                     if (grid.SelectedCells[1].Value != null)
                     {
                         id = (int)grid.SelectedCells[1].Value;
-                        OpenLinkedDocument(grid.Name.ToString(), fileName, id);
+                        OpenLinkedDocument(grid.Name.ToString(), fileName, id, customer);
                     }
                 }
             }
@@ -929,17 +955,34 @@ namespace HullMaintenance
             DataTable dt;
             string docPath = "";
 
-            if (mBtn.Tag.ToString().ToLower().Contains("std") == true)
+            if (mBtn.Tag.ToString().ToLower().Contains("smh") == true)
+            {
+                dt = this.SmhDt;
+                cBox = ui_cbSmhCustomer;
+
+                if (this.CustomerInfoDic.Keys.Contains(cBox.Text) == true)
+                {
+                    docPath = String.Format(@"{0}\{1}", this.ui_tbSmhDocPath.Text, this.CustomerInfoDic[cBox.Text][1]);
+                }
+                else
+                {
+                    docPath = this.ui_tbSmhDocPath.Text;
+                }
+            }
+            else
             {
                 dt = this.StdDt;
                 cBox = ui_cbStdCustomer;
                 docPath = ui_tbStdDocPath.Text;
-            }
-            else
-            {
-                dt = this.SmhDt;
-                cBox = ui_cbSmhCustomer;
-                docPath = ui_tbSmhDocPath.Text;
+
+                foreach (string key in this.CustomerInfoDic.Keys)
+                {
+                    if (this.CustomerInfoDic[key][0] == cBox.Text)
+                    {
+                        docPath = String.Format(@"{0}\{1}\080_SpisHull", docPath, this.CustomerInfoDic[key][1]);
+                        break;
+                    }
+                }
             }
 
             foreach (Form form in Application.OpenForms)
@@ -976,19 +1019,37 @@ namespace HullMaintenance
             string customer = "";
             string docPath = "";
 
-            if (grid.Name.ToString().ToLower().Contains("std") == true)
+            if (grid.Name.ToString().ToLower().Contains("smh") == true)
+            {
+                dt = this.SmhDt;
+                id = Convert.ToInt32(cells["smhColId"].Value.ToString());
+                //customer = cells["smhColCustomer"].Value.ToString();
+                customer = this.ui_cbSmhCustomer.Text;
+
+                if (this.CustomerInfoDic.Keys.Contains(customer) == true)
+                {
+                    docPath = String.Format(@"{0}\{1}", this.ui_tbSmhDocPath.Text, this.CustomerInfoDic[customer][1]);
+                }
+                else
+                {
+                    docPath = this.ui_tbSmhDocPath.Text;
+                }
+            }
+            else
             {
                 dt = this.StdDt;
                 id = Convert.ToInt32(cells["stdColId"].Value.ToString());
                 customer = cells["stdColCustomer"].Value.ToString();
-                docPath = ui_tbStdDocPath.Text;
-            }
-            else
-            {
-                dt = this.SmhDt;
-                id = Convert.ToInt32(cells["smhColId"].Value.ToString());
-                customer = cells["smhColCustomer"].Value.ToString();
-                docPath = ui_tbSmhDocPath.Text;
+                docPath = this.ui_tbSmhDocPath.Text;
+
+                foreach (string key in this.CustomerInfoDic.Keys)
+                {
+                    if (this.CustomerInfoDic[key][0] == customer)
+                    {
+                        docPath = String.Format(@"{0}\{1}\080_SpisHull", docPath, this.CustomerInfoDic[key][1]);
+                        break;
+                    }
+                }
             }
 
             foreach (Form form in Application.OpenForms)
@@ -1017,19 +1078,7 @@ namespace HullMaintenance
             TabPage tabPage = tabControl.SelectedTab;
 
             string dbInfo = String.Format("Database : {0}\tServer: {1}\tLogin ID : {2}", DbHelper.DbName, DbHelper.DbServer, DbHelper.DbUserId);
-
-            if (tabPage.Name.Contains("smh") == true)
-            {
-                ui_lbBottomInfo.Text = String.Format("Option Path : {0}\t{1}\tTableName : {2}", this.OptionPath, dbInfo, this.SmhTableName).Replace("\t", "   ");
-            }
-            else if (tabPage.Name.Contains("std") == true)
-            {
-                ui_lbBottomInfo.Text = String.Format("Option Path : {0}\t{1}\tTableName : {2}", this.OptionPath, dbInfo, this.StdTableName).Replace("\t", "   ");
-            }
-            else
-            {
-                ui_lbBottomInfo.Text = String.Format("Option Path : {0}\t{1}", this.OptionPath, dbInfo).Replace("\t", "   ");
-            }
+            ui_lbBottomInfo.Text = String.Format("Option Path : {0}\t{1}", this.OptionPath, dbInfo).Replace("\t", "   ");
         }
 
         private void OnColorCodeTextChanged(object sender, EventArgs e)
@@ -1082,28 +1131,25 @@ namespace HullMaintenance
 
         private void OnCustomerSelectedValueChanged(object sender, EventArgs e)
         {
-            DataTable filteredDt = new DataTable();
-
-            string customer = ui_cbSmhCustomer.Text;
+            string customer = ui_cbSmhCustomer.Text;    
             this.SmhTableName = customer;
 
             this.SmhDt = this.DtDic[customer];
-            filteredDt = this.SmhDt.Copy();
 
             ui_cbSmhSite.Items.Clear();
             ui_cbSmhSite.Items.Insert(0, "ALL Site");
 
-            if (filteredDt.Rows.Count > 0)
+            if (SmhDt.Rows.Count > 0)
             {
-                List<string> siteList = filteredDt.Select().Select(x => x["site"]).Cast<string>().Distinct().ToList();
+                List<string> siteList = SmhDt.Select().Select(x => x["site"]).Cast<string>().Distinct().ToList();
                 siteList = siteList.OrderByDescending(x => x).ToList();
                 siteList.ForEach(x => ui_cbSmhSite.Items.Add(x));
 
-                filteredDt = filteredDt.Select("", "id DESC").CopyToDataTable();
-
-                ui_gridSmh.DataSource = filteredDt.DefaultView.ToTable(false, new string[] { "id", "customer", "type", "status", "summary_kr",
-                                                                                       "receive_date", "due_date", "start_date", "end_date",
-                                                                                       "verification_date", "update_date", "document_name" }).Select().CopyToDataTable();
+                //filteredDt = filteredDt.Select("", "id DESC").CopyToDataTable();
+                //Console.WriteLine(sw.Elapsed.ToString());
+                //ui_gridSmh.DataSource = filteredDt.DefaultView.ToTable(false, new string[] { "id", "customer", "type", "status", "summary_kr",
+                //                                                                       "receive_date", "due_date", "start_date", "end_date",
+                //                                                                       "verification_date", "update_date", "document_name" }).Select().CopyToDataTable();
             }
             else if (ui_gridSmh.DataSource != null)
             {
@@ -1118,6 +1164,7 @@ namespace HullMaintenance
             DataTable filteredDt = new DataTable();
 
             string customer = ui_cbStdCustomer.Text;
+
             filteredDt = this.StdDt.Copy();
 
             if (customer.Contains("ALL") == false)
@@ -1155,11 +1202,11 @@ namespace HullMaintenance
                 periodList = periodList.OrderByDescending(x => x).ToList();
                 periodList.ForEach(x => ui_cbStdPeriod.Items.Add(x));
 
-                filteredDt = filteredDt.Select("", "id DESC").CopyToDataTable();
+                //filteredDt = filteredDt.Select("", "id DESC").CopyToDataTable();
 
-                ui_gridStd.DataSource = filteredDt.DefaultView.ToTable(false, new string[] { "id", "customer", "type", "status", "summary_kr",
-                                                                                       "receive_date", "due_date", "start_date", "end_date",
-                                                                                       "verification_date", "update_date", "document_name" }).Select().CopyToDataTable();
+                //ui_gridStd.DataSource = filteredDt.DefaultView.ToTable(false, new string[] { "id", "customer", "type", "status", "summary_kr",
+                //                                                                       "receive_date", "due_date", "start_date", "end_date",
+                //                                                                       "verification_date", "update_date", "document_name" }).Select().CopyToDataTable();
             }
             else if (ui_gridStd.DataSource != null)
             {
@@ -1248,8 +1295,17 @@ namespace HullMaintenance
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
             string filePath = e.Argument as string;
+            FileInfo fi = new FileInfo(filePath);
 
             DataTable dt = ReadExcelToDatatble(filePath, "개발사양", 6, 2, sender);
+
+            foreach (string key in this.CustomerInfoDic.Keys)
+            {
+                if (fi.Name.Contains(this.CustomerInfoDic[key][2]) == true)
+                {
+                    dt.TableName = key;
+                }
+            }
 
             MetroGrid excelGrid = new MetroGrid();
             excelGrid.Name = "gridExcel";
@@ -1294,6 +1350,9 @@ namespace HullMaintenance
             tempDt.DefaultView.Sort = String.Format("{0} ASC", tempDt.Columns[2]);
             DataTable sortedDt = tempDt.DefaultView.ToTable();
 
+            string tableName = sortedDt.TableName;
+            string customerNameKr = this.CustomerInfoDic[tableName][0];
+
             using (SqlConnection conn = new SqlConnection(DbHelper.DbConnectionString))
             {
                 conn.Open();
@@ -1312,7 +1371,7 @@ namespace HullMaintenance
 
                     foreach (DataRow row in sortedDt.Rows)
                     {
-                        cmd.Parameters.AddWithValue("@customer", String.Format("{0}{1}", char.ToUpper(this.SmhTableName[0]), this.SmhTableName.ToLower().Substring(1)));
+                        cmd.Parameters.AddWithValue("@customer", customerNameKr);
                         cmd.Parameters.AddWithValue("@category1", row[0].ToString());   // 종류
                         cmd.Parameters.AddWithValue("@category2", row[1].ToString());   // 내용
 
@@ -1410,13 +1469,24 @@ namespace HullMaintenance
                             cmd.Parameters.AddWithValue("@documentFile", DBNull.Value);
                         }
 
-                        if (this.SmhTableName.ToLower() == "imabari")
+                        if (tableName == "imabari")
                         {
                             if (String.IsNullOrEmpty(row[17].ToString()) == false)    // 답변
                             {
                                 cmd.Parameters.AddWithValue("@mailFile", row[17].ToString());
                             }
                             else if (String.IsNullOrEmpty(row[16].ToString()) == false) // 메일
+                            {
+                                cmd.Parameters.AddWithValue("@mailFile", row[16].ToString());
+                            }
+                            else
+                            {
+                                cmd.Parameters.AddWithValue("@mailFile", DBNull.Value);
+                            }
+                        }
+                        else if (tableName == "jmu")
+                        {
+                            if (String.IsNullOrEmpty(row[16].ToString()) == false) // 메일
                             {
                                 cmd.Parameters.AddWithValue("@mailFile", row[16].ToString());
                             }
@@ -1435,7 +1505,7 @@ namespace HullMaintenance
                         cmd.Parameters.AddWithValue("@writer", Environment.UserName);
                         cmd.Parameters.AddWithValue("@saveDate", DateTime.Now);
 
-                        cmd.ExecuteNonQuery();
+                        //cmd.ExecuteNonQuery();
                         cmd.Parameters.Clear();
                     }
 

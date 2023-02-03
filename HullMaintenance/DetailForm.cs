@@ -597,7 +597,7 @@ namespace HullMaintenance
             {
                 UpdateData(this.Index);
             }
-
+            this.Tag = String.Format("{0}", this.Customer);
             this.ActivateMdiChild(this);
         }
 
@@ -652,6 +652,10 @@ namespace HullMaintenance
                 if (fi.Directory.Exists == true)
                 {
                     Process.Start(fi.DirectoryName);
+                }
+                else
+                {
+                    Process.Start(this.DocPath);
                 }
             }
         }

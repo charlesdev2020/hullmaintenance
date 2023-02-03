@@ -183,7 +183,7 @@ namespace HullMaintenance
                                          "FROM sys.tables AS T " +
                                          "INNER JOIN sys.columns AS C " +
                                          "ON T.object_id = C.object_id " +
-                                         "WHERE C.name = 'customer' " +
+                                         "WHERE C.name = 'summary_kr' " +
                                          "ORDER BY TABLE_NAME ASC;");
 
             using (SqlConnection conn = new SqlConnection(DbConnectionString))
@@ -209,6 +209,51 @@ namespace HullMaintenance
 
                 return tableList;
             }
+        }
+
+        /// <summary>
+        /// Get Customer Folder Names
+        /// </summary>
+        /// <param name="customerList"></param>
+        /// <returns></returns>
+        public static Dictionary<string, string[]> GetCustomerInfoFromDB()
+        {
+            Dictionary<string, string[]> dic = new Dictionary<string, string[]>();
+            DataTable dt = new DataTable();
+
+            string query = String.Format("SELECT * FROM customer_info");
+
+            using (SqlConnection conn = new SqlConnection(DbConnectionString))
+            {
+                conn.Open();
+
+                SqlDataAdapter sda = new SqlDataAdapter();
+                SqlCommand scm = new SqlCommand(query, conn);
+
+                try
+                {
+                    SqlDataReader sdr = scm.ExecuteReader();
+
+                    dt.Load(sdr);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+
+            if (dt.Rows.Count > 0)
+            {
+                dic = dt.AsEnumerable().ToDictionary<DataRow, string, string[]>(row => row.Field<string>("customer"), 
+                                                                                row => new string[] 
+                                                                                {
+                                                                                    row.Field<string>("customer_kr"),
+                                                                                    row.Field<string>("folder_name"),
+                                                                                    row.Field<string>("abbr")
+                                                                                });
+            }
+
+            return dic;
         }
     }
 }
