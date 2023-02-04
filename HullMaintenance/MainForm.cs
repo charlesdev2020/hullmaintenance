@@ -1,4 +1,5 @@
-﻿using MetroFramework;
+﻿using HullMaintenance.UserControls;
+using MetroFramework;
 using MetroFramework.Controls;
 using MetroFramework.Forms;
 using System;
@@ -10,6 +11,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
@@ -1292,7 +1294,7 @@ namespace HullMaintenance
 
                 ui_btnLoadExcel.Enabled = false;
                 ui_btnClearExcel.Enabled = false;
-                ui_btnImportExcel.Enabled = false;
+                ui_btnInsertExcel.Enabled = false;
                 ui_progressBar.Width = 0;
                 ui_progressBar.Visible = true;
                 ui_panelHelper.Cursor = Cursors.WaitCursor;
@@ -1317,7 +1319,7 @@ namespace HullMaintenance
         {
             ui_btnLoadExcel.Enabled = true;
             ui_btnClearExcel.Enabled = true;
-            ui_btnImportExcel.Enabled = true;
+            ui_btnInsertExcel.Enabled = true;
             ui_panelHelper.Cursor = Cursors.Default;
 
             MetroGrid metroGrid = e.Result as MetroGrid;
@@ -1340,9 +1342,35 @@ namespace HullMaintenance
             }
 
             MetroGrid excelGrid = new MetroGrid();
+            
+            excelGrid.AllowUserToAddRows = this.ui_gridSmh.AllowUserToAddRows;  //= false;
+            excelGrid.AllowUserToDeleteRows = this.ui_gridSmh.AllowUserToDeleteRows;    //= false;
+            excelGrid.AllowUserToOrderColumns = this.ui_gridSmh.AllowUserToOrderColumns;    //= true;
+            excelGrid.AllowUserToResizeRows = this.ui_gridSmh.AllowUserToResizeRows;    //= false;
+            excelGrid.AlternatingRowsDefaultCellStyle = this.ui_gridSmh.AlternatingRowsDefaultCellStyle;    //= dataGridViewCellStyle61;
+            //excelGrid.AutoSizeColumnsMode = this.ui_gridSmh.AutoSizeColumnsMode;    //= System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            excelGrid.BackgroundColor = this.ui_gridSmh.BackgroundColor;    //= System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            excelGrid.BorderStyle = this.ui_gridSmh.BorderStyle;    //= System.Windows.Forms.BorderStyle.None;
+            excelGrid.CellBorderStyle = this.ui_gridSmh.CellBorderStyle;    //= System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            excelGrid.ColumnHeadersBorderStyle = this.ui_gridSmh.ColumnHeadersBorderStyle;  //= System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            excelGrid.DefaultCellStyle = this.ui_gridSmh.DefaultCellStyle;  //= dataGridViewCellStyle69;
+            excelGrid.Dock = this.ui_gridSmh.Dock;  //= System.Windows.Forms.DockStyle.Fill;
+            excelGrid.EditMode = this.ui_gridSmh.EditMode;  //= System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            excelGrid.EnableHeadersVisualStyles = this.ui_gridSmh.EnableHeadersVisualStyles;    //= false;
+            excelGrid.Font = this.ui_gridSmh.Font;  //= new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            excelGrid.GridColor = this.ui_gridSmh.GridColor;    //= System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            excelGrid.Location = this.ui_gridSmh.Location;  //= new System.Drawing.Point(1, 1);
+            excelGrid.Margin = this.ui_gridSmh.Margin;  //= new System.Windows.Forms.Padding(3, 4, 3, 4);
+            excelGrid.MultiSelect = this.ui_gridSmh.MultiSelect;    //= false;
+            excelGrid.RowHeadersDefaultCellStyle = this.ui_gridSmh.RowHeadersDefaultCellStyle;  //= dataGridViewCellStyle70;
+            excelGrid.RowHeadersWidth = this.ui_gridSmh.RowHeadersWidth;    //= 60;
+            excelGrid.RowHeadersWidthSizeMode = this.ui_gridSmh.RowHeadersWidthSizeMode;    //= System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            excelGrid.RowTemplate.DividerHeight = this.ui_gridSmh.RowTemplate.DividerHeight;    //= 1;
+            excelGrid.RowTemplate.Height = this.ui_gridSmh.RowTemplate.Height;  //= 23;
+            excelGrid.SelectionMode = this.ui_gridSmh.SelectionMode;	//= System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+
             excelGrid.Name = "gridExcel";
             excelGrid.DataSource = dt;
-            excelGrid.Dock = DockStyle.Fill;
 
             e.Result = excelGrid;
         }
@@ -1353,7 +1381,7 @@ namespace HullMaintenance
             ui_panelHelper.Controls.RemoveByKey("gridExcel");
         }
 
-        private void OnClickImport(object sender, EventArgs e)
+        private void OnClickInsert(object sender, EventArgs e)
         {
             MetroGrid excelGrid = null;
             foreach (Control ctrl in ui_panelHelper.Controls.Find("gridExcel", true))
@@ -1579,5 +1607,12 @@ namespace HullMaintenance
             MetroMessageBox.Show(this, "", "Import Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         #endregion
+
+        private void OnClickLoadInterface(object sender, EventArgs e)
+        {
+            InterfaceHelper helper = new InterfaceHelper();
+            helper.Dock = DockStyle.Fill;
+            this.ui_panelHelper.Controls.Add(helper);
+        }
     }
 }
