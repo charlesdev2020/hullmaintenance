@@ -515,7 +515,7 @@ namespace HullMaintenance
         public DataTable ReadExcelToDatatble(string filePath, string worksheetName, int HeaderLine, int ColumnStart, object obj = null)
         {
             BackgroundWorker worker = obj as BackgroundWorker;
-            DataTable dataTable = new DataTable();
+            DataTable excelDt = new DataTable();
             Microsoft.Office.Interop.Excel.Application excel;
             Microsoft.Office.Interop.Excel.Workbook excelworkBook;
             Microsoft.Office.Interop.Excel.Worksheet excelSheet;
@@ -542,19 +542,42 @@ namespace HullMaintenance
                 //create the header of table
                 for (int j = ColumnStart; j <= colCount; j++)
                 {
-                    dataTable.Columns.Add(Convert.ToString(range.Cells[HeaderLine, j].Value), typeof(string));
+                    string header = Convert.ToString(range.Cells[HeaderLine, j].Value);
+                    if (excelDt.Columns.Contains(header) == false)
+                    {
+                        excelDt.Columns.Add(header, typeof(string));
+                    }
+                    else
+                    {
+                        string prevColName = excelDt.Columns[j - ColumnStart - 1].ColumnName;
+
+                        if (prevColName.Split('_').Count() > 1)
+                        {
+                            string originColName = prevColName.Split('_')[0];
+                            int sameCnt = int.Parse(prevColName.Split('_')[1]);
+                            excelDt.Columns.Add(String.Format("{0}_{1}", originColName, sameCnt + 1), typeof(string));
+                        }
+                        else
+                        {
+                            excelDt.Columns.Add(String.Format("{0}_1", prevColName), typeof(string));
+                        }
+                    }
                 }
 
                 //filling the table from excel file
                 for (int i = HeaderLine + 1; i <= rowCount; i++)
                 {
-                    DataRow dr = dataTable.NewRow();
+                    DataRow dr = excelDt.NewRow();
+
+                    bool isBlankLine = false;
+                    int emptyCnt = 0;
 
                     for (int j = ColumnStart; j <= colCount; j++)
                     {
+                        string strVal = Convert.ToString(range.Cells[i, j].Value2);
+
                         if (j > 3 && j < 10)
                         {
-                            string strVal = Convert.ToString(range.Cells[i, j].Value2);
                             double doubleVal;
 
                             if (Double.TryParse(strVal, out doubleVal) == true)
@@ -562,24 +585,51 @@ namespace HullMaintenance
                                 DateTime dateTime = DateTime.FromOADate(doubleVal);
                                 dr[j - ColumnStart] = dateTime.ToString("yyyy-MM-dd");
                             }
+                            else
+                            {
+                                emptyCnt++;
+                            }
                         }
                         else
                         {
-                            dr[j - ColumnStart] = Convert.ToString(range.Cells[i, j].Value2);
+                            if (String.IsNullOrEmpty(strVal) == false)
+                            {
+                                dr[j - ColumnStart] = strVal;
+                            }
+                            else
+                            {
+                                if (i > HeaderLine + 1 && (j == 2 || j == 3))
+                                {
+                                    dr[j - ColumnStart] = excelDt.Rows[excelDt.Rows.Count - 1][j - ColumnStart];
+                                }
+
+                                emptyCnt++;
+                            }
+                        }
+
+                        if (j < 16 && emptyCnt > 13)
+                        {
+                            isBlankLine = true;
+                            break;
                         }
                     }
 
                     double percent = (double)i / (double)rowCount * 100.0;
                     worker.ReportProgress((int)percent, String.Format("{0} / {1}", i, rowCount));
 
-                    dataTable.Rows.InsertAt(dr, dataTable.Rows.Count + 1);
+                    if (isBlankLine == true)
+                    {
+                        continue;
+                    }
+
+                    excelDt.Rows.InsertAt(dr, excelDt.Rows.Count + 1);
                 }
 
                 //now close the workbook and make the function return the data table
                 excelworkBook.Close();
                 excel.Quit();
 
-                return dataTable;
+                return excelDt;
             }
             catch (Exception ex)
             {
@@ -711,15 +761,26 @@ namespace HullMaintenance
         private void OnGridDataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             MetroGrid grid = sender as MetroGrid;
-            string module = grid.Name.ToLower().Contains("std") == true ? "std" : "smh";
 
-            foreach (DataGridViewRow row in grid.Rows)
+            if (grid.Name.Contains("Excel") == true)
             {
-                grid.Rows[row.Index].HeaderCell.Value = (row.Index + 1).ToString();
+                foreach (DataGridViewRow row in grid.Rows)
+                {
+                    grid.Rows[row.Index].HeaderCell.Value = (row.Index + 1).ToString();
+                }
+            }
+            else
+            {
+                string module = grid.Name.ToLower().Contains("std") == true ? "std" : "smh";
 
-                CheckDueDateCell(row, module);
+                foreach (DataGridViewRow row in grid.Rows)
+                {
+                    grid.Rows[row.Index].HeaderCell.Value = (row.Index + 1).ToString();
 
-                CheckStatusCell(row, module);
+                    CheckDueDateCell(row, module);
+
+                    CheckStatusCell(row, module);
+                }
             }
         }
 
@@ -1371,6 +1432,8 @@ namespace HullMaintenance
 
             excelGrid.Name = "gridExcel";
             excelGrid.DataSource = dt;
+
+            excelGrid.DataBindingComplete += OnGridDataBindingComplete;
 
             e.Result = excelGrid;
         }
